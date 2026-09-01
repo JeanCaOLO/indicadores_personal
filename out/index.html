@@ -306,6 +306,20 @@
   .auth-card p.sub{color:var(--muted);font-size:13px;margin:0 0 18px}
   .auth-field{margin-bottom:13px}
   .auth-field label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:6px}
+  .auth-field input{width:100%;box-sizing:border-box;display:block;border:1px solid var(--line-2);border-radius:var(--r-s);padding:12px 13px;font-family:inherit;font-size:14.5px;color:var(--ink);background:#fff;-webkit-appearance:none;appearance:none;transition:border-color .14s,box-shadow .14s}
+  .auth-field input::placeholder{color:var(--faint)}
+  .auth-field input:hover{border-color:var(--line-2)}
+  .auth-field input:focus{outline:0;border-color:var(--teal);box-shadow:0 0 0 3px rgba(0,180,151,.15)}
+  /* Forzar fondo blanco también en autocompletado del navegador */
+  .auth-field input:-webkit-autofill,
+  .auth-field input:-webkit-autofill:hover,
+  .auth-field input:-webkit-autofill:focus{
+    -webkit-text-fill-color:var(--ink);
+    -webkit-box-shadow:0 0 0 1000px #fff inset;
+    box-shadow:0 0 0 1000px #fff inset;
+    caret-color:var(--ink);
+    transition:background-color 9999s ease-in-out 0s;
+  }
   .auth-btn{width:100%;background:var(--teal);color:#fff;border-radius:var(--r-s);padding:12px;font-weight:700;font-size:14.5px;font-family:'Space Grotesk';margin-top:6px;transition:.14s}
   .auth-btn:hover{background:var(--teal-d)}
   .auth-btn:disabled{opacity:.6;cursor:default}
