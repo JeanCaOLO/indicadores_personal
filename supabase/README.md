@@ -36,11 +36,50 @@ Claves usadas por la app (`index.html` guarda `localStorage["olo_master_db"]`):
 - `__cfg` — configuración (metas, líderes, `sysUrl`, `kpiOff`).
 - `YYYY-MM` — datos del mes: `activos`, `egresos`, `ausencias`, `areas`, `capacitacion`, `extras`, `vacaciones`, `merma`, `terceros`, `params`.
 
+## Módulo de acceso (login por rol/país)
+
+Tablas nuevas y exclusivas (no tocan producción):
+
+- `olo_indicadores_usuarios` — usuarios del sistema (email, hash PBKDF2, rol).
+- `olo_indicadores_roles` — catálogo de roles (CRUD desde la app).
+
+Roles y su alcance (`scope`):
+
+| scope    | Qué ve                                            |
+|----------|---------------------------------------------------|
+| `global` | Toda la data de todos los países                  |
+| `pais`   | Solo la data de su país (campo `pais` del rol)    |
+| `admin`  | No ve data; solo el módulo de gestión de usuarios |
+
+Roles base incluidos: `global`, `admin`, `costa_rica`, `venezuela`. Desde la vista
+**👥 Usuarios** se pueden agregar más roles (por ejemplo `Colombia`, `El Salvador`…)
+y crear/editar/eliminar usuarios.
+
+### Usuario administrador inicial
+
+`seed_auth.sql` crea:
+
+- email: `admin@olo.com`
+- password: `admin123`  ← **cambiala tras el primer ingreso**
+
 ## Archivos
 
-- `migrations/001_init.sql` — crea SOLO `olo_indicadores_kv` (tabla, índice, trigger propio, RLS).
-- `seed.sql` — datos de ejemplo, escribe SOLO en `olo_indicadores_kv`.
+- `migrations/001_init.sql` — crea SOLO `olo_indicadores_kv` (tabla de datos).
+- `migrations/002_auth.sql` — crea `olo_indicadores_usuarios` y `olo_indicadores_roles` + roles base.
+- `seed.sql` — datos de ejemplo del dashboard (`olo_indicadores_kv`).
+- `seed_auth.sql` — usuario admin inicial.
 - `supabase-sync.js` — versión standalone del puente (el `index.html` ya lo trae embebido).
+
+## Cómo funciona el login
+
+`out/index.html` arranca mostrando la pantalla de acceso (con la marca OLO).
+
+1. El usuario entra con correo + contraseña (validado contra `olo_indicadores_usuarios`, hash PBKDF2-SHA256).
+2. Según el `scope` de su rol:
+   - `pais` → el sistema fija el país y bloquea los selectores; solo ve su país.
+   - `global` → ve todo y puede cambiar de país.
+   - `admin` → no descarga ni ve data; entra directo a **👥 Usuarios**.
+3. La sesión se guarda en `localStorage` (`olo_session`); "Salir" la borra.
 
 ## Cómo subirlo
 
@@ -48,8 +87,11 @@ Claves usadas por la app (`index.html` guarda `localStorage["olo_master_db"]`):
 
 1. Abrí https://supabase.com/dashboard → proyecto `iigtulgpbqeypnewmzxz`.
 2. **SQL Editor**.
-3. Pegá y ejecutá `migrations/001_init.sql`.
-4. (Opcional) pegá y ejecutá `seed.sql`.
+3. Ejecutá en orden:
+   - `migrations/001_init.sql` (tabla de datos)
+   - `migrations/002_auth.sql` (usuarios y roles)
+   - `seed_auth.sql` (admin inicial · admin@olo.com / admin123)
+4. (Opcional) `seed.sql` para datos de ejemplo del dashboard.
 
 ### Opción B — Supabase CLI
 

@@ -293,6 +293,31 @@
   .pbi-tab:last-child{border-right:0}
   .pbi-tab:hover{background:#f5f5f5}
   .pbi-tab.on{background:#f0f0f0;color:#111;font-weight:700}
+
+  /* ===== Auth · login y gestión de usuarios ===== */
+  .auth-scrim{position:fixed;inset:0;z-index:2000;background:linear-gradient(160deg,#0d3b31,#0a2a23 60%,#08211b);display:flex;align-items:center;justify-content:center;padding:24px}
+  .auth-card{width:100%;max-width:400px;background:var(--surface);border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.35);padding:30px 28px 26px}
+  .auth-brand{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+  .auth-brand img{height:38px;width:auto}
+  .auth-brand .divider{width:1px;height:30px;background:var(--line-2)}
+  .auth-brand small{display:block;font-weight:500;font-size:10px;letter-spacing:.18em;color:var(--muted);text-transform:uppercase}
+  .auth-brand b{font-family:'Space Grotesk';font-size:17px;font-weight:700;color:var(--ink)}
+  .auth-card h1{font-family:'Space Grotesk';font-size:20px;margin:18px 0 4px}
+  .auth-card p.sub{color:var(--muted);font-size:13px;margin:0 0 18px}
+  .auth-field{margin-bottom:13px}
+  .auth-field label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:6px}
+  .auth-btn{width:100%;background:var(--teal);color:#fff;border-radius:var(--r-s);padding:12px;font-weight:700;font-size:14.5px;font-family:'Space Grotesk';margin-top:6px;transition:.14s}
+  .auth-btn:hover{background:var(--teal-d)}
+  .auth-btn:disabled{opacity:.6;cursor:default}
+  .auth-msg{font-size:12.5px;margin-top:12px;min-height:16px}
+  .auth-msg.err{color:var(--danger)}.auth-msg.ok{color:var(--ok)}
+  .auth-switch{margin-top:16px;text-align:center;font-size:12.5px;color:var(--muted)}
+  .auth-switch a{color:var(--teal-d);font-weight:600;cursor:pointer;text-decoration:underline}
+  .userchip{display:inline-flex;align-items:center;gap:8px;background:var(--teal-wash);border:1px solid #cfe3dd;color:var(--teal-d);padding:6px 10px;border-radius:var(--r-s);font-size:12.5px;font-weight:600}
+  .userchip .badge{background:var(--teal);color:#fff;border-radius:6px;padding:2px 7px;font-size:10.5px;font-family:'Space Grotesk'}
+  .usr-wrap{display:grid;gap:18px}
+  .usr-form{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  @media(max-width:640px){.usr-form{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -310,7 +335,10 @@
       <button class="hbtn" id="printBtn">Imprimir / PDF</button>
       <button class="hbtn" id="presBtn">Vista Corporativa</button>
       <button class="hbtn" id="syncBtn" title="Sincronizar datos con la nube (Supabase)">☁ Sincronizar</button>
+      <button class="hbtn" id="usersBtn" title="Gestión de usuarios y roles" style="display:none">👥 Usuarios</button>
       <button class="hbtn solid" id="admBtn">Administrar datos</button>
+      <span id="userChip" class="userchip" style="display:none"></span>
+      <button class="hbtn" id="logoutBtn" title="Cerrar sesión" style="display:none">Salir</button>
     </div>
   </div>
 </header>
@@ -333,9 +361,39 @@
   <section class="view active" id="v-dash"></section>
   <section class="view" id="v-admin"></section>
   <section class="view" id="v-pres"></section>
+  <section class="view" id="v-usuarios"></section>
 </main>
 <div class="toast" id="toast"></div>
 <div id="tip" class="tip"></div>
+
+<!-- ===== Auth · pantalla de acceso ===== -->
+<div class="auth-scrim" id="authScrim" style="display:none">
+  <div class="auth-card">
+    <div class="auth-brand">
+      <img id="authLogo" alt="OLO">
+      <span class="divider"></span>
+      <span><small>Gestión Integral de Talento</small><b>Indicadores</b></span>
+    </div>
+    <h1 id="authTitle">Iniciar sesión</h1>
+    <p class="sub" id="authSub">Ingresá con tu correo y contraseña.</p>
+    <form id="authForm" autocomplete="on">
+      <div class="auth-field" id="authNameWrap" style="display:none">
+        <label for="authName">Nombre</label>
+        <input type="text" id="authName" placeholder="Nombre completo">
+      </div>
+      <div class="auth-field">
+        <label for="authEmail">Correo</label>
+        <input type="text" id="authEmail" placeholder="correo@olo.com" autocomplete="username">
+      </div>
+      <div class="auth-field">
+        <label for="authPass">Contraseña</label>
+        <input type="password" id="authPass" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <button type="submit" class="auth-btn" id="authSubmit">Entrar</button>
+      <div class="auth-msg" id="authMsg"></div>
+    </form>
+  </div>
+</div>
 
 <script>
 "use strict";
@@ -1761,7 +1819,7 @@ function sendMail(leaders){
   setTimeout(()=>{window.location.href=`mailto:${to}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}`;},300);
   toast("Plantilla descargada · abriendo correo");
 }
-function renderAll(){refreshYears();if(ROLE!=="__all__")PAIS=ROLE;renderFilters();if(TAB==="dash")renderDash();else if(TAB==="pres")renderPres();else renderAdmin();
+function renderAll(){refreshYears();if(ROLE!=="__all__")PAIS=ROLE;renderFilters();if(TAB==="usuarios")renderUsuarios();else if(TAB==="dash")renderDash();else if(TAB==="pres")renderPres();else renderAdmin();
   document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));document.getElementById("v-"+TAB).classList.add("active");
   document.getElementById("filterBar").style.display=TAB==="dash"?"":"none";
   {const pn=document.getElementById("pillarNav");if(pn)pn.style.display=TAB==="dash"?"":"none";}
@@ -1769,7 +1827,8 @@ function renderAll(){refreshYears();if(ROLE!=="__all__")PAIS=ROLE;renderFilters(
   document.getElementById("admBtn").textContent=TAB==="admin"?"Vista Operativa":"Administrar datos";
   document.getElementById("admBtn").classList.toggle("solid",TAB!=="pres");
   {const pb=document.getElementById("presBtn");if(pb){pb.textContent=TAB==="pres"?"Vista Operativa":"Vista Corporativa";pb.classList.toggle("solid",TAB==="pres");}}
-  {const dm=document.getElementById("xlsMesBtn"),da=document.getElementById("xlsAnioBtn");if(dm)dm.style.display=TAB==="dash"?"":"none";if(da)da.style.display=TAB==="dash"?"":"none";const pb=document.getElementById("printBtn");if(pb)pb.style.display=TAB==="dash"?"none":"";}
+  {const dm=document.getElementById("xlsMesBtn"),da=document.getElementById("xlsAnioBtn");if(dm)dm.style.display=TAB==="dash"?"":"none";if(da)da.style.display=TAB==="dash"?"":"none";const pb=document.getElementById("printBtn");if(pb)pb.style.display=(TAB==="dash"||TAB==="usuarios")?"none":"";}
+  {const ub=document.getElementById("usersBtn");if(ub){ub.textContent=TAB==="usuarios"?"◀ Volver":"👥 Usuarios";ub.classList.toggle("solid",TAB==="usuarios");}}
   if(ROLE!=="__all__"){["presPais","compPais","aPais","fPais"].forEach(id=>{const s=document.getElementById(id);if(s){s.value=ROLE;s.disabled=true;s.title="Acceso fijado a "+ROLE;}});}}
 document.getElementById("admBtn").onclick=()=>{TAB=TAB==="dash"?"admin":"dash";renderAll();window.scrollTo(0,0);};
 document.getElementById("presBtn").onclick=()=>{TAB=TAB==="pres"?"dash":"pres";renderAll();window.scrollTo(0,0);};
@@ -2015,6 +2074,239 @@ function renderPres(){
 document.getElementById("printBtn").onclick=()=>{try{window.focus();}catch(e){}try{window.print();}catch(e){toast("Para PDF: usá Ctrl+P y elegí 'Guardar como PDF'");}};
 (function(){const as=document.getElementById("accSel");if(!as)return;as.innerHTML=`<option value="__all__">Vista Global</option>`+PAISES.map(pp=>`<option value="${pp}">${pp}</option>`).join("");as.value=ROLE;as.onchange=()=>{ROLE=as.value;try{localStorage.setItem("olo_role",ROLE);}catch(e){}if(ROLE!=="__all__")PAIS=ROLE;renderAll();};})();
 /* ============================================================
+ * OLO · Autenticación y control de acceso por rol/país
+ * ------------------------------------------------------------
+ * Tablas propias: olo_indicadores_usuarios / olo_indicadores_roles.
+ * Roles:
+ *   scope 'global' -> ve toda la data (ROLE = "__all__")
+ *   scope 'pais'   -> ve solo su país (ROLE = rol.pais)
+ *   scope 'admin'  -> no ve data, solo gestión de usuarios
+ * ============================================================ */
+const OLOAuth=(function(){
+  const SB_URL="https://iigtulgpbqeypnewmzxz.supabase.co";
+  const SB_ANON="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlpZ3R1bGdwYnFleXBuZXdtenh6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM1MTU3OTgsImV4cCI6MjA5OTA5MTc5OH0.kFqdbOiRKjyNJ5H-vCvNd3SrC7lamYtN3WyIY8rpetU";
+  const T_USERS="olo_indicadores_usuarios",T_ROLES="olo_indicadores_roles";
+  const ITER=100000;
+  let sb=null,session=null;
+  function client(){if(sb)return sb;if(!window.supabase||!window.supabase.createClient)return null;sb=window.supabase.createClient(SB_URL,SB_ANON);return sb;}
+  function available(){return !!client();}
+
+  /* ---- Hash PBKDF2-SHA256 (compatible con el seed generado) ---- */
+  function toHex(buf){return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,"0")).join("");}
+  function hexToBytes(h){const a=new Uint8Array(h.length/2);for(let i=0;i<a.length;i++)a[i]=parseInt(h.substr(i*2,2),16);return a;}
+  async function derive(pass,saltHex){
+    const enc=new TextEncoder();
+    const key=await crypto.subtle.importKey("raw",enc.encode(pass),{name:"PBKDF2"},false,["deriveBits"]);
+    const bits=await crypto.subtle.deriveBits({name:"PBKDF2",salt:hexToBytes(saltHex),iterations:ITER,hash:"SHA-256"},key,256);
+    return toHex(bits);
+  }
+  function randHex(n){const a=new Uint8Array(n);crypto.getRandomValues(a);return toHex(a);}
+
+  /* ---- Roles ---- */
+  async function listRoles(){const c=client();if(!c)return [];const r=await c.from(T_ROLES).select("*").order("nombre");if(r.error)throw r.error;return r.data||[];}
+  async function saveRole(rol){const c=client();if(!c)throw new Error("Sin conexión");const r=await c.from(T_ROLES).upsert(rol,{onConflict:"id"});if(r.error)throw r.error;}
+  async function deleteRole(id){const c=client();if(!c)throw new Error("Sin conexión");const r=await c.from(T_ROLES).delete().eq("id",id);if(r.error)throw r.error;}
+
+  /* ---- Usuarios ---- */
+  async function listUsers(){const c=client();if(!c)return [];const r=await c.from(T_USERS).select("id,email,nombre,rol_id,activo,created_at").order("created_at");if(r.error)throw r.error;return r.data||[];}
+  async function createUser({email,nombre,rol_id,password}){
+    const c=client();if(!c)throw new Error("Sin conexión");
+    const salt=randHex(16);const hash=await derive(password,salt);
+    const r=await c.from(T_USERS).insert({email:email.trim().toLowerCase(),nombre:nombre||"",rol_id,pass_hash:hash,pass_salt:salt});
+    if(r.error)throw r.error;
+  }
+  async function updateUser(id,patch){const c=client();if(!c)throw new Error("Sin conexión");
+    if(patch.password){const salt=randHex(16);patch.pass_hash=await derive(patch.password,salt);patch.pass_salt=salt;delete patch.password;}
+    const r=await c.from(T_USERS).update(patch).eq("id",id);if(r.error)throw r.error;}
+  async function deleteUser(id){const c=client();if(!c)throw new Error("Sin conexión");const r=await c.from(T_USERS).delete().eq("id",id);if(r.error)throw r.error;}
+
+  /* ---- Login ---- */
+  async function login(email,password){
+    const c=client();if(!c)throw new Error("Supabase no disponible");
+    const r=await c.from(T_USERS).select("*").eq("email",email.trim().toLowerCase()).limit(1);
+    if(r.error)throw r.error;
+    const u=(r.data||[])[0];
+    if(!u||!u.activo)throw new Error("Usuario o contraseña incorrectos");
+    const hash=await derive(password,u.pass_salt);
+    if(hash!==u.pass_hash)throw new Error("Usuario o contraseña incorrectos");
+    const rr=await c.from(T_ROLES).select("*").eq("id",u.rol_id).limit(1);
+    const rol=(rr.data||[])[0]||{id:u.rol_id,nombre:u.rol_id,scope:"pais",pais:null};
+    session={id:u.id,email:u.email,nombre:u.nombre,rol};
+    try{localStorage.setItem("olo_session",JSON.stringify(session));}catch(e){}
+    return session;
+  }
+  function restore(){try{const s=localStorage.getItem("olo_session");if(s)session=JSON.parse(s);}catch(e){}return session;}
+  function logout(){session=null;try{localStorage.removeItem("olo_session");}catch(e){}}
+  function current(){return session;}
+
+  return {available,listRoles,saveRole,deleteRole,listUsers,createUser,updateUser,deleteUser,login,restore,logout,current};
+})();
+
+/* ---- Aplica el rol de la sesión al sistema (ROLE/PAIS) ---- */
+function applySessionAccess(){
+  const s=OLOAuth.current();
+  const accWrap=document.getElementById("accSel")&&document.getElementById("accSel").closest("span");
+  const usersBtn=document.getElementById("usersBtn");
+  const chip=document.getElementById("userChip");
+  const logoutBtn=document.getElementById("logoutBtn");
+  const dashBtns=["xlsMesBtn","xlsAnioBtn","printBtn","presBtn","admBtn"];
+  if(!s){return;}
+  // chip + logout
+  if(chip){chip.style.display="";chip.innerHTML=`<span>${s.nombre||s.email}</span><span class="badge">${s.rol.nombre}</span>`;}
+  if(logoutBtn)logoutBtn.style.display="";
+  const scope=s.rol.scope;
+  // Selector "Acceso" solo para global (los demás quedan fijados)
+  if(accWrap)accWrap.style.display=scope==="global"?"":"none";
+  if(usersBtn)usersBtn.style.display=(scope==="admin"||scope==="global")?"":"none";
+  if(scope==="global"){ROLE="__all__";}
+  else if(scope==="pais"){ROLE=s.rol.pais;PAIS=s.rol.pais;}
+  else if(scope==="admin"){ROLE="__all__";}
+  try{localStorage.setItem("olo_role",ROLE);}catch(e){}
+  // admin: sin acceso al dashboard, va directo a usuarios
+  if(scope==="admin"){
+    dashBtns.forEach(id=>{const b=document.getElementById(id);if(b)b.style.display="none";});
+    const sync=document.getElementById("syncBtn");if(sync)sync.style.display="none";
+    TAB="usuarios";
+  }
+}
+
+/* ---- Pantalla de login ---- */
+(function(){
+  const scrim=document.getElementById("authScrim");
+  const form=document.getElementById("authForm");
+  const msg=document.getElementById("authMsg");
+  const emailI=document.getElementById("authEmail");
+  const passI=document.getElementById("authPass");
+  const submit=document.getElementById("authSubmit");
+  // logo de la marca en el login
+  const hdrImg=document.querySelector(".logo .mark img");const authLogo=document.getElementById("authLogo");
+  if(hdrImg&&authLogo)authLogo.src=hdrImg.src;
+
+  window.OLOShowLogin=function(){if(scrim)scrim.style.display="flex";};
+  window.OLOHideLogin=function(){if(scrim)scrim.style.display="none";};
+
+  if(form)form.onsubmit=async(e)=>{
+    e.preventDefault();
+    msg.className="auth-msg";msg.textContent="";
+    if(!OLOAuth.available()){msg.className="auth-msg err";msg.textContent="No hay conexión con Supabase.";return;}
+    const email=emailI.value.trim(),pass=passI.value;
+    if(!email||!pass){msg.className="auth-msg err";msg.textContent="Completá correo y contraseña.";return;}
+    submit.disabled=true;submit.textContent="Entrando…";
+    try{
+      await OLOAuth.login(email,pass);
+      window.OLOHideLogin();
+      applySessionAccess();
+      await bootData();
+      renderAll();
+    }catch(err){
+      msg.className="auth-msg err";msg.textContent=err.message||"No se pudo iniciar sesión";
+    }
+    submit.disabled=false;submit.textContent="Entrar";
+  };
+})();
+
+/* ---- Botones sesión ---- */
+(function(){
+  const lo=document.getElementById("logoutBtn");if(lo)lo.onclick=()=>{OLOAuth.logout();location.reload();};
+  const ub=document.getElementById("usersBtn");if(ub)ub.onclick=()=>{TAB=TAB==="usuarios"?"dash":"usuarios";renderAll();window.scrollTo(0,0);};
+})();
+
+/* ============================================================
+ * Vista · Gestión de usuarios y roles (CRUD)
+ * ============================================================ */
+async function renderUsuarios(){
+  const root=document.getElementById("v-usuarios");if(!root)return;
+  const s=OLOAuth.current();
+  if(!s||!(s.rol.scope==="admin"||s.rol.scope==="global")){root.innerHTML=`<div class="banner">No tenés permisos para gestionar usuarios.</div>`;return;}
+  root.innerHTML=`<div class="banner">Cargando usuarios y roles…</div>`;
+  let roles=[],users=[];
+  try{[roles,users]=await Promise.all([OLOAuth.listRoles(),OLOAuth.listUsers()]);}
+  catch(e){root.innerHTML=`<div class="banner">Error al cargar: ${e.message||e}</div>`;return;}
+  const rolOpts=roles.map(r=>`<option value="${r.id}">${r.nombre}</option>`).join("");
+  const scopeName=sc=>sc==="global"?"Global (toda la data)":sc==="admin"?"Admin (solo usuarios)":"País";
+  root.innerHTML=`
+  <div class="adm-head"><h2>Usuarios y roles</h2></div>
+  <div class="banner">Los usuarios de un país solo ven la data de ese país. Global ve todo. Admin no ve data, solo gestiona usuarios.</div>
+  <div class="usr-wrap">
+    <div class="card adm-card">
+      <div class="ch"><h3>➕ Registrar usuario</h3></div>
+      <div class="cb" style="padding:16px 20px">
+        <form id="uForm" class="usr-form">
+          <div><label class="fld">Nombre</label><input type="text" id="uNombre" placeholder="Nombre completo"></div>
+          <div><label class="fld">Correo</label><input type="text" id="uEmail" placeholder="correo@olo.com"></div>
+          <div><label class="fld">Contraseña</label><input type="password" id="uPass" placeholder="mínimo 6 caracteres"></div>
+          <div><label class="fld">Rol</label><select id="uRol">${rolOpts}</select></div>
+          <div style="grid-column:1/-1"><button type="submit" class="mini save">Crear usuario</button></div>
+        </form>
+      </div>
+    </div>
+
+    <div class="card adm-card">
+      <div class="ch"><h3>Usuarios registrados</h3><span class="hint">${users.length} usuario(s)</span></div>
+      <div class="cb"><table><thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Activo</th><th></th></tr></thead>
+      <tbody id="uBody">${users.map(u=>{
+        const rn=(roles.find(r=>r.id===u.rol_id)||{}).nombre||u.rol_id;
+        return `<tr data-id="${u.id}">
+          <td>${u.nombre||"—"}</td><td>${u.email}</td>
+          <td><select class="uRolEdit" style="padding:6px 8px">${roles.map(r=>`<option value="${r.id}" ${r.id===u.rol_id?"selected":""}>${r.nombre}</option>`).join("")}</select></td>
+          <td class="num"><input type="checkbox" class="uActEdit" ${u.activo?"checked":""}></td>
+          <td style="text-align:right"><button class="mini uSaveBtn">Guardar</button> <button class="row-del uDelBtn" title="Eliminar">✕</button></td>
+        </tr>`;}).join("")||`<tr><td colspan="5" class="empty">Sin usuarios aún</td></tr>`}</tbody></table></div>
+    </div>
+
+    <div class="card adm-card">
+      <div class="ch"><h3>🏷️ Roles</h3><span class="hint">Agregá roles por país o accesos especiales</span></div>
+      <div class="cb" style="padding:16px 20px">
+        <form id="rForm" class="usr-form">
+          <div><label class="fld">Nombre del rol</label><input type="text" id="rNombre" placeholder="Ej: Colombia"></div>
+          <div><label class="fld">Alcance</label><select id="rScope"><option value="pais">País (ve solo su país)</option><option value="global">Global (ve todo)</option><option value="admin">Admin (solo usuarios)</option></select></div>
+          <div id="rPaisWrap"><label class="fld">País</label><input type="text" id="rPais" placeholder="Ej: Colombia"></div>
+          <div style="grid-column:1/-1"><button type="submit" class="mini save">Agregar rol</button></div>
+        </form>
+        <div class="dc-tbl" style="margin-top:14px"><table><thead><tr><th>Rol</th><th>Alcance</th><th>País</th><th></th></tr></thead>
+        <tbody id="rBody">${roles.map(r=>`<tr data-id="${r.id}">
+          <td>${r.nombre}</td><td>${scopeName(r.scope)}</td><td>${r.pais||"—"}</td>
+          <td style="text-align:right">${["global","admin","costa_rica","venezuela"].includes(r.id)?'<span class="hint">base</span>':`<button class="row-del rDelBtn" title="Eliminar">✕</button>`}</td>
+        </tr>`).join("")}</tbody></table></div>
+      </div>
+    </div>
+  </div>`;
+
+  // Crear usuario
+  root.querySelector("#uForm").onsubmit=async(e)=>{e.preventDefault();
+    const nombre=root.querySelector("#uNombre").value.trim();
+    const email=root.querySelector("#uEmail").value.trim();
+    const pass=root.querySelector("#uPass").value;
+    const rol_id=root.querySelector("#uRol").value;
+    if(!email||pass.length<6){toast("Correo y contraseña (6+) requeridos");return;}
+    try{await OLOAuth.createUser({email,nombre,rol_id,password:pass});toast("✓ Usuario creado");renderUsuarios();}
+    catch(err){toast(/duplicate|unique/i.test(err.message||"")?"Ese correo ya existe":("Error: "+(err.message||err)));}
+  };
+  // Editar/eliminar usuario
+  root.querySelectorAll("#uBody tr[data-id]").forEach(tr=>{
+    const id=tr.getAttribute("data-id");
+    const sb=tr.querySelector(".uSaveBtn"),db=tr.querySelector(".uDelBtn");
+    if(sb)sb.onclick=async()=>{try{await OLOAuth.updateUser(id,{rol_id:tr.querySelector(".uRolEdit").value,activo:tr.querySelector(".uActEdit").checked});toast("✓ Guardado");}catch(err){toast("Error al guardar");}};
+    if(db)db.onclick=async()=>{if(!confirm("¿Eliminar este usuario?"))return;try{await OLOAuth.deleteUser(id);toast("Usuario eliminado");renderUsuarios();}catch(err){toast("Error al eliminar");}};
+  });
+  // Rol: mostrar/ocultar país
+  const rScope=root.querySelector("#rScope"),rPaisWrap=root.querySelector("#rPaisWrap");
+  const syncPais=()=>{rPaisWrap.style.display=rScope.value==="pais"?"":"none";};rScope.onchange=syncPais;syncPais();
+  // Crear rol
+  root.querySelector("#rForm").onsubmit=async(e)=>{e.preventDefault();
+    const nombre=root.querySelector("#rNombre").value.trim();
+    const scope=rScope.value;const pais=scope==="pais"?root.querySelector("#rPais").value.trim():null;
+    if(!nombre){toast("Nombre del rol requerido");return;}
+    if(scope==="pais"&&!pais){toast("Indicá el país");return;}
+    const idSlug=nombre.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"_").replace(/^_|_$/g,"");
+    try{await OLOAuth.saveRole({id:idSlug,nombre,scope,pais});toast("✓ Rol agregado");renderUsuarios();}
+    catch(err){toast("Error: "+(err.message||err));}
+  };
+  // Eliminar rol
+  root.querySelectorAll("#rBody .rDelBtn").forEach(b=>{b.onclick=async()=>{const id=b.closest("tr").getAttribute("data-id");if(!confirm("¿Eliminar este rol? Los usuarios con este rol quedarán sin acceso válido."))return;try{await OLOAuth.deleteRole(id);toast("Rol eliminado");renderUsuarios();}catch(err){toast("No se pudo eliminar (¿hay usuarios usándolo?)");}};});
+}
+
+/* ============================================================
  * OLO · Sincronización con Supabase — tabla PROPIA olo_indicadores_kv
  * No toca olo_kv ni las demás tablas (son de otros proyectos).
  * Respeta la estructura DB local sin tocar el diseño ni la lógica:
@@ -2038,15 +2330,32 @@ let _syncTimer=null;
 // Botón Sincronizar manual (pull + refresco)
 (function(){const b=document.getElementById("syncBtn");if(!b)return;b.onclick=async()=>{if(!OLOSync.available()){toast("Supabase no disponible");return;}const t0=b.textContent;b.textContent="Sincronizando…";try{const n=await OLOSync.pull();load();renderAll();toast("☁ Sincronizado · "+n+" registro(s)");}catch(e){toast("Error de sincronización");console.warn("[OLOSync]",e);}b.textContent=t0;};})();
 
-// Arranque: intenta traer de la nube; si no hay datos o falla, usa local
-(async function(){
+// Trae los indicadores de la nube y carga la DB local (para usuarios con acceso a data)
+async function bootData(){
+  const s=OLOAuth.current();
+  // admin no ve data: no descarga indicadores
+  if(s&&s.rol.scope==="admin"){DB={};CFG();return;}
   let usedCloud=false;
   if(OLOSync.available()){
     try{const n=await OLOSync.pull();usedCloud=n>0;}catch(e){console.warn("[OLOSync] pull inicial:",e&&e.message);}
   }
-  load();renderAll();
-  // Si la nube estaba vacía pero hay datos locales, súbelos una vez
+  load();
   if(OLOSync.available()&&!usedCloud){OLOSync.push().catch(()=>{});}
+}
+
+// Arranque: el sistema exige login. Si hay sesión guardada, entra directo.
+(async function(){
+  const s=OLOAuth.restore();
+  if(s){
+    window.OLOHideLogin();
+    applySessionAccess();
+    await bootData();
+    renderAll();
+  }else{
+    // sin sesión: DB vacía y pantalla de login
+    load();
+    window.OLOShowLogin();
+  }
 })();
 </script>
 </body>
