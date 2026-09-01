@@ -1,0 +1,23 @@
+# Configuración del proyecto Supabase (CLI)
+# Ejecutá `supabase link --project-ref <tu-ref>` y luego `supabase db push`.
+project_id = "olo-indicadores-personal"
+
+[db]
+# Puerto local por defecto de Postgres al correr `supabase start`
+port = 54322
+major_version = 15
+
+[db.seed]
+enabled = true
+sql_paths = ["./seed.sql"]
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public"]
+extra_search_path = ["public"]
+max_rows = 1000
+
+[studio]
+enabled = true
+port = 54323
