@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Indicadores de Personal · OLO</title>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -774,6 +774,24 @@ function delta(it,v,pv){
 
 function _xlsVal(it,v){if(v==null||isNaN(v))return "";if(it.type==="pct")return +(v*100).toFixed(1);if(it.type==="int")return Math.round(v);return +(+v).toFixed(1);}
 function _kpiAt(it,mk){if(!hasData(mk))return null;const _C=CUR;CUR=mk;const c=compute(mk);let ok;try{ok=(it.info||it.esl)?(c.ind[it.k]!=null):kpiValid(it.k,c);}catch(e){ok=false;}if(ok&&it.k==="dias_sin_acc"){const p=(DB[mk]&&DB[mk].params)||{};ok=!!p.fecha_ult_accidente;}const v=c.ind[it.k];CUR=_C;return ok?v:null;}
+/* Descarga robusta de un workbook XLSX (funciona en file:// y todos los navegadores) */
+function dlWorkbook(wb,filename){
+  if(typeof XLSX==="undefined"){toast("Excel no disponible (XLSX no cargó)");return false;}
+  try{
+    const out=XLSX.write(wb,{bookType:"xlsx",type:"array"});
+    const blob=new Blob([out],{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url;a.download=filename;a.style.display="none";
+    document.body.appendChild(a);a.click();
+    setTimeout(()=>{URL.revokeObjectURL(url);a.remove();},1500);
+    return true;
+  }catch(e){
+    console.error("[dlWorkbook]",e);
+    // Respaldo: intentar el método nativo
+    try{XLSX.writeFile(wb,filename);return true;}catch(e2){toast("No se pudo descargar el Excel");return false;}
+  }
+}
 function exportOperativaMes(){if(typeof XLSX==="undefined"){toast("Excel no disponible");return;}
   const paisLbl=PAIS==="__all__"?"Consolidado":PAIS;
   const rows=[["OLO · Indicadores de personal"],[`País: ${paisLbl}`,`Período: ${MSHORT[mi(CUR)]} ${CUR.slice(0,4)}`],[],["Grupo","Indicador","Unidad","Valor"]];
@@ -781,7 +799,7 @@ function exportOperativaMes(){if(typeof XLSX==="undefined"){toast("Excel no disp
   rows.push(["Colaboradores","Colaboradores (nómina)","",(hc&&hc>0)?hc:""]);
   KPI.forEach(g=>g.items.forEach(it=>{const v=_kpiAt(it,CUR);rows.push([g.g,it.name,it.type==="pct"?"%":(it.unit||""),(v==null)?"":_xlsVal(it,v)]);}));
   const wb=XLSX.utils.book_new();const ws=XLSX.utils.aoa_to_sheet(rows);ws["!cols"]=[{wch:26},{wch:40},{wch:8},{wch:12}];ws["!freeze"]={xSplit:0,ySplit:4};XLSX.utils.book_append_sheet(wb,ws,"Indicadores");
-  XLSX.writeFile(wb,`OLO_${paisLbl.replace(/\s+/g,"_")}_${CUR}.xlsx`);}
+  dlWorkbook(wb,`OLO_${paisLbl.replace(/\s+/g,"_")}_${CUR}.xlsx`);}
 function exportOperativaAnio(){if(typeof XLSX==="undefined"){toast("Excel no disponible");return;}
   const yr=YEAR,months=monthsOf(yr),paisLbl=PAIS==="__all__"?"Consolidado":PAIS;
   const mHead=months.map(mk=>`${MSHORT[mi(mk)]}-${mk.slice(2,4)}`);
@@ -789,7 +807,7 @@ function exportOperativaAnio(){if(typeof XLSX==="undefined"){toast("Excel no dis
   rows.push(["Colaboradores","Colaboradores (nómina)","",...months.map(mk=>{const _C=CUR;CUR=mk;const h=hasData(mk)?compute(mk).hcTot:null;CUR=_C;return (h&&h>0)?h:"";})]);
   KPI.forEach(g=>g.items.forEach(it=>{rows.push([g.g,it.name,it.type==="pct"?"%":(it.unit||""),...months.map(mk=>{const v=_kpiAt(it,mk);return (v==null)?"":_xlsVal(it,v);})]);}));
   const wb=XLSX.utils.book_new();const ws=XLSX.utils.aoa_to_sheet(rows);ws["!cols"]=[{wch:26},{wch:40},{wch:8},...months.map(()=>({wch:9}))];ws["!freeze"]={xSplit:2,ySplit:4};XLSX.utils.book_append_sheet(wb,ws,String(yr));
-  XLSX.writeFile(wb,`OLO_${paisLbl.replace(/\s+/g,"_")}_${yr}.xlsx`);}
+  dlWorkbook(wb,`OLO_${paisLbl.replace(/\s+/g,"_")}_${yr}.xlsx`);}
 function renderDash(){
   const c=compute(CUR);
   let paisComp=null;
@@ -1497,9 +1515,15 @@ function paramCard(g){
   h+=`</div></details></div>`;return h;
 }
 function dlParamTpl(key){const g=PGMAP[key];
-  const header="anio,mes,"+g.fields.map(f=>`"${f.l}"`).join(",");
-  const rows=MONTHS.map(k=>{const p=M(k).params;const vals=g.fields.map(f=>{let v=p[f.k];if(f.t==="pct")v=(+v||0);else if(f.t==="date"||f.t==="text")v=v||"";else v=(+v||0);return v;});return `${k.slice(0,4)},${k.slice(5,7)},`+vals.join(",");});
-  const csv=header+"\n"+rows.join("\n");
+  const head=["anio","mes",...g.fields.map(f=>f.l)];
+  const rows=MONTHS.map(k=>{const p=M(k).params;const vals=g.fields.map(f=>{let v=p[f.k];if(f.t==="pct")v=(+v||0);else if(f.t==="date"||f.t==="text")v=v||"";else v=(+v||0);return v;});return [k.slice(0,4),k.slice(5,7),...vals];});
+  if(typeof XLSX!=="undefined"){
+    const wb=XLSX.utils.book_new();const ws=XLSX.utils.aoa_to_sheet([head,...rows]);
+    XLSX.utils.book_append_sheet(wb,ws,(g.title||key).slice(0,28));
+    dlWorkbook(wb,`plantilla_${key}_${YEAR}.xlsx`);return;
+  }
+  const esc=v=>{v=String(v==null?"":v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;};
+  const csv=head.map(esc).join(",")+"\n"+rows.map(r=>r.map(esc).join(",")).join("\n");
   const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download=`plantilla_${key}_${YEAR}.csv`;a.click();
 }
 function toISODate(v){
@@ -1702,7 +1726,7 @@ function masterTemplate(){
   {const sat=(DB.__cfg&&DB.__cfg.satisfaccion)||{};const yrs=Object.keys(sat).sort();
    const rows=(yrs.length?yrs:[yy]).map(y=>[y,sat[y]!=null?sat[y]:""]);
    S("SATISFACCIÓN LABORAL",["AÑO","PUNTAJE"],rows);}
-  XLSX.writeFile(wb,`plantilla_maestra_OLO_${CUR}.xlsx`);
+  dlWorkbook(wb,`plantilla_maestra_OLO_${CUR}.xlsx`);
 }
 function classifySheet(mat){if(!mat||!mat.length)return null;const head=mat[0].map(NA);const has=f=>resolveIdx(head,f)>=0;
   if(has("motivo")||(has("fecha_salida")&&has("nombre")&&!has("fecha_nacimiento")))return "egresos";
@@ -1747,7 +1771,7 @@ function dlHorasTpl(){
   cats.forEach(c=>aoa.push(catRow(c)));aoa.push(["Total Extras",...meses.map(()=>0)]);
   const wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(aoa,{cellDates:true});
   XLSX.utils.book_append_sheet(wb,ws,`Horas Hombre ${yr}`);
-  XLSX.writeFile(wb,`plantilla_Horas_Hombre_${yr}.xlsx`);
+  dlWorkbook(wb,`plantilla_Horas_Hombre_${yr}.xlsx`);
 }
 function uploadHoras(file){if(!file)return;const rd=new FileReader();
   rd.onload=()=>{try{const wb=XLSX.read(rd.result,{type:"array",cellDates:true});const n=ingestHoras(wb);save();renderAll();toast(n?("✓ Horas hombre cargadas · "+n+" meses · tablero actualizado"):"No encontré la hoja 'Horas Hombre AAAA'. Revisá el nombre de la hoja.");}catch(e){toast("No se pudo leer el archivo");}};
@@ -1795,7 +1819,7 @@ function tplSheets(yy,mm){return {
 function dlTpl(kind){const yy=CUR.slice(0,4),mm=CUR.slice(5,7);const def=tplSheets(yy,mm)[kind];
   if(!def){toast("Sin plantilla para "+kind);return;}
   const sheetName=def[0],head=def[1],row=def[2];
-  if(typeof XLSX!=="undefined"){const wb=XLSX.utils.book_new();const ws=XLSX.utils.aoa_to_sheet([head,row]);XLSX.utils.book_append_sheet(wb,ws,sheetName);XLSX.writeFile(wb,`plantilla_${sheetName}_${CUR}.xlsx`);return;}
+  if(typeof XLSX!=="undefined"){const wb=XLSX.utils.book_new();const ws=XLSX.utils.aoa_to_sheet([head,row]);XLSX.utils.book_append_sheet(wb,ws,sheetName);dlWorkbook(wb,`plantilla_${sheetName}_${CUR}.xlsx`);return;}
   const esc=v=>{v=String(v==null?"":v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;};
   const csv=head.map(esc).join(",")+"\n"+row.map(esc).join(",")+"\n";
   const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download=`plantilla_${sheetName}_${CUR}.csv`;a.click();}
