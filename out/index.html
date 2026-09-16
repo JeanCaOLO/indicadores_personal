@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Indicadores de Personal · OLO</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -346,7 +348,7 @@
       <span style="display:inline-flex;align-items:center;gap:6px;margin-right:6px"><label for="accSel" style="font-size:12px;color:var(--muted)">Acceso</label><select id="accSel" style="padding:8px 12px;border:1px solid #d0d0d0;background:#fff;color:#111;border-radius:var(--r-s);font-weight:600;font-size:13px;font-family:inherit;cursor:pointer"></select></span>
       <button class="hbtn" id="xlsMesBtn" title="Descargar los indicadores del mes en Excel">⬇ Excel mes</button>
       <button class="hbtn" id="xlsAnioBtn" title="Descargar los indicadores del año (12 meses) en Excel">⬇ Excel año</button>
-      <button class="hbtn" id="printBtn">Imprimir / PDF</button>
+      <button class="hbtn" id="printBtn">⬇ PDF</button>
       <button class="hbtn" id="presBtn">Vista Corporativa</button>
       <button class="hbtn" id="syncBtn" title="Sincronizar datos con la nube (Supabase)">☁ Sincronizar</button>
       <button class="hbtn" id="usersBtn" title="Gestión de usuarios y roles" style="display:none">👥 Usuarios</button>
@@ -774,6 +776,24 @@ function delta(it,v,pv){
 
 function _xlsVal(it,v){if(v==null||isNaN(v))return "";if(it.type==="pct")return +(v*100).toFixed(1);if(it.type==="int")return Math.round(v);return +(+v).toFixed(1);}
 function _kpiAt(it,mk){if(!hasData(mk))return null;const _C=CUR;CUR=mk;const c=compute(mk);let ok;try{ok=(it.info||it.esl)?(c.ind[it.k]!=null):kpiValid(it.k,c);}catch(e){ok=false;}if(ok&&it.k==="dias_sin_acc"){const p=(DB[mk]&&DB[mk].params)||{};ok=!!p.fecha_ult_accidente;}const v=c.ind[it.k];CUR=_C;return ok?v:null;}
+function _fmtX(dec,v){if(v===""||v==null||isNaN(+v))return "";return dec?+(+v).toFixed(dec):Math.round(+v);}
+function _extraMetrics(mk){const has=hasData(mk);let c=null,p={},terc=0;
+  if(has){const _C=CUR;CUR=mk;c=compute(mk);p=(DB[mk]&&DB[mk].params)||{};terc=(M(mk).terceros||[]).filter(x=>PAIS==="__all__"||(x.pais||"")===PAIS).reduce((s,x)=>s+(+x.cantidad||0),0);CUR=_C;}
+  const sx=(c&&c.sexoC)||{},ed=(c&&c.educC)||{},mv=(c&&c.movMC)||{};
+  const g=(o,ks)=>ks.reduce((s,k)=>s+(+(o[k]||0)),0);
+  const hh=((+p.hh_ord||0)+(+p.hh_ext||0))||(+p.horas_hombre||0);
+  const rows=[];const add=(grp,name,unit,dec,val)=>rows.push([grp,name,unit,dec,has?val:""]);
+  add("Perfil","Edad promedio","años",1,c?c.edadProm:"");
+  add("Perfil","Antigüedad promedio","años",1,c?c.antigProm:"");
+  add("Perfil","Mujeres","",0,g(sx,["F","Femenino","Mujer","f"]));
+  add("Perfil","Hombres","",0,g(sx,["M","Masculino","Hombre","m"]));
+  add("Horas hombre","Horas hombre (total)","h",0,hh);
+  add("Horas hombre","Horas ordinarias","h",0,+p.hh_ord||0);
+  add("Horas hombre","Horas extras","h",0,+p.hh_ext||0);
+  EDUC.forEach(e=>add("Nivel educativo",e,"",0,ed[e]||0));
+  ["M1","M2","M3","M4","M5","M6","M7","M7 NN"].forEach(m=>add("Movilidad",m,"",0,mv[m]||0));
+  add("Terceros","Terceros","",0,terc);
+  return rows;}
 /* Descarga robusta de un workbook XLSX (funciona en file:// y todos los navegadores) */
 function dlWorkbook(wb,filename){
   if(typeof XLSX==="undefined"){toast("Excel no disponible (XLSX no cargó)");return false;}
@@ -798,6 +818,7 @@ function exportOperativaMes(){if(typeof XLSX==="undefined"){toast("Excel no disp
   const _C=CUR;const hc=hasData(CUR)?compute(CUR).hcTot:null;CUR=_C;
   rows.push(["Colaboradores","Colaboradores (nómina)","",(hc&&hc>0)?hc:""]);
   KPI.forEach(g=>g.items.forEach(it=>{const v=_kpiAt(it,CUR);rows.push([g.g,it.name,it.type==="pct"?"%":(it.unit||""),(v==null)?"":_xlsVal(it,v)]);}));
+  _extraMetrics(CUR).forEach(r=>rows.push([r[0],r[1],r[2],_fmtX(r[3],r[4])]));
   const wb=XLSX.utils.book_new();const ws=XLSX.utils.aoa_to_sheet(rows);ws["!cols"]=[{wch:26},{wch:40},{wch:8},{wch:12}];ws["!freeze"]={xSplit:0,ySplit:4};XLSX.utils.book_append_sheet(wb,ws,"Indicadores");
   dlWorkbook(wb,`OLO_${paisLbl.replace(/\s+/g,"_")}_${CUR}.xlsx`);}
 function exportOperativaAnio(){if(typeof XLSX==="undefined"){toast("Excel no disponible");return;}
@@ -806,6 +827,8 @@ function exportOperativaAnio(){if(typeof XLSX==="undefined"){toast("Excel no dis
   const rows=[["OLO · Indicadores de personal"],[`País: ${paisLbl}`,`Año: ${yr}`],[],["Grupo","Indicador","Unidad",...mHead]];
   rows.push(["Colaboradores","Colaboradores (nómina)","",...months.map(mk=>{const _C=CUR;CUR=mk;const h=hasData(mk)?compute(mk).hcTot:null;CUR=_C;return (h&&h>0)?h:"";})]);
   KPI.forEach(g=>g.items.forEach(it=>{rows.push([g.g,it.name,it.type==="pct"?"%":(it.unit||""),...months.map(mk=>{const v=_kpiAt(it,mk);return (v==null)?"":_xlsVal(it,v);})]);}));
+  const exByM=months.map(mk=>_extraMetrics(mk));
+  if(exByM.length&&exByM[0].length){exByM[0].forEach((r0,i)=>{rows.push([r0[0],r0[1],r0[2],...months.map((mk,mIdx)=>_fmtX(exByM[mIdx][i][3],exByM[mIdx][i][4]))]);});}
   const wb=XLSX.utils.book_new();const ws=XLSX.utils.aoa_to_sheet(rows);ws["!cols"]=[{wch:26},{wch:40},{wch:8},...months.map(()=>({wch:9}))];ws["!freeze"]={xSplit:2,ySplit:4};XLSX.utils.book_append_sheet(wb,ws,String(yr));
   dlWorkbook(wb,`OLO_${paisLbl.replace(/\s+/g,"_")}_${yr}.xlsx`);}
 function renderDash(){
@@ -1865,7 +1888,7 @@ function renderAll(){refreshYears();if(ROLE!=="__all__")PAIS=ROLE;renderFilters(
   document.getElementById("admBtn").textContent=TAB==="admin"?"Vista Operativa":"Administrar datos";
   document.getElementById("admBtn").classList.toggle("solid",TAB!=="pres");
   {const pb=document.getElementById("presBtn");if(pb){pb.textContent=TAB==="pres"?"Vista Operativa":"Vista Corporativa";pb.classList.toggle("solid",TAB==="pres");}}
-  {const dm=document.getElementById("xlsMesBtn"),da=document.getElementById("xlsAnioBtn");if(dm)dm.style.display=TAB==="dash"?"":"none";if(da)da.style.display=TAB==="dash"?"":"none";const pb=document.getElementById("printBtn");if(pb)pb.style.display=(TAB==="dash"||TAB==="usuarios")?"none":"";}
+  {const dm=document.getElementById("xlsMesBtn"),da=document.getElementById("xlsAnioBtn");if(dm)dm.style.display=TAB==="dash"?"":"none";if(da)da.style.display=TAB==="dash"?"":"none";const pb=document.getElementById("printBtn");if(pb)pb.style.display=(TAB==="usuarios")?"none":"";}
   {const ub=document.getElementById("usersBtn");if(ub){ub.textContent=TAB==="usuarios"?"◀ Volver":"👥 Usuarios";ub.classList.toggle("solid",TAB==="usuarios");}}
   if(ROLE!=="__all__"){["presPais","compPais","aPais","fPais"].forEach(id=>{const s=document.getElementById(id);if(s){s.value=ROLE;s.disabled=true;s.title="Acceso fijado a "+ROLE;}});}}
 document.getElementById("admBtn").onclick=()=>{TAB=TAB==="dash"?"admin":"dash";renderAll();window.scrollTo(0,0);};
@@ -2109,7 +2132,38 @@ function renderPres(){
       root.querySelectorAll(`.pbi-child[data-grp="${gi}"]`).forEach(r=>r.classList.toggle("hide",!open));};
   });
 }
-document.getElementById("printBtn").onclick=()=>{try{window.focus();}catch(e){}try{window.print();}catch(e){toast("Para PDF: usá Ctrl+P y elegí 'Guardar como PDF'");}};
+function downloadPDFOperativa(){
+  const Ctor=(window.jspdf&&window.jspdf.jsPDF)||window.jsPDF;
+  if(!Ctor){try{window.print();}catch(e){toast("Para PDF: usá Ctrl+P");}return;}
+  const paisLbl=PAIS==="__all__"?"Consolidado":PAIS;
+  const body=[];
+  const _C=CUR;const hc=hasData(CUR)?compute(CUR).hcTot:null;CUR=_C;
+  body.push(["Colaboradores","Colaboradores (nómina)","",(hc&&hc>0)?String(hc):""]);
+  KPI.forEach(g=>g.items.forEach(it=>{const v=_kpiAt(it,CUR);body.push([g.g,it.name,it.type==="pct"?"%":(it.unit||""),(v==null)?"":String(_xlsVal(it,v))]);}));
+  _extraMetrics(CUR).forEach(r=>body.push([r[0],r[1],r[2],String(_fmtX(r[3],r[4]))]));
+  const doc=new Ctor({orientation:'portrait',unit:'pt',format:'a4'});
+  doc.setFontSize(13);doc.text("OLO · Indicadores de personal — Vista Operativa",40,40);
+  doc.setFontSize(10);doc.text("País: "+paisLbl+"     Período: "+MSHORT[mi(CUR)]+" "+CUR.slice(0,4),40,56);
+  doc.autoTable({head:[["Grupo","Indicador","Unidad","Valor"]],body:body,startY:68,theme:'grid',styles:{fontSize:8,cellPadding:3,overflow:'linebreak'},headStyles:{fillColor:[0,168,140],textColor:255,fontStyle:'bold'},columnStyles:{0:{cellWidth:130},1:{cellWidth:230},2:{cellWidth:45,halign:'center'},3:{halign:'right'}},margin:{left:40,right:40}});
+  doc.save("OLO_Operativa_"+paisLbl.replace(/\s+/g,"_")+"_"+CUR+".pdf");
+}
+function downloadPDF(){
+  try{
+    const Ctor=(window.jspdf&&window.jspdf.jsPDF)||window.jsPDF;
+    if(Ctor&&TAB==="dash"){downloadPDFOperativa();return;}
+    const tbl=document.querySelector('#v-pres table.pbi-tbl');
+    if(!Ctor||TAB!=="pres"||!tbl){try{window.print();}catch(e){toast("Para PDF: usá Ctrl+P y elegí 'Guardar como PDF'");}return;}
+    const head=[...tbl.querySelectorAll('thead th')].map(th=>th.textContent.trim());
+    const body=[...tbl.querySelectorAll('tbody tr')].map(tr=>[...tr.querySelectorAll('td,th')].map(td=>td.textContent.replace(/^[+\-−]\s*/,'').trim()));
+    const doc=new Ctor({orientation:'landscape',unit:'pt',format:'a4'});
+    const paisLbl=PAIS==="__all__"?"Consolidado":PAIS;
+    doc.setFontSize(13);doc.text("OLO · Indicadores de personal — Vista Corporativa",40,34);
+    doc.setFontSize(10);doc.text("País: "+paisLbl+"     Año: "+YEAR,40,50);
+    doc.autoTable({head:[head],body:body,startY:60,theme:'grid',styles:{fontSize:7,cellPadding:2,overflow:'linebreak'},headStyles:{fillColor:[0,168,140],textColor:255,fontStyle:'bold'},columnStyles:{0:{halign:'left',cellWidth:150,fontStyle:'bold'}},margin:{left:30,right:30}});
+    doc.save("OLO_Corporativa_"+paisLbl.replace(/\s+/g,"_")+"_"+YEAR+".pdf");
+  }catch(e){try{window.print();}catch(_){toast("No se pudo generar el PDF");}}
+}
+document.getElementById("printBtn").onclick=()=>downloadPDF();
 (function(){const as=document.getElementById("accSel");if(!as)return;as.innerHTML=`<option value="__all__">Vista Global</option>`+PAISES.map(pp=>`<option value="${pp}">${pp}</option>`).join("");as.value=ROLE;as.onchange=()=>{ROLE=as.value;try{localStorage.setItem("olo_role",ROLE);}catch(e){}if(ROLE!=="__all__")PAIS=ROLE;renderAll();};})();
 /* ============================================================
  * OLO · Autenticación y control de acceso por rol/país
