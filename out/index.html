@@ -1283,13 +1283,13 @@ function wireTips(){if(window.__tipwired)return;window.__tipwired=true;const tip
   document.addEventListener("mouseout",e=>{const el=e.target.closest("[data-tip]");if(el&&!el.contains(e.relatedTarget)){tip.classList.remove("on");}});}
 
 /* ---------- admin ---------- */
-const COLMAP={activos:["pais","nombre","departamento","area","sexo","fecha_nacimiento","fecha_ingreso","nivel","nivel_educativo","carrera","movilidad","movimiento","tipo","paso","vac_disfrutadas","vac_pendientes"],
+const COLMAP={activos:["id","pais","nombre","departamento","area","sexo","fecha_nacimiento","fecha_ingreso","nivel","nivel_educativo","carrera","movilidad","movimiento","tipo","paso","vac_disfrutadas","vac_pendientes"],
   terceros:["pais","cantidad"],
-  extras:["pais","nombre","departamento","area","horas"],
+  extras:["id","pais","nombre","departamento","area","horas"],
   merma:["pais","area","cantidad"],
-  egresos:["pais","nombre","departamento","motivo","fecha_ingreso","fecha_salida","movilidad","recomienda"],
-  vacaciones:["pais","nombre","departamento","area","dias"],
-  ausencias:["pais","nombre","departamento","tipo","dias"],
+  egresos:["id","pais","nombre","departamento","motivo","fecha_ingreso","fecha_salida","movilidad","recomienda"],
+  vacaciones:["id","pais","nombre","departamento","area","dias"],
+  ausencias:["id","pais","nombre","departamento","tipo","dias"],
   areas:["grupo","area","colaboradores"],
   capacitacion:["pais","area_conocimiento","curso","horas","participantes"]};
 function renderAdmin(){
@@ -1434,7 +1434,7 @@ function dataCard(kind,title,cols,rows,note){
       <button class="mini save" data-savesec="${title}">✓ Guardar</button>
     </div>`;
   if(n){
-    h+=`<details class="dc-edit"><summary>Ver / editar registros (${n}) <span class="fchev">▾</span></summary><div class="dc-tbl"><table class="adm"><thead><tr>${cols.map(c=>`<th${['dias','nivel','paso','colaboradores','horas','participantes'].includes(c)?' class="num"':''}>${c.replace(/_/g," ")}</th>`).join("")}<th></th></tr></thead><tbody>`;
+    h+=`<details class="dc-edit"><summary>Ver / editar registros (${n}) <span class="fchev">▾</span></summary><div class="dc-tbl"><table class="adm"><thead><tr>${cols.map(c=>`<th${['dias','nivel','paso','colaboradores','horas','participantes'].includes(c)?' class="num"':''}>${c==="id"?"ID / Cédula":c.replace(/_/g," ")}</th>`).join("")}<th></th></tr></thead><tbody>`;
     idxRows.forEach(([r,ri])=>{h+=`<tr>${cols.map(c=>`<td>${cellInput(kind,ri,c,r[c])}</td>`).join("")}<td><button class="row-del" data-del="${kind}" data-ri="${ri}">×</button></td></tr>`;});
     h+=`</tbody></table><div style="padding:10px 2px 2px"><div class="actset"><button class="mini" data-add="${kind}">+ Fila</button><button class="mini danger" data-clear="${kind}">Vaciar</button></div></div></div></details>`;
   }else{
@@ -1592,6 +1592,7 @@ function titleCase(s){s=String(s==null?"":s).trim();if(!s)return "";
   return s.toLowerCase().split(/(\s+|\/|-)/).map((w,i)=>{if(w==="/"||w==="-"||w===""||/^\s+$/.test(w))return w;if(i>0&&low.has(w))return w;return w.charAt(0).toUpperCase()+w.slice(1);}).join("");}
 const DEPTCODE={dlog:"Logística",dcoex:"Comercio Exterior",dper:"Personal",dsist:"Sistemas",dope:"Operaciones",dcon:"Control",dvent:"Ventas",dimc:"IMC"};
 const FIELD_ALIAS={
+ id:["id","cedula","cédula","dni","documento","identificacion","identificación","num_identificacion","numero_identificacion","no_cedula","nro_cedula","cedula_identidad","documento_identidad","doc_identidad","ci","nit","dpi","cui"],
  pais:["pais","country"],
  nombre:["nombre","colaborador","empleado","nombre_completo","funcionario"],
  departamento:["departamento","depto","dpto"],
@@ -1635,6 +1636,7 @@ function eduCarrera(s){s=String(s==null?"":s).trim();if(!s)return "";
 function normVal(field,v,kind){if(v instanceof Date){v=isNaN(v)?"":new Date(v.getTime()-v.getTimezoneOffset()*60000).toISOString().slice(0,10);}
  v=String(v==null?"":v).trim();if(!v)return "";
  if(/^#\s*(n\/?a|ref|value|div\/?0|name|num|null|error|¡)/i.test(v))return "";
+ if(field==="id"){let x=v.replace(/\s+/g,"").replace(/[.\u00A0]/g,"").trim();if(/^\d+([.,]\d+)?[eE][+\-]?\d+$/.test(v.replace(/\s/g,""))){const n=Number(v.replace(/\s/g,"").replace(",","."));if(!isNaN(n))x=n.toLocaleString("fullwide",{useGrouping:false});}return x;}
  if(field==="sexo"){const x=v.toLowerCase();if(x==="m"||x.startsWith("masc")||x.startsWith("hom"))return "Masculino";if(x==="f"||x.startsWith("fem")||x.startsWith("muj"))return "Femenino";return v;}
  if(field==="carrera")return eduCarrera(v);
  if(field==="movimiento"){const x=v.toLowerCase();if(/promoc/.test(x))return "Promoción";if(/ascens/.test(x))return "Ascenso";if(/sin ?cambio|ninguno|estable|n\/?a/.test(x))return "Sin cambio";return titleCase(v);}
@@ -1725,20 +1727,20 @@ function masterTemplate(){
     [""],["NOTA"],
     ["'Horas hombre' (Costo por Hora) se carga aparte desde Administrar datos → Horas hombre, por su formato de matriz."]];
   {const ws=XLSX.utils.aoa_to_sheet(INSTR);ws["!cols"]=[{wch:118}];XLSX.utils.book_append_sheet(wb,ws,"Instrucciones");}
-  S("Activos",["AÑO","MES","PAÍS","NOMBRE","DEPARTAMENTO","ÁREA","SEXO","fecha_nacimiento","fecha_ingreso","NIVEL","PASO","MOVILIDAD","PROMOCIONES/ASCENSOS","ACCIÓN","TIPO","NIVEL EDUCATIVO","VACACIONES DE LEY","VACACIONES ADICIONALES","VACACIONES ACUMULADAS"],
-    [[yy,mm,"Costa Rica","Juan Pérez","Logística de Entrada","Alisto","M","1990-05-14","2020-03-01",1,"2","M2","Promoción","Asistente","Indeterminado","Bachiller en Administración",12,4,16]]);
-  S("Egresos",["AÑO","MES","PAÍS","NOMBRE","DEPARTAMENTO","MOTIVO","FECHA_INGRESO","FECHA_SALIDA","MOVILIDAD","RECOMIENDA"],
-    [[yy,mm,"Costa Rica","María Gómez","Logística de Salida","Renuncia","2024-08-10","2026-06-15","M5","Sí"]]);
-  S("Incapacidades",["AÑO","MES","PAÍS","NOMBRE","DEPARTAMENTO","TIPO","DÍAS"],
-    [[yy,mm,"Costa Rica","Luis Mora","Logística","CCSS",3]]);
-  S("Permisos",["COLABORADOR","AÑO","MES","PAÍS","DEPARTAMENTO","ÁREA","TIPO","DÍAS"],
-    [["Ana Rojas",yy,mm,"Costa Rica","Logística","Alisto","Sin goce de salario",1]]);
-  S("Vacaciones",["COLABORADOR","AÑO","MES","PAÍS","DEPARTAMENTO","ÁREA","VACACIONES DISFRUTADAS AL MES"],
-    [["Juan Pérez",yy,mm,"Costa Rica","Logística","Alisto",5]]);
+  S("Activos",["AÑO","MES","PAÍS","ID","NOMBRE","DEPARTAMENTO","ÁREA","SEXO","fecha_nacimiento","fecha_ingreso","NIVEL","PASO","MOVILIDAD","PROMOCIONES/ASCENSOS","ACCIÓN","TIPO","NIVEL EDUCATIVO","VACACIONES DE LEY","VACACIONES ADICIONALES","VACACIONES ACUMULADAS"],
+    [[yy,mm,"Costa Rica","1-2345-6789","Juan Pérez","Logística de Entrada","Alisto","M","1990-05-14","2020-03-01",1,"2","M2","Promoción","Asistente","Indeterminado","Bachiller en Administración",12,4,16]]);
+  S("Egresos",["AÑO","MES","PAÍS","ID","NOMBRE","DEPARTAMENTO","MOTIVO","FECHA_INGRESO","FECHA_SALIDA","MOVILIDAD","RECOMIENDA"],
+    [[yy,mm,"Costa Rica","1-9876-5432","María Gómez","Logística de Salida","Renuncia","2024-08-10","2026-06-15","M5","Sí"]]);
+  S("Incapacidades",["AÑO","MES","PAÍS","ID","NOMBRE","DEPARTAMENTO","TIPO","DÍAS"],
+    [[yy,mm,"Costa Rica","1-1111-2222","Luis Mora","Logística","CCSS",3]]);
+  S("Permisos",["ID","COLABORADOR","AÑO","MES","PAÍS","DEPARTAMENTO","ÁREA","TIPO","DÍAS"],
+    [["1-3333-4444","Ana Rojas",yy,mm,"Costa Rica","Logística","Alisto","Sin goce de salario",1]]);
+  S("Vacaciones",["ID","COLABORADOR","AÑO","MES","PAÍS","DEPARTAMENTO","ÁREA","VACACIONES DISFRUTADAS AL MES"],
+    [["1-2345-6789","Juan Pérez",yy,mm,"Costa Rica","Logística","Alisto",5]]);
   S("Capacitacion",["AÑO","MES","PAÍS","AREA DE CONOCIMIENTO","CURSO","PARTICIPANTES","HORAS"],
     [[yy,mm,"Costa Rica","Técnicas","Manejo de montacargas",22,16]]);
-  S("HorasExtra",["COLABORADOR","AÑO","MES","PAÍS","DEPARTAMENTO","ÁREA","HORAS"],
-    [["Juan Pérez",yy,mm,"Costa Rica","Logística","Alisto",120]]);
+  S("HorasExtra",["ID","COLABORADOR","AÑO","MES","PAÍS","DEPARTAMENTO","ÁREA","HORAS"],
+    [["1-2345-6789","Juan Pérez",yy,mm,"Costa Rica","Logística","Alisto",120]]);
   S("Terceros",["AÑO","MES","PAÍS","CANTIDAD"],
     [[yy,mm,"Costa Rica",0]]);
   S("MERMA",["AÑO","MES","MERMA","ÁREA"],[[yy,mm,0,"Alisto"]]);
@@ -1830,13 +1832,13 @@ function masterUpload(file){if(!file)return;const rd=new FileReader();
   }catch(e){toast("No se pudo leer el archivo");}};
   rd.readAsArrayBuffer(file);}
 function tplSheets(yy,mm){return {
-  activos:["Activos",["AÑO","MES","PAÍS","NOMBRE","DEPARTAMENTO","ÁREA","SEXO","fecha_nacimiento","fecha_ingreso","NIVEL","PASO","MOVILIDAD","PROMOCIONES/ASCENSOS","ACCIÓN","TIPO","NIVEL EDUCATIVO","VACACIONES DE LEY","VACACIONES ADICIONALES","VACACIONES ACUMULADAS"],[yy,mm,"Costa Rica","Juan Pérez","Logística de Entrada","Alisto","M","1990-05-14","2020-03-01",1,"2","M2","Promoción","Asistente","Indeterminado","Bachiller en Administración",12,4,16]],
-  egresos:["Egresos",["AÑO","MES","PAÍS","NOMBRE","DEPARTAMENTO","MOTIVO","FECHA_INGRESO","FECHA_SALIDA","MOVILIDAD","RECOMIENDAN TRABAJAR EN OLO"],[yy,mm,"Costa Rica","María Gómez","Logística de Salida","Renuncia","2024-08-10","2026-06-15","M5","Sí"]],
-  ausencias:["Incapacidades",["AÑO","MES","PAÍS","NOMBRE","DEPARTAMENTO","TIPO","DÍAS"],[yy,mm,"Costa Rica","Luis Mora","Logística","CCSS",3]],
+  activos:["Activos",["AÑO","MES","PAÍS","ID","NOMBRE","DEPARTAMENTO","ÁREA","SEXO","fecha_nacimiento","fecha_ingreso","NIVEL","PASO","MOVILIDAD","PROMOCIONES/ASCENSOS","ACCIÓN","TIPO","NIVEL EDUCATIVO","VACACIONES DE LEY","VACACIONES ADICIONALES","VACACIONES ACUMULADAS"],[yy,mm,"Costa Rica","1-2345-6789","Juan Pérez","Logística de Entrada","Alisto","M","1990-05-14","2020-03-01",1,"2","M2","Promoción","Asistente","Indeterminado","Bachiller en Administración",12,4,16]],
+  egresos:["Egresos",["AÑO","MES","PAÍS","ID","NOMBRE","DEPARTAMENTO","MOTIVO","FECHA_INGRESO","FECHA_SALIDA","MOVILIDAD","RECOMIENDAN TRABAJAR EN OLO"],[yy,mm,"Costa Rica","1-9876-5432","María Gómez","Logística de Salida","Renuncia","2024-08-10","2026-06-15","M5","Sí"]],
+  ausencias:["Incapacidades",["AÑO","MES","PAÍS","ID","NOMBRE","DEPARTAMENTO","TIPO","DÍAS"],[yy,mm,"Costa Rica","1-1111-2222","Luis Mora","Logística","CCSS",3]],
   capacitacion:["Capacitacion",["AÑO","MES","PAÍS","AREA DE CONOCIMIENTO","CURSO","PARTICIPANTES","HORAS"],[yy,mm,"Costa Rica","Técnicas","Manejo de montacargas",22,16]],
-  extras:["HorasExtra",["COLABORADOR","AÑO","MES","PAÍS","DEPARTAMENTO","ÁREA","HORAS"],["Juan Pérez",yy,mm,"Costa Rica","Logística de Entrada","Alisto",120]],
-  vacaciones:["Vacaciones",["COLABORADOR","AÑO","MES","PAÍS","DEPARTAMENTO","ÁREA","VACACIONES DISFRUTADAS"],["Juan Pérez",yy,mm,"Costa Rica","Logística de Entrada","Alisto",5]],
-  permisos:["Permisos",["COLABORADOR","AÑO","MES","PAÍS","DEPARTAMENTO","ÁREA","TIPO","DÍAS"],["Ana Rojas",yy,mm,"Costa Rica","Logística","Alisto","Sin goce de salario",1]],
+  extras:["HorasExtra",["ID","COLABORADOR","AÑO","MES","PAÍS","DEPARTAMENTO","ÁREA","HORAS"],["1-2345-6789","Juan Pérez",yy,mm,"Costa Rica","Logística de Entrada","Alisto",120]],
+  vacaciones:["Vacaciones",["ID","COLABORADOR","AÑO","MES","PAÍS","DEPARTAMENTO","ÁREA","VACACIONES DISFRUTADAS"],["1-2345-6789","Juan Pérez",yy,mm,"Costa Rica","Logística de Entrada","Alisto",5]],
+  permisos:["Permisos",["ID","COLABORADOR","AÑO","MES","PAÍS","DEPARTAMENTO","ÁREA","TIPO","DÍAS"],["1-3333-4444","Ana Rojas",yy,mm,"Costa Rica","Logística","Alisto","Sin goce de salario",1]],
   terceros:["Terceros",["AÑO","MES","PAÍS","CANTIDAD"],[yy,mm,"Costa Rica",8]]
 };}
 function dlTpl(kind){const yy=CUR.slice(0,4),mm=CUR.slice(5,7);const def=tplSheets(yy,mm)[kind];
