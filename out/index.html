@@ -1684,7 +1684,10 @@ function parseRows(kind,mat){const hr=headRow(mat);if(hr>0)mat=mat.slice(hr);con
    let key=CUR;if(ai>=0&&mmi>=0){const k=monthKeyFrom(row[ai],row[mmi]);if(k)key=k;}
    const o={};cols.forEach(c=>{const j=idx[c];o[c]=j>=0&&row[j]!=null?normVal(c,row[j],kind):"";});
    if(!cols.some(c=>c!=="pais"&&o[c]&&String(o[c]).trim()!==""))continue;
-   if(cols.includes("pais")&&!o.pais)o.pais=(PAIS==="__all__"?"":PAIS);
+   if(cols.includes("pais")){const cp=cargaPais();
+     if(typeof ROLE!=="undefined"&&ROLE!=="__all__")o.pais=ROLE; // usuario de país: se fuerza su país (no puede inyectar otro)
+     else if(!o.pais)o.pais=cp; // global: completa con el país seleccionado si la fila no trae país
+   }
    out.push({key,o});}
  return out;}
 function applySatisfaccion(mat){if(!mat||!mat.length)return 0;
@@ -1699,9 +1702,19 @@ function applySatisfaccion(mat){if(!mat||!mat.length)return 0;
     for(let m=1;m<=12;m++){const k=y+"-"+String(m).padStart(2,"0");if(DB[k]&&DB[k].params)DB[k].params.encuesta=v;}
     n++;}
   return n;}
+/* País de carga efectivo: un usuario de país solo puede cargar SU país.
+ * Un global usa el país seleccionado; si está en "Todos", respeta el país del archivo. */
+function cargaPais(){return (typeof ROLE!=="undefined"&&ROLE!=="__all__")?ROLE:(PAIS!=="__all__"?PAIS:"");}
+/* Reemplazo por país: sustituye SOLO los registros del país de carga dentro de cada mes,
+ * conservando intactos los de los demás países. Si no hay país de carga (global en "Todos"),
+ * se comporta como reemplazo total del mes (como antes). */
 function ingestReplace(kind,mat){if(!mat||!mat.length)return 0;const groups={};
  parseRows(kind,mat).forEach(({key,o})=>{(groups[key]=groups[key]||[]).push(o);});
- Object.keys(groups).forEach(k=>{M(k)[kind]=groups[k];});
+ const cp=cargaPais();const porPais=cp&&kind!=="areas";
+ Object.keys(groups).forEach(k=>{
+   if(porPais){const prev=(M(k)[kind]||[]).filter(r=>(r&&r.pais||"")!==cp);M(k)[kind]=prev.concat(groups[k]);}
+   else{M(k)[kind]=groups[k];}
+ });
  return Object.values(groups).reduce((s,a)=>s+a.length,0);}
 function masterTemplate(){
   if(typeof XLSX==="undefined"){toast("Cargando componente… reintentá en un momento");return;}
@@ -1825,7 +1838,7 @@ function masterUpload(file){if(!file)return;const rd=new FileReader();
       else if(nm.startsWith("ruta")){tot+=applyParamRows("ruta",mat);used.add("ruta OLO");}
       else{const t=classifySheet(mat);if(t){tot+=ingestReplace(t,mat);used.add(t);}}
     });
-    if(ausRows.length){const grp={};ausRows.forEach(({key,o})=>{(grp[key]=grp[key]||[]).push(o);});Object.keys(grp).forEach(k=>{M(k).ausencias=grp[k];});tot+=ausRows.length;}
+    if(ausRows.length){const grp={};ausRows.forEach(({key,o})=>{(grp[key]=grp[key]||[]).push(o);});const cp=cargaPais();Object.keys(grp).forEach(k=>{if(cp){const prev=(M(k).ausencias||[]).filter(r=>(r&&r.pais||"")!==cp);M(k).ausencias=prev.concat(grp[k]);}else{M(k).ausencias=grp[k];}});tot+=ausRows.length;}
     migrateEduc();save();renderAll();
     if(tot)toast("✓ Procesado — "+tot+" registros ("+[...used].join(", ")+"). Tablero actualizado.");
     else toast("No reconocí datos. Revisá los nombres de hoja (Activos, Egresos, Incapacidades, Permisos, Vacaciones, Capacitacion, HorasExtra, Seleccion, SSL, ServiciosGenerales).");
@@ -2412,8 +2425,42 @@ const OLOSync=(function(){
   const TABLE="olo_indicadores_kv"; // tabla exclusiva de este proyecto
   let sb=null;
   function client(){if(sb)return sb;if(!window.supabase||!window.supabase.createClient)return null;sb=window.supabase.createClient(SB_URL,SB_ANON);return sb;}
+  const PERSON_FIELDS=["activos","egresos","ausencias","capacitacion","extras","vacaciones","merma","terceros"];
   async function pull(){const c=client();if(!c)throw new Error("Supabase no disponible");const r=await c.from(TABLE).select("key,value");if(r.error)throw r.error;const db={};(r.data||[]).forEach(x=>{db[x.key]=x.value;});if(Object.keys(db).length){localStorage.setItem("olo_master_db",JSON.stringify(db));}return (r.data||[]).length;}
-  async function push(){const c=client();if(!c)throw new Error("Supabase no disponible");let db={};try{db=JSON.parse(localStorage.getItem("olo_master_db")||"{}");}catch(e){}const rows=Object.keys(db).map(k=>({key:k,value:db[k]}));if(!rows.length)return 0;const r=await c.from(TABLE).upsert(rows,{onConflict:"key"});if(r.error)throw r.error;return rows.length;}
+  // Fusiona un mes local con el de la nube conservando los registros de OTROS países (clave para no pisar datos ajenos).
+  function mergeMonth(cloud,local,cp){
+    if(!cp)return local;                 // global: sube su versión completa
+    if(!cloud)return local;              // mes nuevo: no hay nada que conservar
+    const out=JSON.parse(JSON.stringify(cloud)); // base = nube (conserva otros países y sus params)
+    PERSON_FIELDS.forEach(f=>{
+      const loc=Array.isArray(local[f])?local[f]:[];
+      const otros=(Array.isArray(cloud[f])?cloud[f]:[]).filter(r=>((r&&r.pais)||"")!==cp);
+      const mios=loc.filter(r=>((r&&r.pais)||"")===cp);
+      out[f]=otros.concat(mios);
+    });
+    // params e indicadores agregados: en país se respetan los locales (son del país del usuario)
+    if(local.params)out.params=local.params;
+    return out;
+  }
+  async function push(){const c=client();if(!c)throw new Error("Supabase no disponible");
+    let db={};try{db=JSON.parse(localStorage.getItem("olo_master_db")||"{}");}catch(e){}
+    const keys=Object.keys(db);if(!keys.length)return 0;
+    const cp=(typeof ROLE!=="undefined"&&ROLE!=="__all__")?ROLE:"";
+    let rows;
+    if(cp){
+      // Trae la versión actual de la nube SOLO de los meses que vamos a subir y fusiona por país.
+      const monthKeys=keys.filter(k=>k==="__cfg"||/^\d{4}-\d{2}$/.test(k));
+      const r0=await c.from(TABLE).select("key,value").in("key",monthKeys);
+      if(r0.error)throw r0.error;
+      const cloud={};(r0.data||[]).forEach(x=>{cloud[x.key]=x.value;});
+      rows=monthKeys.map(k=>{
+        if(k==="__cfg")return {key:k,value:db[k]}; // config global: se sube tal cual
+        return {key:k,value:mergeMonth(cloud[k],db[k],cp)};
+      });
+    }else{
+      rows=keys.map(k=>({key:k,value:db[k]}));
+    }
+    const r=await c.from(TABLE).upsert(rows,{onConflict:"key"});if(r.error)throw r.error;return rows.length;}
   return {pull,push,available:()=>!!client()};
 })();
 
