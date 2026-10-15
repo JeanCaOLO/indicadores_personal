@@ -1,0 +1,21 @@
+.env.supabase
+
+# Dependencias y artefactos de build
+node_modules/
+dist/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.aws-sam/
+
+# Variables de entorno reales (los .env.example sí se versionan)
+.env
+.env.*
+!.env.example
+
+# Datos reales de producción (emails y hashes de contraseña): no versionar
+**/aurora_postgresql_data.sql
+
+# Descubrimiento de Supabase: esquema completo de la base compartida y Edge Functions ajenas
+migration-output/.discovery/

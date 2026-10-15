@@ -1,0 +1,768 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: INDICADORES_PERSONAL - API | Backend serverless (Lambda + API Gateway + Aurora)
+Parameters:
+  Environment:
+    Type: String
+    AllowedValues:
+    - dev
+    - qa
+    - prod
+    Description: Ambiente de despliegue
+  VpcSubnetIds:
+    Type: AWS::SSM::Parameter::Value<List<AWS::EC2::Subnet::Id>>
+    Description: Ruta SSM con las subnets privadas de las Lambdas
+  LambdaSecurityGroupId:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::SecurityGroup::Id>
+    Description: Ruta SSM con el Security Group de las Lambdas
+  DbProxyEndpoint:
+    Type: AWS::SSM::Parameter::Value<String>
+    Description: Ruta SSM con el endpoint de RDS Proxy / Aurora
+  DbSecretName:
+    Type: String
+    Description: Nombre del secreto de usr_<app>_app (nunca la password)
+  DbName:
+    Type: String
+    Description: Base Aurora del ambiente ({compania}_{amb}_{app}_db)
+  AllowedOrigins:
+    Type: AWS::SSM::Parameter::Value<String>
+    Description: Ruta SSM con el origen del frontend (CORS estricto)
+  CognitoUserPoolArn:
+    Type: String
+    Default: ''
+    Description: ARN de un User Pool existente; vacío = crear uno en el stack
+  AlarmTopicArn:
+    Type: String
+    Default: ''
+    Description: SNS para alarmas (opcional)
+  LogLevel:
+    Type: String
+    Default: INFO
+    AllowedValues:
+    - DEBUG
+    - INFO
+    - WARNING
+    - ERROR
+Conditions:
+  IsProduction: !Equals
+  - !Ref 'Environment'
+  - prod
+  CreateUserPool: !Equals
+  - !Ref 'CognitoUserPoolArn'
+  - ''
+  HasAlarmTopic: !Not
+  - !Equals
+    - !Ref 'AlarmTopicArn'
+    - ''
+Globals:
+  Function:
+    Runtime: python3.13
+    Architectures:
+    - x86_64
+    MemorySize: 512
+    Timeout: 30
+    CodeUri: src/
+    VpcConfig:
+      SubnetIds: !Ref 'VpcSubnetIds'
+      SecurityGroupIds:
+      - !Ref 'LambdaSecurityGroupId'
+    Environment:
+      Variables:
+        ENVIRONMENT: !Ref 'Environment'
+        SERVICE_NAME: indicadores-personal
+        LOG_LEVEL: !Ref 'LogLevel'
+        DB_SECRET_NAME: !Ref 'DbSecretName'
+        DB_NAME: !Ref 'DbName'
+        DB_PROXY_ENDPOINT: !Ref 'DbProxyEndpoint'
+        DB_PORT: '5432'
+        DB_SSLMODE: require
+        ALLOWED_ORIGINS: !Ref 'AllowedOrigins'
+Resources:
+  UserPool:
+    Type: AWS::Cognito::UserPool
+    Condition: CreateUserPool
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      UserPoolName: !Sub '${AWS::StackName}-users'
+      UsernameAttributes:
+      - email
+      AutoVerifiedAttributes:
+      - email
+      MfaConfiguration: 'OFF'
+      AdminCreateUserConfig:
+        AllowAdminCreateUserOnly: true
+      AccountRecoverySetting:
+        RecoveryMechanisms:
+        - Name: verified_email
+          Priority: 1
+      DeletionProtection: !If [IsProduction, ACTIVE, INACTIVE]
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 12
+          RequireLowercase: true
+          RequireUppercase: true
+          RequireNumbers: true
+          RequireSymbols: true
+          TemporaryPasswordValidityDays: 3
+      UserPoolTags:
+        Project: INDICADORES_PERSONAL
+        Environment: !Ref 'Environment'
+  UserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Condition: CreateUserPool
+    Properties:
+      ClientName: !Sub '${AWS::StackName}-web'
+      UserPoolId: !Ref 'UserPool'
+      GenerateSecret: false
+      ExplicitAuthFlows:
+      - ALLOW_USER_SRP_AUTH
+      - ALLOW_REFRESH_TOKEN_AUTH
+      PreventUserExistenceErrors: ENABLED
+      EnableTokenRevocation: true
+      AccessTokenValidity: 60
+      IdTokenValidity: 60
+      RefreshTokenValidity: 1
+      TokenValidityUnits:
+        AccessToken: minutes
+        IdToken: minutes
+        RefreshToken: days
+  Api:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: !Sub '${AWS::StackName}-api'
+      Description: INDICADORES_PERSONAL - API | REST API (internal)
+      StageName: !Ref 'Environment'
+      EndpointConfiguration:
+        Type: REGIONAL
+      OpenApiVersion: 3.0.1
+      Cors:
+        AllowOrigin: !Sub '''${AllowedOrigins}'''
+        AllowHeaders: '''Authorization,Content-Type'''
+        AllowMethods: '''GET,POST,PUT,PATCH,DELETE,OPTIONS'''
+        MaxAge: '''600'''
+      Auth:
+        DefaultAuthorizer: CognitoAuthorizer
+        AddDefaultAuthorizerToCorsPreflight: false
+        Authorizers:
+          CognitoAuthorizer:
+            UserPoolArn: !If
+            - CreateUserPool
+            - !GetAtt 'UserPool.Arn'
+            - !Ref 'CognitoUserPoolArn'
+            Identity:
+              Header: Authorization
+      MethodSettings:
+      - ResourcePath: /*
+        HttpMethod: '*'
+        ThrottlingBurstLimit: 200
+        ThrottlingRateLimit: 100
+      GatewayResponses:
+        DEFAULT_4XX:
+          ResponseParameters:
+            Headers:
+              Access-Control-Allow-Origin: !Sub '''${AllowedOrigins}'''
+              Access-Control-Allow-Headers: '''Authorization,Content-Type'''
+        DEFAULT_5XX:
+          ResponseParameters:
+            Headers:
+              Access-Control-Allow-Origin: !Sub '''${AllowedOrigins}'''
+              Access-Control-Allow-Headers: '''Authorization,Content-Type'''
+        UNAUTHORIZED:
+          ResponseParameters:
+            Headers:
+              Access-Control-Allow-Origin: !Sub '''${AllowedOrigins}'''
+              Access-Control-Allow-Headers: '''Authorization,Content-Type'''
+        ACCESS_DENIED:
+          ResponseParameters:
+            Headers:
+              Access-Control-Allow-Origin: !Sub '''${AllowedOrigins}'''
+              Access-Control-Allow-Headers: '''Authorization,Content-Type'''
+  Api5xxAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub '${AWS::StackName}-api5xx'
+      AlarmDescription: INDICADORES_PERSONAL - errores 5XX en API Gateway
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      EvaluationPeriods: 1
+      Threshold: 1
+      Period: 300
+      Statistic: Sum
+      TreatMissingData: notBreaching
+      AlarmActions: !If
+      - HasAlarmTopic
+      - - !Ref 'AlarmTopicArn'
+      - !Ref 'AWS::NoValue'
+      Namespace: AWS/ApiGateway
+      MetricName: 5XXError
+      Dimensions:
+      - Name: ApiName
+        Value: !Sub '${AWS::StackName}-api'
+  GetCurrentAccessLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${AWS::StackName}-get-current-access'
+      RetentionInDays: !If [IsProduction, 30, 7]
+  GetCurrentAccessFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub '${AWS::StackName}-get-current-access'
+      Description: INDICADORES_PERSONAL - GET_CURRENT_ACCESS | GET /me
+      Handler: entrypoints.lambda_handlers.acceso.get_current_access_handler
+      LoggingConfig:
+        LogFormat: JSON
+        LogGroup: !Ref 'GetCurrentAccessLogGroup'
+      Events:
+        GetMe:
+          Type: Api
+          Properties:
+            RestApiId: !Ref 'Api'
+            Path: /me
+            Method: get
+      Role: !GetAtt 'DbRole.Arn'
+  GetCurrentAccessErrorsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub '${AWS::StackName}-get-current-access-errors'
+      AlarmDescription: INDICADORES_PERSONAL - errores en GetCurrentAccessFunction
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      EvaluationPeriods: 1
+      Threshold: 1
+      Period: 300
+      Statistic: Sum
+      TreatMissingData: notBreaching
+      AlarmActions: !If
+      - HasAlarmTopic
+      - - !Ref 'AlarmTopicArn'
+      - !Ref 'AWS::NoValue'
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+      - Name: FunctionName
+        Value: !Ref 'GetCurrentAccessFunction'
+  ListIndicadoresRegistrosLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${AWS::StackName}-list-indicadores-registros'
+      RetentionInDays: !If [IsProduction, 30, 7]
+  ListIndicadoresRegistrosFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub '${AWS::StackName}-list-indicadores-registros'
+      Description: INDICADORES_PERSONAL - LIST_INDICADORES_REGISTROS | GET /indicadores/registros
+      Handler: entrypoints.lambda_handlers.indicadores.list_indicadores_registros_handler
+      LoggingConfig:
+        LogFormat: JSON
+        LogGroup: !Ref 'ListIndicadoresRegistrosLogGroup'
+      Events:
+        GetIndicadoresRegistros:
+          Type: Api
+          Properties:
+            RestApiId: !Ref 'Api'
+            Path: /indicadores/registros
+            Method: get
+      Role: !GetAtt 'DbRole.Arn'
+  ListIndicadoresRegistrosErrorsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub '${AWS::StackName}-list-indicadores-registros-errors'
+      AlarmDescription: INDICADORES_PERSONAL - errores en ListIndicadoresRegistrosFunction
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      EvaluationPeriods: 1
+      Threshold: 1
+      Period: 300
+      Statistic: Sum
+      TreatMissingData: notBreaching
+      AlarmActions: !If
+      - HasAlarmTopic
+      - - !Ref 'AlarmTopicArn'
+      - !Ref 'AWS::NoValue'
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+      - Name: FunctionName
+        Value: !Ref 'ListIndicadoresRegistrosFunction'
+  SaveIndicadoresRegistrosLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${AWS::StackName}-save-indicadores-registros'
+      RetentionInDays: !If [IsProduction, 30, 7]
+  SaveIndicadoresRegistrosFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub '${AWS::StackName}-save-indicadores-registros'
+      Description: INDICADORES_PERSONAL - SAVE_INDICADORES_REGISTROS | PUT /indicadores/registros
+      Handler: entrypoints.lambda_handlers.indicadores.save_indicadores_registros_handler
+      LoggingConfig:
+        LogFormat: JSON
+        LogGroup: !Ref 'SaveIndicadoresRegistrosLogGroup'
+      MemorySize: 1024
+      Events:
+        PutIndicadoresRegistros:
+          Type: Api
+          Properties:
+            RestApiId: !Ref 'Api'
+            Path: /indicadores/registros
+            Method: put
+      Role: !GetAtt 'DbRole.Arn'
+  SaveIndicadoresRegistrosErrorsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub '${AWS::StackName}-save-indicadores-registros-errors'
+      AlarmDescription: INDICADORES_PERSONAL - errores en SaveIndicadoresRegistrosFunction
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      EvaluationPeriods: 1
+      Threshold: 1
+      Period: 300
+      Statistic: Sum
+      TreatMissingData: notBreaching
+      AlarmActions: !If
+      - HasAlarmTopic
+      - - !Ref 'AlarmTopicArn'
+      - !Ref 'AWS::NoValue'
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+      - Name: FunctionName
+        Value: !Ref 'SaveIndicadoresRegistrosFunction'
+  ListRolesLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${AWS::StackName}-list-roles'
+      RetentionInDays: !If [IsProduction, 30, 7]
+  ListRolesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub '${AWS::StackName}-list-roles'
+      Description: INDICADORES_PERSONAL - LIST_ROLES | GET /roles
+      Handler: entrypoints.lambda_handlers.usuarios.list_roles_handler
+      LoggingConfig:
+        LogFormat: JSON
+        LogGroup: !Ref 'ListRolesLogGroup'
+      Events:
+        GetRoles:
+          Type: Api
+          Properties:
+            RestApiId: !Ref 'Api'
+            Path: /roles
+            Method: get
+      Role: !GetAtt 'DbRole.Arn'
+  ListRolesErrorsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub '${AWS::StackName}-list-roles-errors'
+      AlarmDescription: INDICADORES_PERSONAL - errores en ListRolesFunction
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      EvaluationPeriods: 1
+      Threshold: 1
+      Period: 300
+      Statistic: Sum
+      TreatMissingData: notBreaching
+      AlarmActions: !If
+      - HasAlarmTopic
+      - - !Ref 'AlarmTopicArn'
+      - !Ref 'AWS::NoValue'
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+      - Name: FunctionName
+        Value: !Ref 'ListRolesFunction'
+  SaveRoleLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${AWS::StackName}-save-role'
+      RetentionInDays: !If [IsProduction, 30, 7]
+  SaveRoleFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub '${AWS::StackName}-save-role'
+      Description: INDICADORES_PERSONAL - SAVE_ROLE | PUT /roles/{roleId}
+      Handler: entrypoints.lambda_handlers.usuarios.save_role_handler
+      LoggingConfig:
+        LogFormat: JSON
+        LogGroup: !Ref 'SaveRoleLogGroup'
+      Events:
+        PutRolesRoleId:
+          Type: Api
+          Properties:
+            RestApiId: !Ref 'Api'
+            Path: /roles/{roleId}
+            Method: put
+      Role: !GetAtt 'DbRole.Arn'
+  SaveRoleErrorsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub '${AWS::StackName}-save-role-errors'
+      AlarmDescription: INDICADORES_PERSONAL - errores en SaveRoleFunction
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      EvaluationPeriods: 1
+      Threshold: 1
+      Period: 300
+      Statistic: Sum
+      TreatMissingData: notBreaching
+      AlarmActions: !If
+      - HasAlarmTopic
+      - - !Ref 'AlarmTopicArn'
+      - !Ref 'AWS::NoValue'
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+      - Name: FunctionName
+        Value: !Ref 'SaveRoleFunction'
+  DeleteRoleLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${AWS::StackName}-delete-role'
+      RetentionInDays: !If [IsProduction, 30, 7]
+  DeleteRoleFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub '${AWS::StackName}-delete-role'
+      Description: INDICADORES_PERSONAL - DELETE_ROLE | DELETE /roles/{roleId}
+      Handler: entrypoints.lambda_handlers.usuarios.delete_role_handler
+      LoggingConfig:
+        LogFormat: JSON
+        LogGroup: !Ref 'DeleteRoleLogGroup'
+      Events:
+        DeleteRolesRoleId:
+          Type: Api
+          Properties:
+            RestApiId: !Ref 'Api'
+            Path: /roles/{roleId}
+            Method: delete
+      Role: !GetAtt 'DbRole.Arn'
+  DeleteRoleErrorsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub '${AWS::StackName}-delete-role-errors'
+      AlarmDescription: INDICADORES_PERSONAL - errores en DeleteRoleFunction
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      EvaluationPeriods: 1
+      Threshold: 1
+      Period: 300
+      Statistic: Sum
+      TreatMissingData: notBreaching
+      AlarmActions: !If
+      - HasAlarmTopic
+      - - !Ref 'AlarmTopicArn'
+      - !Ref 'AWS::NoValue'
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+      - Name: FunctionName
+        Value: !Ref 'DeleteRoleFunction'
+  ListUsuariosLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${AWS::StackName}-list-usuarios'
+      RetentionInDays: !If [IsProduction, 30, 7]
+  ListUsuariosFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub '${AWS::StackName}-list-usuarios'
+      Description: INDICADORES_PERSONAL - LIST_USUARIOS | GET /usuarios
+      Handler: entrypoints.lambda_handlers.usuarios.list_usuarios_handler
+      LoggingConfig:
+        LogFormat: JSON
+        LogGroup: !Ref 'ListUsuariosLogGroup'
+      Events:
+        GetUsuarios:
+          Type: Api
+          Properties:
+            RestApiId: !Ref 'Api'
+            Path: /usuarios
+            Method: get
+      Role: !GetAtt 'DbRole.Arn'
+  ListUsuariosErrorsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub '${AWS::StackName}-list-usuarios-errors'
+      AlarmDescription: INDICADORES_PERSONAL - errores en ListUsuariosFunction
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      EvaluationPeriods: 1
+      Threshold: 1
+      Period: 300
+      Statistic: Sum
+      TreatMissingData: notBreaching
+      AlarmActions: !If
+      - HasAlarmTopic
+      - - !Ref 'AlarmTopicArn'
+      - !Ref 'AWS::NoValue'
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+      - Name: FunctionName
+        Value: !Ref 'ListUsuariosFunction'
+  CreateUsuarioLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${AWS::StackName}-create-usuario'
+      RetentionInDays: !If [IsProduction, 30, 7]
+  CreateUsuarioFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub '${AWS::StackName}-create-usuario'
+      Description: INDICADORES_PERSONAL - CREATE_USUARIO | POST /usuarios
+      Handler: entrypoints.lambda_handlers.usuarios.create_usuario_handler
+      LoggingConfig:
+        LogFormat: JSON
+        LogGroup: !Ref 'CreateUsuarioLogGroup'
+      Environment:
+        Variables:
+          COGNITO_USER_POOL_ID: !If
+          - CreateUserPool
+          - !Ref 'UserPool'
+          - !Select
+            - 1
+            - !Split
+              - /
+              - !Ref 'CognitoUserPoolArn'
+      Events:
+        PostUsuarios:
+          Type: Api
+          Properties:
+            RestApiId: !Ref 'Api'
+            Path: /usuarios
+            Method: post
+      Role: !GetAtt 'CognitoAdminDbRole.Arn'
+  CreateUsuarioErrorsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub '${AWS::StackName}-create-usuario-errors'
+      AlarmDescription: INDICADORES_PERSONAL - errores en CreateUsuarioFunction
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      EvaluationPeriods: 1
+      Threshold: 1
+      Period: 300
+      Statistic: Sum
+      TreatMissingData: notBreaching
+      AlarmActions: !If
+      - HasAlarmTopic
+      - - !Ref 'AlarmTopicArn'
+      - !Ref 'AWS::NoValue'
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+      - Name: FunctionName
+        Value: !Ref 'CreateUsuarioFunction'
+  UpdateUsuarioLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${AWS::StackName}-update-usuario'
+      RetentionInDays: !If [IsProduction, 30, 7]
+  UpdateUsuarioFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub '${AWS::StackName}-update-usuario'
+      Description: INDICADORES_PERSONAL - UPDATE_USUARIO | PATCH /usuarios/{usuarioId}
+      Handler: entrypoints.lambda_handlers.usuarios.update_usuario_handler
+      LoggingConfig:
+        LogFormat: JSON
+        LogGroup: !Ref 'UpdateUsuarioLogGroup'
+      Events:
+        PatchUsuariosUsuarioId:
+          Type: Api
+          Properties:
+            RestApiId: !Ref 'Api'
+            Path: /usuarios/{usuarioId}
+            Method: patch
+      Role: !GetAtt 'DbRole.Arn'
+  UpdateUsuarioErrorsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub '${AWS::StackName}-update-usuario-errors'
+      AlarmDescription: INDICADORES_PERSONAL - errores en UpdateUsuarioFunction
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      EvaluationPeriods: 1
+      Threshold: 1
+      Period: 300
+      Statistic: Sum
+      TreatMissingData: notBreaching
+      AlarmActions: !If
+      - HasAlarmTopic
+      - - !Ref 'AlarmTopicArn'
+      - !Ref 'AWS::NoValue'
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+      - Name: FunctionName
+        Value: !Ref 'UpdateUsuarioFunction'
+  DeleteUsuarioLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Delete
+    UpdateReplacePolicy: Delete
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${AWS::StackName}-delete-usuario'
+      RetentionInDays: !If [IsProduction, 30, 7]
+  DeleteUsuarioFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub '${AWS::StackName}-delete-usuario'
+      Description: INDICADORES_PERSONAL - DELETE_USUARIO | DELETE /usuarios/{usuarioId}
+      Handler: entrypoints.lambda_handlers.usuarios.delete_usuario_handler
+      LoggingConfig:
+        LogFormat: JSON
+        LogGroup: !Ref 'DeleteUsuarioLogGroup'
+      Environment:
+        Variables:
+          COGNITO_USER_POOL_ID: !If
+          - CreateUserPool
+          - !Ref 'UserPool'
+          - !Select
+            - 1
+            - !Split
+              - /
+              - !Ref 'CognitoUserPoolArn'
+      Events:
+        DeleteUsuariosUsuarioId:
+          Type: Api
+          Properties:
+            RestApiId: !Ref 'Api'
+            Path: /usuarios/{usuarioId}
+            Method: delete
+      Role: !GetAtt 'CognitoAdminDbRole.Arn'
+  DeleteUsuarioErrorsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub '${AWS::StackName}-delete-usuario-errors'
+      AlarmDescription: INDICADORES_PERSONAL - errores en DeleteUsuarioFunction
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      EvaluationPeriods: 1
+      Threshold: 1
+      Period: 300
+      Statistic: Sum
+      TreatMissingData: notBreaching
+      AlarmActions: !If
+      - HasAlarmTopic
+      - - !Ref 'AlarmTopicArn'
+      - !Ref 'AWS::NoValue'
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+      - Name: FunctionName
+        Value: !Ref 'DeleteUsuarioFunction'
+  CognitoAdminDbRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Description: 'INDICADORES_PERSONAL - rol compartido por 2 función(es): cognito_admin, db'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: lambda.amazonaws.com
+          Action: sts:AssumeRole
+      Policies:
+      - PolicyName: least-privilege
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Sid: WriteOwnLogs
+            Effect: Allow
+            Action:
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+            Resource:
+            - !GetAtt 'CreateUsuarioLogGroup.Arn'
+            - !GetAtt 'DeleteUsuarioLogGroup.Arn'
+          - Sid: VpcNetworkInterfaces
+            Effect: Allow
+            Action:
+            - ec2:CreateNetworkInterface
+            - ec2:DescribeNetworkInterfaces
+            - ec2:DeleteNetworkInterface
+            - ec2:AssignPrivateIpAddresses
+            - ec2:UnassignPrivateIpAddresses
+            Resource: '*'
+          - Sid: ReadDbSecret
+            Effect: Allow
+            Action:
+            - secretsmanager:GetSecretValue
+            Resource: !Sub 'arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:${DbSecretName}-??????'
+          - Sid: CognitoAdmin
+            Effect: Allow
+            Action:
+            - cognito-idp:AdminGetUser
+            - cognito-idp:AdminCreateUser
+            - cognito-idp:AdminUpdateUserAttributes
+            - cognito-idp:AdminDisableUser
+            - cognito-idp:AdminAddUserToGroup
+            - cognito-idp:AdminRemoveUserFromGroup
+            Resource: !If
+            - CreateUserPool
+            - !GetAtt 'UserPool.Arn'
+            - !Ref 'CognitoUserPoolArn'
+  DbRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Description: 'INDICADORES_PERSONAL - rol compartido por 8 función(es): db'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: lambda.amazonaws.com
+          Action: sts:AssumeRole
+      Policies:
+      - PolicyName: least-privilege
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Sid: WriteOwnLogs
+            Effect: Allow
+            Action:
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+            Resource:
+            - !GetAtt 'DeleteRoleLogGroup.Arn'
+            - !GetAtt 'GetCurrentAccessLogGroup.Arn'
+            - !GetAtt 'ListIndicadoresRegistrosLogGroup.Arn'
+            - !GetAtt 'ListRolesLogGroup.Arn'
+            - !GetAtt 'ListUsuariosLogGroup.Arn'
+            - !GetAtt 'SaveIndicadoresRegistrosLogGroup.Arn'
+            - !GetAtt 'SaveRoleLogGroup.Arn'
+            - !GetAtt 'UpdateUsuarioLogGroup.Arn'
+          - Sid: VpcNetworkInterfaces
+            Effect: Allow
+            Action:
+            - ec2:CreateNetworkInterface
+            - ec2:DescribeNetworkInterfaces
+            - ec2:DeleteNetworkInterface
+            - ec2:AssignPrivateIpAddresses
+            - ec2:UnassignPrivateIpAddresses
+            Resource: '*'
+          - Sid: ReadDbSecret
+            Effect: Allow
+            Action:
+            - secretsmanager:GetSecretValue
+            Resource: !Sub 'arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:${DbSecretName}-??????'
+Outputs:
+  UserPoolId:
+    Condition: CreateUserPool
+    Value: !Ref 'UserPool'
+    Description: COGNITO_USER_POOL_ID del frontend
+  UserPoolClientId:
+    Condition: CreateUserPool
+    Value: !Ref 'UserPoolClient'
+    Description: COGNITO_CLIENT_ID del frontend
+  ApiUrl:
+    Description: URL base del API (VITE_/NEXT_PUBLIC_/REACT_APP_API_BASE_URL)
+    Value: !Sub 'https://${Api}.execute-api.${AWS::Region}.amazonaws.com/${Environment}'

@@ -1,0 +1,85 @@
+{
+  "environment": "prd",
+  "database": "olo_prd_indicadores_personal_db",
+  "rls_mode": "backend",
+  "counts": {
+    "tables": 3,
+    "views": 0,
+    "materialized_views": 0,
+    "functions": 2,
+    "triggers": 2,
+    "enums": 0,
+    "sequences": 0,
+    "indexes": 2,
+    "constraints": 6,
+    "policies": 3
+  },
+  "extensions": [
+    {
+      "name": "pgcrypto",
+      "version": "1.3",
+      "source_schema": "extensions",
+      "class": "compatible",
+      "generated": true,
+      "note": ""
+    }
+  ],
+  "review": [],
+  "rls_policies": [
+    {
+      "table": "public.olo_indicadores_kv",
+      "policy": "olo_indicadores_kv_all",
+      "command": "ALL",
+      "roles": [
+        "anon",
+        "authenticated"
+      ],
+      "using": "true",
+      "with_check": "true",
+      "status": "translate_to_use_case"
+    },
+    {
+      "table": "public.olo_indicadores_roles",
+      "policy": "olo_ind_roles_all",
+      "command": "ALL",
+      "roles": [
+        "anon",
+        "authenticated"
+      ],
+      "using": "true",
+      "with_check": "true",
+      "status": "translate_to_use_case"
+    },
+    {
+      "table": "public.olo_indicadores_usuarios",
+      "policy": "olo_ind_usuarios_all",
+      "command": "ALL",
+      "roles": [
+        "anon",
+        "authenticated"
+      ],
+      "using": "true",
+      "with_check": "true",
+      "status": "translate_to_use_case"
+    }
+  ],
+  "moved_to_backend": [],
+  "webhooks": [],
+  "unsupported": [],
+  "skipped": [],
+  "warnings": [],
+  "storage_buckets": [],
+  "realtime_tables": [],
+  "cron_jobs": [],
+  "auth": {
+    "users_count": 0,
+    "providers": [
+      "email"
+    ],
+    "uses_user_metadata": true,
+    "user_metadata_keys": [
+      "email_verified"
+    ],
+    "note": "La app no usa Supabase Auth: login propio sobre olo_indicadores_usuarios. Los usuarios de auth.users pertenecen a otros proyectos del mismo Supabase."
+  }
+}

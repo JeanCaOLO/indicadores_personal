@@ -1,0 +1,267 @@
+# Manifest de migración: Indicadores de Personal (OLO) — Supabase → AWS (estándares Intelix).
+# Contrato: references/output-contract.md. Revisado; generate_sam.py y el reporte se basan en este archivo.
+version: 1
+draft: false
+project:
+  name: Indicadores de Personal OLO
+  slug: indicadores_personal
+  compania: olo
+  label: INDICADORES_PERSONAL
+  exposure: internal
+  public_reason: ''
+source:
+  framework: static-html
+  language: js
+  router: none
+  monolith: true
+  schema_source: live_db
+  notes: >-
+    Sitio estático de un solo archivo (out/index.html, ~2.500 líneas de JS sin build) que usaba
+    supabase-js desde CDN. La base Supabase es compartida con otros proyectos OLO; solo se migran las
+    tablas propias olo_indicadores_kv, olo_indicadores_roles y olo_indicadores_usuarios.
+target:
+  aws_region: us-east-1
+  api_endpoint_type: REGIONAL
+  frontend_hosting: amplify-static
+  lambda:
+    memory: 512
+    timeout: 30
+    architecture: x86_64
+  cognito:
+    groups: []
+  database:
+    engine: aurora-postgresql
+    rls_mode: backend
+modules:
+- name: acceso
+  entities:
+  - olo_indicadores_usuarios
+  - olo_indicadores_roles
+  use_cases:
+  - GetCurrentAccessUseCase
+- name: indicadores
+  entities:
+  - olo_indicadores_kv
+  use_cases:
+  - ListIndicadoresRegistrosUseCase
+  - SaveIndicadoresRegistrosUseCase
+- name: usuarios
+  entities:
+  - olo_indicadores_usuarios
+  - olo_indicadores_roles
+  use_cases:
+  - ListRolesUseCase
+  - SaveRoleUseCase
+  - DeleteRoleUseCase
+  - ListUsuariosUseCase
+  - CreateUsuarioUseCase
+  - UpdateUsuarioUseCase
+  - DeleteUsuarioUseCase
+api_endpoints:
+- method: GET
+  path: /me
+  function: GetCurrentAccess
+  handler: entrypoints.lambda_handlers.acceso.get_current_access_handler
+  use_case: GetCurrentAccessUseCase
+  module: acceso
+  auth: cognito
+  source:
+  - out/index.html:2233
+  - out/index.html:2239
+- method: GET
+  path: /indicadores/registros
+  function: ListIndicadoresRegistros
+  handler: entrypoints.lambda_handlers.indicadores.list_indicadores_registros_handler
+  use_case: ListIndicadoresRegistrosUseCase
+  module: indicadores
+  auth: cognito
+  source:
+  - out/index.html:2429
+  - supabase/supabase-sync.js:48
+- method: PUT
+  path: /indicadores/registros
+  function: SaveIndicadoresRegistros
+  handler: entrypoints.lambda_handlers.indicadores.save_indicadores_registros_handler
+  use_case: SaveIndicadoresRegistrosUseCase
+  module: indicadores
+  auth: cognito
+  memory: 1024
+  source:
+  - out/index.html:2453
+  - out/index.html:2463
+  - supabase/supabase-sync.js:40
+- method: GET
+  path: /roles
+  function: ListRoles
+  handler: entrypoints.lambda_handlers.usuarios.list_roles_handler
+  use_case: ListRolesUseCase
+  module: usuarios
+  auth: cognito
+  source:
+  - out/index.html:2213
+- method: PUT
+  path: /roles/{roleId}
+  function: SaveRole
+  handler: entrypoints.lambda_handlers.usuarios.save_role_handler
+  use_case: SaveRoleUseCase
+  module: usuarios
+  auth: cognito
+  source:
+  - out/index.html:2214
+- method: DELETE
+  path: /roles/{roleId}
+  function: DeleteRole
+  handler: entrypoints.lambda_handlers.usuarios.delete_role_handler
+  use_case: DeleteRoleUseCase
+  module: usuarios
+  auth: cognito
+  source:
+  - out/index.html:2215
+- method: GET
+  path: /usuarios
+  function: ListUsuarios
+  handler: entrypoints.lambda_handlers.usuarios.list_usuarios_handler
+  use_case: ListUsuariosUseCase
+  module: usuarios
+  auth: cognito
+  source:
+  - out/index.html:2218
+- method: POST
+  path: /usuarios
+  function: CreateUsuario
+  handler: entrypoints.lambda_handlers.usuarios.create_usuario_handler
+  use_case: CreateUsuarioUseCase
+  module: usuarios
+  auth: cognito
+  cognito_admin: true
+  source:
+  - out/index.html:2222
+- method: PATCH
+  path: /usuarios/{usuarioId}
+  function: UpdateUsuario
+  handler: entrypoints.lambda_handlers.usuarios.update_usuario_handler
+  use_case: UpdateUsuarioUseCase
+  module: usuarios
+  auth: cognito
+  source:
+  - out/index.html:2227
+- method: DELETE
+  path: /usuarios/{usuarioId}
+  function: DeleteUsuario
+  handler: entrypoints.lambda_handlers.usuarios.delete_usuario_handler
+  use_case: DeleteUsuarioUseCase
+  module: usuarios
+  auth: cognito
+  cognito_admin: true
+  source:
+  - out/index.html:2228
+async_workers: []
+storage_buckets: []
+realtime:
+  enabled: false
+scheduled_jobs: []
+database_objects:
+  naming_map: database/naming-map.json
+  generation_report: database/generation-report.json
+environment_variables:
+  backend:
+  - ENVIRONMENT
+  - SERVICE_NAME
+  - LOG_LEVEL
+  - DB_SECRET_NAME
+  - DB_NAME
+  - DB_PROXY_ENDPOINT
+  - DB_PORT
+  - DB_SSLMODE
+  - ALLOWED_ORIGINS
+  - COGNITO_USER_POOL_ID
+  frontend:
+  - VITE_API_BASE_URL
+  - VITE_COGNITO_USER_POOL_ID
+  - VITE_COGNITO_CLIENT_ID
+  - VITE_APP_EXPOSURE
+authorization_rules:
+- table: public.olo_indicadores_kv
+  policy: olo_indicadores_kv_all
+  command: ALL
+  roles:
+  - anon
+  - authenticated
+  using: 'true'
+  with_check: 'true'
+  enforced_in: >-
+    Cognito authorizer + AccessResolver (usuario activo en tbl_olo_indicadores_usuarios). La política
+    abierta (anon) se reemplaza por el modelo de alcance que la UI aplicaba: ListIndicadoresRegistrosUseCase
+    rechaza scope admin (403) y para scope pais filtra los registros de personas a su país
+    (IndicadoresKv.visible_for); SaveIndicadoresRegistrosUseCase rechaza admin y para pais fusiona en el
+    servidor conservando los registros de otros países (IndicadoresKv.merge_for_country, antes mergeMonth
+    en el navegador) dentro de una transacción con SELECT ... FOR UPDATE.
+- table: public.olo_indicadores_roles
+  policy: olo_ind_roles_all
+  command: ALL
+  roles:
+  - anon
+  - authenticated
+  using: 'true'
+  with_check: 'true'
+  enforced_in: >-
+    GetCurrentAccessUseCase lee solo el rol propio. ListRolesUseCase / SaveRoleUseCase / DeleteRoleUseCase
+    exigen require_user_manager (scope admin o global, igual que el botón Usuarios del original); los roles
+    base (global, admin, costa_rica, venezuela) no se eliminan (antes solo lo impedía la UI).
+- table: public.olo_indicadores_usuarios
+  policy: olo_ind_usuarios_all
+  command: ALL
+  roles:
+  - anon
+  - authenticated
+  using: 'true'
+  with_check: 'true'
+  enforced_in: >-
+    GetCurrentAccessUseCase resuelve solo la fila propia por el email del token. ListUsuarios / CreateUsuario
+    / UpdateUsuario / DeleteUsuario exigen require_user_manager (scope admin o global); UpdateUsuario aplica
+    lista blanca (nombre, rol_id, activo); pass_hash/pass_salt nunca se exponen ni se leen desde el API.
+structural_changes:
+- 'Login propio (PBKDF2 calculado en el navegador contra olo_indicadores_usuarios leída con la anon key) →
+  Amazon Cognito (SRP). La fila de olo_indicadores_usuarios sigue siendo el perfil con rol y estado; GET /me
+  la resuelve por el email verificado del token y devuelve la sesión con la misma forma que guardaba
+  OLOAuth (id, email, nombre, rol{id,nombre,scope,pais}). activo=false bloquea todo el API y el login muestra
+  el mismo mensaje "Usuario o contraseña incorrectos".'
+- 'Alta de usuarios: CreateUsuario crea la identidad en Cognito (AdminCreateUser con la contraseña indicada
+  como temporal, sin correo) y la fila del perfil en una sola operación. En el primer ingreso Cognito pide
+  definir una contraseña nueva (paso agregado en la misma tarjeta de login). pass_hash/pass_salt quedan vacíos
+  para los usuarios nuevos: las credenciales viven solo en Cognito.'
+- 'Baja de usuarios: DeleteUsuario elimina el perfil y deshabilita la identidad de Cognito (AdminDisableUser).'
+- 'Sincronización KV: la fusión por país que hacía el navegador (OLOSync.mergeMonth con SELECT ... IN y
+  upsert) pasa al backend (SaveIndicadoresRegistrosUseCase), atómica y basada en el país del rol del
+  servidor, no en el valor ROLE de localStorage. El navegador sigue enviando el documento completo con el
+  mismo rebote de 1,2 s y el botón Sincronizar hace el mismo pull.'
+- 'Lectura KV por país: para usuarios scope pais el API devuelve solo los registros de personas de su país
+  (antes la anon key permitía leer todo y el filtro era visual).'
+- 'Sitio HTML estático → React 19 + Vite + TypeScript. La interfaz (marcado, clases, CSS, textos) se conserva:
+  el shell (cabecera, filtros, vistas, login) es JSX y el motor de render original (cálculo de indicadores,
+  vistas Operativa/Corporativa/Administrar, exportes Excel/PDF) se movió tal cual a
+  src/views/indicadores/engine con sus dependencias inyectadas (sincronización, sesión, usuarios) desde los
+  controllers. xlsx, jspdf, jspdf-autotable y las fuentes Inter/Space Grotesk pasan de CDN a dependencias
+  npm empaquetadas (la CSP de Amplify no permite scripts ni fuentes de terceros). El logo base64 pasa a
+  src/assets/olo-logo.jpg.'
+- 'Validación de contraseña en el alta de usuarios: de "mínimo 6 caracteres" a la política estándar del
+  User Pool (12+ caracteres con mayúscula, minúscula, número y símbolo); se mantiene el mismo aviso (toast).'
+incompatibilities:
+- 'Las contraseñas existentes (hash PBKDF2-SHA256 propio) no se pueden importar a Cognito: los usuarios
+  migrados se crean en el User Pool (importación CSV o alta desde la vista Usuarios) y definen contraseña
+  nueva en el primer ingreso. Las filas y sus hashes se migran tal cual a Aurora como histórico.'
+- 'Reactivar en Cognito un correo dado de baja requiere habilitar la identidad en la consola (el perfil
+  IAM estándar cognito_admin no incluye AdminEnableUser/AdminDeleteUser); mientras tanto el alta de ese
+  correo responde "Ese correo ya existe".'
+- 'El rol de scope admin no ve indicadores: el backend responde 403 en /indicadores/*; la UI ya no los pedía.'
+migration_risks:
+- 'Base Supabase compartida: solo se exportan las tablas olo_indicadores_*; auth.users (5 usuarios de
+  otros proyectos) y las tablas olo_kv, olo_movilidad_*, olo_organigramas_kv, olo_salida_kv, olo_usuarios
+  quedan fuera a propósito (export_data_sql.py --exclude auth.users, esquema filtrado en
+  .discovery/supabase-schema.json; el completo está en supabase-schema-full.json).'
+- 'El documento KV de cada mes puede crecer (listas de colaboradores por país); PUT /indicadores/registros
+  usa 1024 MB y el límite de 10 MB de payload de API Gateway. Si se supera, el front deberá enviar solo los
+  meses modificados.'
+- 'localStorage sigue siendo la copia de trabajo (olo_master_db) como en el original; un navegador con datos
+  locales viejos que no pudo sincronizar los subirá en el siguiente guardado (mismo comportamiento).'
+pending_errors: []

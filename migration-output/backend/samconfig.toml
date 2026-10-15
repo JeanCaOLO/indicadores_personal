@@ -1,0 +1,79 @@
+version = 0.1
+
+[dev.build.parameters]
+cached = true
+parallel = true
+
+[dev.deploy.parameters]
+stack_name = "dev-indicadores-personal-api"
+region = "us-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+resolve_s3 = true
+s3_prefix = "dev-indicadores-personal-api"
+parameter_overrides = [
+  "Environment=dev",
+  "VpcSubnetIds=/dev/indicadores-personal/network/subnets",
+  "LambdaSecurityGroupId=/dev/indicadores-personal/network/lambda-sg",
+  "DbProxyEndpoint=/dev/indicadores-personal/db/proxy-endpoint",
+  "DbSecretName=/dev/indicadores-personal/db/app",
+  "DbName=olo_dev_indicadores_personal_db",
+  "AllowedOrigins=/dev/indicadores-personal/frontend/origin",
+]
+tags = [
+  "Project=INDICADORES_PERSONAL",
+  "Environment=DEV",
+  "Name=dev-indicadores-personal-api",
+]
+
+[qa.build.parameters]
+cached = true
+parallel = true
+
+[qa.deploy.parameters]
+stack_name = "qa-indicadores-personal-api"
+region = "us-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+resolve_s3 = true
+s3_prefix = "qa-indicadores-personal-api"
+parameter_overrides = [
+  "Environment=qa",
+  "VpcSubnetIds=/qa/indicadores-personal/network/subnets",
+  "LambdaSecurityGroupId=/qa/indicadores-personal/network/lambda-sg",
+  "DbProxyEndpoint=/qa/indicadores-personal/db/proxy-endpoint",
+  "DbSecretName=/qa/indicadores-personal/db/app",
+  "DbName=olo_qa_indicadores_personal_db",
+  "AllowedOrigins=/qa/indicadores-personal/frontend/origin",
+]
+tags = [
+  "Project=INDICADORES_PERSONAL",
+  "Environment=QA",
+  "Name=qa-indicadores-personal-api",
+]
+
+[prod.build.parameters]
+cached = true
+parallel = true
+
+[prod.deploy.parameters]
+stack_name = "prod-indicadores-personal-api"
+region = "us-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+resolve_s3 = true
+s3_prefix = "prod-indicadores-personal-api"
+parameter_overrides = [
+  "Environment=prod",
+  "VpcSubnetIds=/prod/indicadores-personal/network/subnets",
+  "LambdaSecurityGroupId=/prod/indicadores-personal/network/lambda-sg",
+  "DbProxyEndpoint=/prod/indicadores-personal/db/proxy-endpoint",
+  "DbSecretName=/prod/indicadores-personal/db/app",
+  "DbName=olo_prd_indicadores_personal_db",
+  "AllowedOrigins=/prod/indicadores-personal/frontend/origin",
+]
+tags = [
+  "Project=INDICADORES_PERSONAL",
+  "Environment=PROD",
+  "Name=prod-indicadores-personal-api",
+]
