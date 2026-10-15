@@ -1,0 +1,36 @@
+# Amplify Hosting — SPA (Vite/CRA). Variables públicas por ambiente (rama) en la consola de
+# Amplify o en el pipeline: VITE_API_BASE_URL, VITE_COGNITO_USER_POOL_ID,
+# VITE_COGNITO_CLIENT_ID, VITE_APP_EXPOSURE. Rewrite SPA en Amplify:
+# origen </^[^.]+$|\.(?!(css|gif|ico|jpg|jpeg|js|png|txt|svg|woff|woff2|ttf|map|json|webp)$)([^.]+$)/>
+# → /index.html (200).
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm install
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    baseDirectory: dist
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+customHeaders:
+  - pattern: '**/*'
+    headers:
+      - key: Strict-Transport-Security
+        value: max-age=31536000; includeSubDomains
+      - key: X-Content-Type-Options
+        value: nosniff
+      - key: X-Frame-Options
+        value: DENY
+      - key: Referrer-Policy
+        value: strict-origin-when-cross-origin
+      - key: Permissions-Policy
+        value: camera=(), microphone=(), geolocation=()
+      - key: Content-Security-Policy
+        value: "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://*.execute-api.us-east-1.amazonaws.com wss://*.execute-api.us-east-1.amazonaws.com https://cognito-idp.us-east-1.amazonaws.com https://*.amazoncognito.com https://*.s3.us-east-1.amazonaws.com https://*.s3.amazonaws.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"

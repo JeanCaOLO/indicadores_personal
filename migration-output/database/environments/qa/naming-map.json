@@ -1,0 +1,120 @@
+{
+  "environment": "qa",
+  "database": "olo_qa_indicadores_personal_db",
+  "schemas": {
+    "public": "olo_qa_indicadores_personal_sch_core"
+  },
+  "search_path": [
+    "olo_qa_indicadores_personal_sch_core"
+  ],
+  "roles": {
+    "ro": "ro_indicadores_personal",
+    "rw": "rw_indicadores_personal",
+    "ddl": "ddl_indicadores_personal",
+    "admin": "admin_indicadores_personal"
+  },
+  "users": {
+    "ro": "usr_indicadores_personal_report",
+    "rw": "usr_indicadores_personal_app",
+    "ddl": "usr_indicadores_personal_deploy",
+    "admin": "usr_indicadores_personal_dba"
+  },
+  "relations": [
+    {
+      "source": "public.olo_indicadores_kv",
+      "target": "olo_qa_indicadores_personal_sch_core.tbl_olo_indicadores_kv",
+      "target_name": "tbl_olo_indicadores_kv",
+      "kind": "table"
+    },
+    {
+      "source": "public.olo_indicadores_roles",
+      "target": "olo_qa_indicadores_personal_sch_core.tbl_olo_indicadores_roles",
+      "target_name": "tbl_olo_indicadores_roles",
+      "kind": "table"
+    },
+    {
+      "source": "public.olo_indicadores_usuarios",
+      "target": "olo_qa_indicadores_personal_sch_core.tbl_olo_indicadores_usuarios",
+      "target_name": "tbl_olo_indicadores_usuarios",
+      "kind": "table"
+    },
+    {
+      "source": "auth.users",
+      "target": "olo_qa_indicadores_personal_sch_core.tbl_app_users",
+      "target_name": "tbl_app_users",
+      "kind": "table"
+    }
+  ],
+  "functions": [
+    {
+      "source": "public.olo_indicadores_set_updated_at",
+      "target": "olo_qa_indicadores_personal_sch_core.fn_olo_indicadores_set_updated_at",
+      "target_name": "fn_olo_indicadores_set_updated_at"
+    },
+    {
+      "source": "public.olo_indicadores_usuarios_touch",
+      "target": "olo_qa_indicadores_personal_sch_core.fn_olo_indicadores_usuarios_touch",
+      "target_name": "fn_olo_indicadores_usuarios_touch"
+    }
+  ],
+  "auth_functions": {
+    "auth.uid()": "fn_auth_uid()",
+    "auth.role()": "fn_auth_role()",
+    "auth.email()": "fn_auth_email()",
+    "auth.jwt()": "fn_auth_jwt()"
+  },
+  "constraints": [
+    {
+      "table": "public.olo_indicadores_kv",
+      "source": "olo_indicadores_kv_pkey",
+      "target": "pk_olo_indicadores_kv"
+    },
+    {
+      "table": "public.olo_indicadores_roles",
+      "source": "olo_ind_roles_scope_chk",
+      "target": "ck_olo_indicadores_roles_scope"
+    },
+    {
+      "table": "public.olo_indicadores_roles",
+      "source": "olo_indicadores_roles_pkey",
+      "target": "pk_olo_indicadores_roles"
+    },
+    {
+      "table": "public.olo_indicadores_usuarios",
+      "source": "olo_indicadores_usuarios_email_key",
+      "target": "uq_olo_indicadores_usuarios_email"
+    },
+    {
+      "table": "public.olo_indicadores_usuarios",
+      "source": "olo_indicadores_usuarios_pkey",
+      "target": "pk_olo_indicadores_usuarios"
+    },
+    {
+      "table": "public.olo_indicadores_usuarios",
+      "source": "olo_indicadores_usuarios_rol_id_fkey",
+      "target": "fk_olo_indicadores_usuarios_olo_indicadores_roles"
+    }
+  ],
+  "indexes": [
+    {
+      "source": "public.olo_ind_usuarios_email_idx",
+      "target": "idx_olo_indicadores_usuarios_olo_ind_usuarios_email"
+    },
+    {
+      "source": "public.olo_indicadores_kv_value_gin",
+      "target": "idx_olo_indicadores_kv_value_gin"
+    }
+  ],
+  "triggers": [
+    {
+      "table": "public.olo_indicadores_kv",
+      "source": "trg_olo_indicadores_kv_updated",
+      "target": "trg_olo_indicadores_kv_updated"
+    },
+    {
+      "table": "public.olo_indicadores_usuarios",
+      "source": "trg_olo_ind_usuarios_touch",
+      "target": "trg_olo_indicadores_usuarios_trg_olo_ind_usuarios_touch"
+    }
+  ]
+}
