@@ -1,0 +1,4720 @@
+{
+  "meta": {
+    "today": "2026-10-06T00:00:00.000Z",
+    "generatedFrom": "out/index.html",
+    "generator": "indicadores-app/scripts/gen-golden.mjs",
+    "kpiKeys": [
+      "rot_total",
+      "rot_renuncia",
+      "rot_despido",
+      "rot_indeseada",
+      "dias_vacante",
+      "nuevos",
+      "desercion",
+      "descarte",
+      "efectividad",
+      "ausentismo",
+      "vac_cobertura",
+      "encuesta",
+      "cap_horas",
+      "cap_hxc",
+      "cap_cursos",
+      "promo",
+      "ascenso",
+      "sucesion",
+      "dias_sin_acc",
+      "record_dias",
+      "accidentes",
+      "colab_accid_n",
+      "merma_hurto",
+      "mant_plan",
+      "mant",
+      "ot_dias",
+      "mant_prev"
+    ],
+    "kpiCount": 27,
+    "indKeys": [
+      "rot_indeseada",
+      "sucesion",
+      "dias_vacante",
+      "desercion",
+      "descarte",
+      "efectividad",
+      "rot_total",
+      "rot_renuncia",
+      "rot_despido",
+      "nuevos",
+      "ausentismo",
+      "vac_cobertura",
+      "vacante_activa",
+      "encuesta",
+      "merma_hurto",
+      "accidentes",
+      "accid_pct",
+      "colab_accid_n",
+      "incidentes",
+      "dias_sin_acc",
+      "record_dias",
+      "mant_plan",
+      "mant",
+      "ot_dias",
+      "mant_prev",
+      "cap_horas",
+      "cap_hxc",
+      "cap_cursos",
+      "edad_prom",
+      "antig_prom",
+      "promo_asc",
+      "promo",
+      "ascenso"
+    ],
+    "indCount": 33,
+    "rawKeys": [
+      "rot_indeseada",
+      "dias_vacante",
+      "desercion",
+      "descarte",
+      "efectividad",
+      "rot_total",
+      "rot_renuncia",
+      "rot_despido",
+      "nuevos",
+      "ausentismo",
+      "vac_cobertura",
+      "cap_horas",
+      "cap_cursos",
+      "accidentes",
+      "incidentes"
+    ],
+    "paises": [
+      "__all__",
+      "Costa Rica",
+      "Venezuela"
+    ],
+    "months": [
+      "2025-12",
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04",
+      "2026-05",
+      "2026-06",
+      "2026-07",
+      "2026-08",
+      "2026-09",
+      "2027-09"
+    ],
+    "note": "Golden del sistema actual. 'ind' = compute(mes).ind (mensual, todas las claves), 'raw' = compute(mes).raw ([num,den]), 'acc' = accValue(kpi,mes) (YTD, por clave de ind). TODAY fijado; se reutiliza como ctx.today en los tests de paridad (tarea 6)."
+  },
+  "byMonthPais": {
+    "2025-12": {
+      "__all__": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 0,
+          "desercion": 0,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 26,
+          "record_dias": 0,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            0,
+            0
+          ],
+          "dias_vacante": [
+            0,
+            0
+          ],
+          "desercion": [
+            0,
+            29
+          ],
+          "descarte": [
+            0,
+            0
+          ],
+          "efectividad": [
+            0,
+            0
+          ],
+          "rot_total": [
+            0,
+            0
+          ],
+          "rot_renuncia": [
+            0,
+            0
+          ],
+          "rot_despido": [
+            0,
+            0
+          ],
+          "nuevos": [
+            0,
+            0
+          ],
+          "ausentismo": [
+            32,
+            0
+          ],
+          "vac_cobertura": [
+            0,
+            0
+          ],
+          "cap_horas": [
+            0,
+            1
+          ],
+          "cap_cursos": [
+            0,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 0,
+          "desercion": 0,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 26,
+          "record_dias": 0,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 0,
+        "prom": 0,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 26
+      },
+      "Costa Rica": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 0,
+          "desercion": 0,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 26,
+          "record_dias": 0,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            0,
+            0
+          ],
+          "dias_vacante": [
+            0,
+            0
+          ],
+          "desercion": [
+            0,
+            29
+          ],
+          "descarte": [
+            0,
+            0
+          ],
+          "efectividad": [
+            0,
+            0
+          ],
+          "rot_total": [
+            0,
+            0
+          ],
+          "rot_renuncia": [
+            0,
+            0
+          ],
+          "rot_despido": [
+            0,
+            0
+          ],
+          "nuevos": [
+            0,
+            0
+          ],
+          "ausentismo": [
+            32,
+            0
+          ],
+          "vac_cobertura": [
+            0,
+            0
+          ],
+          "cap_horas": [
+            0,
+            1
+          ],
+          "cap_cursos": [
+            0,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 0,
+          "desercion": 0,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 26,
+          "record_dias": 0,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 0,
+        "prom": 0,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 26
+      },
+      "Venezuela": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 0,
+          "desercion": 0,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 26,
+          "record_dias": 0,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            0,
+            0
+          ],
+          "dias_vacante": [
+            0,
+            0
+          ],
+          "desercion": [
+            0,
+            0
+          ],
+          "descarte": [
+            0,
+            0
+          ],
+          "efectividad": [
+            0,
+            0
+          ],
+          "rot_total": [
+            0,
+            0
+          ],
+          "rot_renuncia": [
+            0,
+            0
+          ],
+          "rot_despido": [
+            0,
+            0
+          ],
+          "nuevos": [
+            0,
+            0
+          ],
+          "ausentismo": [
+            0,
+            0
+          ],
+          "vac_cobertura": [
+            0,
+            0
+          ],
+          "cap_horas": [
+            0,
+            1
+          ],
+          "cap_cursos": [
+            0,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 0,
+          "desercion": 0,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 26,
+          "record_dias": 0,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 0,
+        "prom": 0,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 26
+      }
+    },
+    "2026-01": {
+      "__all__": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 1.1428571428571428,
+          "desercion": 0.19696969696969696,
+          "descarte": 1,
+          "efectividad": 0,
+          "rot_total": 0.06557377049180328,
+          "rot_renuncia": 0.0273224043715847,
+          "rot_despido": 0.03278688524590164,
+          "nuevos": 0.03825136612021858,
+          "ausentismo": 2.5681818181818183,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 57,
+          "record_dias": 57,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 1815.5000000000005,
+          "cap_hxc": 453.8750000000001,
+          "cap_cursos": 207,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            1,
+            0
+          ],
+          "dias_vacante": [
+            8,
+            7
+          ],
+          "desercion": [
+            26,
+            132
+          ],
+          "descarte": [
+            7,
+            7
+          ],
+          "efectividad": [
+            0,
+            0
+          ],
+          "rot_total": [
+            12,
+            183
+          ],
+          "rot_renuncia": [
+            5,
+            183
+          ],
+          "rot_despido": [
+            6,
+            183
+          ],
+          "nuevos": [
+            7,
+            183
+          ],
+          "ausentismo": [
+            226,
+            88
+          ],
+          "vac_cobertura": [
+            330,
+            0
+          ],
+          "cap_horas": [
+            1815.5000000000005,
+            1
+          ],
+          "cap_cursos": [
+            207,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 1.1428571428571428,
+          "desercion": 0.19696969696969696,
+          "descarte": 1,
+          "efectividad": 0,
+          "rot_total": 0.06557377049180328,
+          "rot_renuncia": 0.0273224043715847,
+          "rot_despido": 0.03278688524590164,
+          "nuevos": 0.03825136612021858,
+          "ausentismo": 2.5681818181818183,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 57,
+          "record_dias": 57,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 1815.5000000000005,
+          "cap_hxc": 453.8750000000001,
+          "cap_cursos": 207,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 4,
+        "prom": 183,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 57
+      },
+      "Costa Rica": {
+        "ind": {
+          "rot_indeseada": 0.2,
+          "sucesion": 0,
+          "dias_vacante": 1.1428571428571428,
+          "desercion": 0.19696969696969696,
+          "descarte": 1,
+          "efectividad": 0,
+          "rot_total": 0.06557377049180328,
+          "rot_renuncia": 0.0273224043715847,
+          "rot_despido": 0.03278688524590164,
+          "nuevos": 0.03825136612021858,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 57,
+          "record_dias": 57,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 1815.5000000000005,
+          "cap_hxc": 9.920765027322407,
+          "cap_cursos": 207,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            1,
+            5
+          ],
+          "dias_vacante": [
+            8,
+            7
+          ],
+          "desercion": [
+            26,
+            132
+          ],
+          "descarte": [
+            7,
+            7
+          ],
+          "efectividad": [
+            0,
+            0
+          ],
+          "rot_total": [
+            12,
+            183
+          ],
+          "rot_renuncia": [
+            5,
+            183
+          ],
+          "rot_despido": [
+            6,
+            183
+          ],
+          "nuevos": [
+            7,
+            183
+          ],
+          "ausentismo": [
+            226,
+            0
+          ],
+          "vac_cobertura": [
+            330,
+            0
+          ],
+          "cap_horas": [
+            1815.5000000000005,
+            1
+          ],
+          "cap_cursos": [
+            207,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0.2,
+          "sucesion": 0,
+          "dias_vacante": 1.1428571428571428,
+          "desercion": 0.19696969696969696,
+          "descarte": 1,
+          "efectividad": 0,
+          "rot_total": 0.06557377049180328,
+          "rot_renuncia": 0.0273224043715847,
+          "rot_despido": 0.03278688524590164,
+          "nuevos": 0.03825136612021858,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 57,
+          "record_dias": 57,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 1815.5000000000005,
+          "cap_hxc": 9.920765027322407,
+          "cap_cursos": 207,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 0,
+        "prom": 183,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 57
+      },
+      "Venezuela": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 1.1428571428571428,
+          "desercion": 0.19696969696969696,
+          "descarte": 1,
+          "efectividad": 0,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0.03825136612021858,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 57,
+          "record_dias": 57,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            0,
+            5
+          ],
+          "dias_vacante": [
+            8,
+            7
+          ],
+          "desercion": [
+            26,
+            132
+          ],
+          "descarte": [
+            7,
+            7
+          ],
+          "efectividad": [
+            0,
+            0
+          ],
+          "rot_total": [
+            0,
+            183
+          ],
+          "rot_renuncia": [
+            0,
+            183
+          ],
+          "rot_despido": [
+            0,
+            183
+          ],
+          "nuevos": [
+            7,
+            183
+          ],
+          "ausentismo": [
+            0,
+            0
+          ],
+          "vac_cobertura": [
+            0,
+            0
+          ],
+          "cap_horas": [
+            0,
+            1
+          ],
+          "cap_cursos": [
+            0,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 1.1428571428571428,
+          "desercion": 0.19696969696969696,
+          "descarte": 1,
+          "efectividad": 0,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0.03825136612021858,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 57,
+          "record_dias": 57,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 0,
+        "prom": 183,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 57
+      }
+    },
+    "2026-02": {
+      "__all__": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 5.666666666666667,
+          "desercion": 0.23376623376623376,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0.0427807486631016,
+          "rot_renuncia": 0.026737967914438502,
+          "rot_despido": 0.016042780748663103,
+          "nuevos": 0.0213903743315508,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 85,
+          "record_dias": 85,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 57.75,
+          "cap_hxc": 0.3088235294117647,
+          "cap_cursos": 73,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            0,
+            5
+          ],
+          "dias_vacante": [
+            17,
+            3
+          ],
+          "desercion": [
+            18,
+            77
+          ],
+          "descarte": [
+            0,
+            4
+          ],
+          "efectividad": [
+            0,
+            4
+          ],
+          "rot_total": [
+            8,
+            187
+          ],
+          "rot_renuncia": [
+            5,
+            187
+          ],
+          "rot_despido": [
+            3,
+            187
+          ],
+          "nuevos": [
+            4,
+            187
+          ],
+          "ausentismo": [
+            123,
+            0
+          ],
+          "vac_cobertura": [
+            115,
+            0
+          ],
+          "cap_horas": [
+            57.75,
+            1
+          ],
+          "cap_cursos": [
+            73,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0.2,
+          "sucesion": 0,
+          "dias_vacante": 2.5,
+          "desercion": 0.21052631578947367,
+          "descarte": 0.6363636363636364,
+          "efectividad": 0,
+          "rot_total": 0.05405405405405406,
+          "rot_renuncia": 0.026737967914438502,
+          "rot_despido": 0.016042780748663103,
+          "nuevos": 0.02972972972972973,
+          "ausentismo": 3.965909090909091,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 85,
+          "record_dias": 85,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 1873.2500000000005,
+          "cap_hxc": 0.3088235294117647,
+          "cap_cursos": 280,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 0,
+        "prom": 187,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 85
+      },
+      "Costa Rica": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 5.666666666666667,
+          "desercion": 0.23376623376623376,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0.0427807486631016,
+          "rot_renuncia": 0.026737967914438502,
+          "rot_despido": 0.016042780748663103,
+          "nuevos": 0.0213903743315508,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 85,
+          "record_dias": 85,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 57.75,
+          "cap_hxc": 0.3088235294117647,
+          "cap_cursos": 73,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            0,
+            5
+          ],
+          "dias_vacante": [
+            17,
+            3
+          ],
+          "desercion": [
+            18,
+            77
+          ],
+          "descarte": [
+            0,
+            4
+          ],
+          "efectividad": [
+            0,
+            4
+          ],
+          "rot_total": [
+            8,
+            187
+          ],
+          "rot_renuncia": [
+            5,
+            187
+          ],
+          "rot_despido": [
+            3,
+            187
+          ],
+          "nuevos": [
+            4,
+            187
+          ],
+          "ausentismo": [
+            123,
+            0
+          ],
+          "vac_cobertura": [
+            115,
+            0
+          ],
+          "cap_horas": [
+            57.75,
+            1
+          ],
+          "cap_cursos": [
+            73,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0.1,
+          "sucesion": 0,
+          "dias_vacante": 2.5,
+          "desercion": 0.21052631578947367,
+          "descarte": 0.6363636363636364,
+          "efectividad": 0,
+          "rot_total": 0.05405405405405406,
+          "rot_renuncia": 0.026737967914438502,
+          "rot_despido": 0.016042780748663103,
+          "nuevos": 0.02972972972972973,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 85,
+          "record_dias": 85,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 1873.2500000000005,
+          "cap_hxc": 0.3088235294117647,
+          "cap_cursos": 280,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 0,
+        "prom": 187,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 85
+      },
+      "Venezuela": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 5.666666666666667,
+          "desercion": 0.23376623376623376,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0.0213903743315508,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 85,
+          "record_dias": 85,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            0,
+            5
+          ],
+          "dias_vacante": [
+            17,
+            3
+          ],
+          "desercion": [
+            18,
+            77
+          ],
+          "descarte": [
+            0,
+            4
+          ],
+          "efectividad": [
+            0,
+            4
+          ],
+          "rot_total": [
+            0,
+            187
+          ],
+          "rot_renuncia": [
+            0,
+            187
+          ],
+          "rot_despido": [
+            0,
+            187
+          ],
+          "nuevos": [
+            4,
+            187
+          ],
+          "ausentismo": [
+            0,
+            0
+          ],
+          "vac_cobertura": [
+            0,
+            0
+          ],
+          "cap_horas": [
+            0,
+            1
+          ],
+          "cap_cursos": [
+            0,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 2.5,
+          "desercion": 0.21052631578947367,
+          "descarte": 0.6363636363636364,
+          "efectividad": 0,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0.02972972972972973,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 85,
+          "record_dias": 85,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 0,
+        "prom": 187,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 85
+      }
+    },
+    "2026-03": {
+      "__all__": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 8.714285714285714,
+          "desercion": 0.2191780821917808,
+          "descarte": 0,
+          "efectividad": 0.125,
+          "rot_total": 0.043243243243243246,
+          "rot_renuncia": 0.010810810810810811,
+          "rot_despido": 0.016216216216216217,
+          "nuevos": 0.043243243243243246,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 116,
+          "record_dias": 115,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 53.599999999999994,
+          "cap_hxc": 0.2897297297297297,
+          "cap_cursos": 26,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            0,
+            18
+          ],
+          "dias_vacante": [
+            61,
+            7
+          ],
+          "desercion": [
+            16,
+            73
+          ],
+          "descarte": [
+            0,
+            9
+          ],
+          "efectividad": [
+            1,
+            8
+          ],
+          "rot_total": [
+            8,
+            185
+          ],
+          "rot_renuncia": [
+            2,
+            185
+          ],
+          "rot_despido": [
+            3,
+            185
+          ],
+          "nuevos": [
+            8,
+            185
+          ],
+          "ausentismo": [
+            303,
+            0
+          ],
+          "vac_cobertura": [
+            159,
+            0
+          ],
+          "cap_horas": [
+            53.599999999999994,
+            1
+          ],
+          "cap_cursos": [
+            26,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0.043478260869565216,
+          "sucesion": 0,
+          "dias_vacante": 5.0588235294117645,
+          "desercion": 0.2127659574468085,
+          "descarte": 0.35,
+          "efectividad": 0.08333333333333333,
+          "rot_total": 0.05045045045045045,
+          "rot_renuncia": 0.010810810810810811,
+          "rot_despido": 0.016216216216216217,
+          "nuevos": 0.03423423423423423,
+          "ausentismo": 7.409090909090909,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 116,
+          "record_dias": 115,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 1926.8500000000004,
+          "cap_hxc": 0.2897297297297297,
+          "cap_cursos": 306,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 0,
+        "prom": 185,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 116
+      },
+      "Costa Rica": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 8.714285714285714,
+          "desercion": 0.2191780821917808,
+          "descarte": 0,
+          "efectividad": 0.125,
+          "rot_total": 0.043243243243243246,
+          "rot_renuncia": 0.010810810810810811,
+          "rot_despido": 0.016216216216216217,
+          "nuevos": 0.043243243243243246,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 116,
+          "record_dias": 115,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 53.599999999999994,
+          "cap_hxc": 0.2897297297297297,
+          "cap_cursos": 26,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            0,
+            18
+          ],
+          "dias_vacante": [
+            61,
+            7
+          ],
+          "desercion": [
+            16,
+            73
+          ],
+          "descarte": [
+            0,
+            9
+          ],
+          "efectividad": [
+            1,
+            8
+          ],
+          "rot_total": [
+            8,
+            185
+          ],
+          "rot_renuncia": [
+            2,
+            185
+          ],
+          "rot_despido": [
+            3,
+            185
+          ],
+          "nuevos": [
+            8,
+            185
+          ],
+          "ausentismo": [
+            303,
+            0
+          ],
+          "vac_cobertura": [
+            159,
+            0
+          ],
+          "cap_horas": [
+            53.599999999999994,
+            1
+          ],
+          "cap_cursos": [
+            26,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0.03571428571428571,
+          "sucesion": 0,
+          "dias_vacante": 5.0588235294117645,
+          "desercion": 0.2127659574468085,
+          "descarte": 0.35,
+          "efectividad": 0.08333333333333333,
+          "rot_total": 0.05045045045045045,
+          "rot_renuncia": 0.010810810810810811,
+          "rot_despido": 0.016216216216216217,
+          "nuevos": 0.03423423423423423,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 116,
+          "record_dias": 115,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 1926.8500000000004,
+          "cap_hxc": 0.2897297297297297,
+          "cap_cursos": 306,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 0,
+        "prom": 185,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 116
+      },
+      "Venezuela": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 8.714285714285714,
+          "desercion": 0.2191780821917808,
+          "descarte": 0,
+          "efectividad": 0.125,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0.043243243243243246,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 116,
+          "record_dias": 115,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            0,
+            18
+          ],
+          "dias_vacante": [
+            61,
+            7
+          ],
+          "desercion": [
+            16,
+            73
+          ],
+          "descarte": [
+            0,
+            9
+          ],
+          "efectividad": [
+            1,
+            8
+          ],
+          "rot_total": [
+            0,
+            185
+          ],
+          "rot_renuncia": [
+            0,
+            185
+          ],
+          "rot_despido": [
+            0,
+            185
+          ],
+          "nuevos": [
+            8,
+            185
+          ],
+          "ausentismo": [
+            0,
+            0
+          ],
+          "vac_cobertura": [
+            0,
+            0
+          ],
+          "cap_horas": [
+            0,
+            1
+          ],
+          "cap_cursos": [
+            0,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 5.0588235294117645,
+          "desercion": 0.2127659574468085,
+          "descarte": 0.35,
+          "efectividad": 0.08333333333333333,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0.03423423423423423,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 116,
+          "record_dias": 115,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 0,
+        "prom": 185,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 116
+      }
+    },
+    "2026-04": {
+      "__all__": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 7.416666666666667,
+          "desercion": 0.36,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0.0546448087431694,
+          "rot_renuncia": 0.04918032786885246,
+          "rot_despido": 0.00546448087431694,
+          "nuevos": 0.060109289617486336,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 146,
+          "record_dias": 145,
+          "mant_plan": 191,
+          "mant": 0.91,
+          "ot_dias": 7,
+          "mant_prev": 0.07,
+          "cap_horas": 1814.420000000002,
+          "cap_hxc": 9.914863387978153,
+          "cap_cursos": 112,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            0,
+            2
+          ],
+          "dias_vacante": [
+            89,
+            12
+          ],
+          "desercion": [
+            27,
+            75
+          ],
+          "descarte": [
+            0,
+            11
+          ],
+          "efectividad": [
+            0,
+            11
+          ],
+          "rot_total": [
+            10,
+            183
+          ],
+          "rot_renuncia": [
+            9,
+            183
+          ],
+          "rot_despido": [
+            1,
+            183
+          ],
+          "nuevos": [
+            11,
+            183
+          ],
+          "ausentismo": [
+            66,
+            0
+          ],
+          "vac_cobertura": [
+            102,
+            0
+          ],
+          "cap_horas": [
+            1814.420000000002,
+            1
+          ],
+          "cap_cursos": [
+            112,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0.04,
+          "sucesion": 0,
+          "dias_vacante": 6.0344827586206895,
+          "desercion": 0.24369747899159663,
+          "descarte": 0.22580645161290322,
+          "efectividad": 0.043478260869565216,
+          "rot_total": 0.051490514905149054,
+          "rot_renuncia": 0.04918032786885246,
+          "rot_despido": 0.00546448087431694,
+          "nuevos": 0.04065040650406504,
+          "ausentismo": 8.159090909090908,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 146,
+          "record_dias": 145,
+          "mant_plan": 191,
+          "mant": 0.91,
+          "ot_dias": 7,
+          "mant_prev": 0.07,
+          "cap_horas": 3741.2700000000023,
+          "cap_hxc": 9.914863387978153,
+          "cap_cursos": 418,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 0,
+        "prom": 183,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 146
+      },
+      "Costa Rica": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 7.416666666666667,
+          "desercion": 0.36,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0.0546448087431694,
+          "rot_renuncia": 0.04918032786885246,
+          "rot_despido": 0.00546448087431694,
+          "nuevos": 0.060109289617486336,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 146,
+          "record_dias": 145,
+          "mant_plan": 191,
+          "mant": 0.91,
+          "ot_dias": 7,
+          "mant_prev": 0.07,
+          "cap_horas": 1814.420000000002,
+          "cap_hxc": 9.914863387978153,
+          "cap_cursos": 112,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            0,
+            2
+          ],
+          "dias_vacante": [
+            89,
+            12
+          ],
+          "desercion": [
+            27,
+            75
+          ],
+          "descarte": [
+            0,
+            11
+          ],
+          "efectividad": [
+            0,
+            11
+          ],
+          "rot_total": [
+            10,
+            183
+          ],
+          "rot_renuncia": [
+            9,
+            183
+          ],
+          "rot_despido": [
+            1,
+            183
+          ],
+          "nuevos": [
+            11,
+            183
+          ],
+          "ausentismo": [
+            66,
+            0
+          ],
+          "vac_cobertura": [
+            102,
+            0
+          ],
+          "cap_horas": [
+            1814.420000000002,
+            1
+          ],
+          "cap_cursos": [
+            112,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0.03333333333333333,
+          "sucesion": 0,
+          "dias_vacante": 6.0344827586206895,
+          "desercion": 0.24369747899159663,
+          "descarte": 0.22580645161290322,
+          "efectividad": 0.043478260869565216,
+          "rot_total": 0.051490514905149054,
+          "rot_renuncia": 0.04918032786885246,
+          "rot_despido": 0.00546448087431694,
+          "nuevos": 0.04065040650406504,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 146,
+          "record_dias": 145,
+          "mant_plan": 191,
+          "mant": 0.91,
+          "ot_dias": 7,
+          "mant_prev": 0.07,
+          "cap_horas": 3741.2700000000023,
+          "cap_hxc": 9.914863387978153,
+          "cap_cursos": 418,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 0,
+        "prom": 183,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 146
+      },
+      "Venezuela": {
+        "ind": {
+          "rot_indeseada": 0.5,
+          "sucesion": 0,
+          "dias_vacante": 7.416666666666667,
+          "desercion": 0.36,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0.060109289617486336,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 146,
+          "record_dias": 145,
+          "mant_plan": 191,
+          "mant": 0.91,
+          "ot_dias": 7,
+          "mant_prev": 0.07,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            1,
+            2
+          ],
+          "dias_vacante": [
+            89,
+            12
+          ],
+          "desercion": [
+            27,
+            75
+          ],
+          "descarte": [
+            0,
+            11
+          ],
+          "efectividad": [
+            0,
+            11
+          ],
+          "rot_total": [
+            0,
+            183
+          ],
+          "rot_renuncia": [
+            0,
+            183
+          ],
+          "rot_despido": [
+            0,
+            183
+          ],
+          "nuevos": [
+            11,
+            183
+          ],
+          "ausentismo": [
+            0,
+            0
+          ],
+          "vac_cobertura": [
+            0,
+            0
+          ],
+          "cap_horas": [
+            0,
+            1
+          ],
+          "cap_cursos": [
+            0,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0.03333333333333333,
+          "sucesion": 0,
+          "dias_vacante": 6.0344827586206895,
+          "desercion": 0.24369747899159663,
+          "descarte": 0.22580645161290322,
+          "efectividad": 0.043478260869565216,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0.04065040650406504,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 146,
+          "record_dias": 145,
+          "mant_plan": 191,
+          "mant": 0.91,
+          "ot_dias": 7,
+          "mant_prev": 0.07,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 0,
+        "prom": 183,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 146
+      }
+    },
+    "2026-05": {
+      "__all__": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 15.5,
+          "desercion": 0.35294117647058826,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0.036458333333333336,
+          "rot_renuncia": 0.020833333333333332,
+          "rot_despido": 0.015625,
+          "nuevos": 0.057291666666666664,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 177,
+          "record_dias": 175,
+          "mant_plan": 201,
+          "mant": 0.86,
+          "ot_dias": 3,
+          "mant_prev": 0.91,
+          "cap_horas": 346.5000000000001,
+          "cap_hxc": 1.8046875000000007,
+          "cap_cursos": 112,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            0,
+            17
+          ],
+          "dias_vacante": [
+            186,
+            12
+          ],
+          "desercion": [
+            42,
+            119
+          ],
+          "descarte": [
+            0,
+            11
+          ],
+          "efectividad": [
+            0,
+            11
+          ],
+          "rot_total": [
+            7,
+            192
+          ],
+          "rot_renuncia": [
+            4,
+            192
+          ],
+          "rot_despido": [
+            3,
+            192
+          ],
+          "nuevos": [
+            11,
+            192
+          ],
+          "ausentismo": [
+            108,
+            0
+          ],
+          "vac_cobertura": [
+            153,
+            0
+          ],
+          "cap_horas": [
+            346.5000000000001,
+            1
+          ],
+          "cap_cursos": [
+            112,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0.023809523809523808,
+          "sucesion": 0,
+          "dias_vacante": 8.804878048780488,
+          "desercion": 0.2710084033613445,
+          "descarte": 0.16666666666666666,
+          "efectividad": 0.029411764705882353,
+          "rot_total": 0.04838709677419355,
+          "rot_renuncia": 0.020833333333333332,
+          "rot_despido": 0.015625,
+          "nuevos": 0.04408602150537634,
+          "ausentismo": 9.386363636363637,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 177,
+          "record_dias": 175,
+          "mant_plan": 201,
+          "mant": 0.86,
+          "ot_dias": 3,
+          "mant_prev": 0.91,
+          "cap_horas": 4087.7700000000023,
+          "cap_hxc": 1.8046875000000007,
+          "cap_cursos": 530,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 0,
+        "prom": 192,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 177
+      },
+      "Costa Rica": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 15.5,
+          "desercion": 0.35294117647058826,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0.036458333333333336,
+          "rot_renuncia": 0.020833333333333332,
+          "rot_despido": 0.015625,
+          "nuevos": 0.057291666666666664,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 177,
+          "record_dias": 175,
+          "mant_plan": 201,
+          "mant": 0.86,
+          "ot_dias": 3,
+          "mant_prev": 0.91,
+          "cap_horas": 346.5000000000001,
+          "cap_hxc": 1.8046875000000007,
+          "cap_cursos": 112,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            0,
+            17
+          ],
+          "dias_vacante": [
+            186,
+            12
+          ],
+          "desercion": [
+            42,
+            119
+          ],
+          "descarte": [
+            0,
+            11
+          ],
+          "efectividad": [
+            0,
+            11
+          ],
+          "rot_total": [
+            7,
+            192
+          ],
+          "rot_renuncia": [
+            4,
+            192
+          ],
+          "rot_despido": [
+            3,
+            192
+          ],
+          "nuevos": [
+            11,
+            192
+          ],
+          "ausentismo": [
+            108,
+            0
+          ],
+          "vac_cobertura": [
+            153,
+            0
+          ],
+          "cap_horas": [
+            346.5000000000001,
+            1
+          ],
+          "cap_cursos": [
+            112,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0.02127659574468085,
+          "sucesion": 0,
+          "dias_vacante": 8.804878048780488,
+          "desercion": 0.2710084033613445,
+          "descarte": 0.16666666666666666,
+          "efectividad": 0.029411764705882353,
+          "rot_total": 0.04838709677419355,
+          "rot_renuncia": 0.020833333333333332,
+          "rot_despido": 0.015625,
+          "nuevos": 0.04408602150537634,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 177,
+          "record_dias": 175,
+          "mant_plan": 201,
+          "mant": 0.86,
+          "ot_dias": 3,
+          "mant_prev": 0.91,
+          "cap_horas": 4087.7700000000023,
+          "cap_hxc": 1.8046875000000007,
+          "cap_cursos": 530,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 0,
+        "prom": 192,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 177
+      },
+      "Venezuela": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 15.5,
+          "desercion": 0.35294117647058826,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0.057291666666666664,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 177,
+          "record_dias": 175,
+          "mant_plan": 201,
+          "mant": 0.86,
+          "ot_dias": 3,
+          "mant_prev": 0.91,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            0,
+            17
+          ],
+          "dias_vacante": [
+            186,
+            12
+          ],
+          "desercion": [
+            42,
+            119
+          ],
+          "descarte": [
+            0,
+            11
+          ],
+          "efectividad": [
+            0,
+            11
+          ],
+          "rot_total": [
+            0,
+            192
+          ],
+          "rot_renuncia": [
+            0,
+            192
+          ],
+          "rot_despido": [
+            0,
+            192
+          ],
+          "nuevos": [
+            11,
+            192
+          ],
+          "ausentismo": [
+            0,
+            0
+          ],
+          "vac_cobertura": [
+            0,
+            0
+          ],
+          "cap_horas": [
+            0,
+            1
+          ],
+          "cap_cursos": [
+            0,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0.02127659574468085,
+          "sucesion": 0,
+          "dias_vacante": 8.804878048780488,
+          "desercion": 0.2710084033613445,
+          "descarte": 0.16666666666666666,
+          "efectividad": 0.029411764705882353,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0.04408602150537634,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 177,
+          "record_dias": 175,
+          "mant_plan": 201,
+          "mant": 0.86,
+          "ot_dias": 3,
+          "mant_prev": 0.91,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 0,
+        "prom": 192,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 177
+      }
+    },
+    "2026-06": {
+      "__all__": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 19.2,
+          "desercion": 0.3132530120481928,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0.015706806282722512,
+          "rot_renuncia": 0.005235602094240838,
+          "rot_despido": 0.010471204188481676,
+          "nuevos": 0.02617801047120419,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 207,
+          "record_dias": 205,
+          "mant_plan": 107,
+          "mant": 0.91,
+          "ot_dias": 4,
+          "mant_prev": 0.91,
+          "cap_horas": 35.19000000000006,
+          "cap_hxc": 0.1842408376963354,
+          "cap_cursos": 94,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            0,
+            17
+          ],
+          "dias_vacante": [
+            96,
+            5
+          ],
+          "desercion": [
+            26,
+            83
+          ],
+          "descarte": [
+            0,
+            5
+          ],
+          "efectividad": [
+            0,
+            5
+          ],
+          "rot_total": [
+            3,
+            191
+          ],
+          "rot_renuncia": [
+            1,
+            191
+          ],
+          "rot_despido": [
+            2,
+            191
+          ],
+          "nuevos": [
+            5,
+            191
+          ],
+          "ausentismo": [
+            445,
+            0
+          ],
+          "vac_cobertura": [
+            221,
+            0
+          ],
+          "cap_horas": [
+            35.19000000000006,
+            1
+          ],
+          "cap_cursos": [
+            94,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0.01694915254237288,
+          "sucesion": 0,
+          "dias_vacante": 9.934782608695652,
+          "desercion": 0.2772808586762075,
+          "descarte": 0.14893617021276595,
+          "efectividad": 0.02564102564102564,
+          "rot_total": 0.042818911685994644,
+          "rot_renuncia": 0.005235602094240838,
+          "rot_despido": 0.010471204188481676,
+          "nuevos": 0.04103479036574487,
+          "ausentismo": 14.443181818181818,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 207,
+          "record_dias": 205,
+          "mant_plan": 107,
+          "mant": 0.91,
+          "ot_dias": 4,
+          "mant_prev": 0.91,
+          "cap_horas": 4122.960000000003,
+          "cap_hxc": 0.1842408376963354,
+          "cap_cursos": 624,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 0,
+        "prom": 191,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 207
+      },
+      "Costa Rica": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 19.2,
+          "desercion": 0.3132530120481928,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0.015706806282722512,
+          "rot_renuncia": 0.005235602094240838,
+          "rot_despido": 0.010471204188481676,
+          "nuevos": 0.02617801047120419,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 207,
+          "record_dias": 205,
+          "mant_plan": 107,
+          "mant": 0.91,
+          "ot_dias": 4,
+          "mant_prev": 0.91,
+          "cap_horas": 35.19000000000006,
+          "cap_hxc": 0.1842408376963354,
+          "cap_cursos": 94,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            0,
+            17
+          ],
+          "dias_vacante": [
+            96,
+            5
+          ],
+          "desercion": [
+            26,
+            83
+          ],
+          "descarte": [
+            0,
+            5
+          ],
+          "efectividad": [
+            0,
+            5
+          ],
+          "rot_total": [
+            3,
+            191
+          ],
+          "rot_renuncia": [
+            1,
+            191
+          ],
+          "rot_despido": [
+            2,
+            191
+          ],
+          "nuevos": [
+            5,
+            191
+          ],
+          "ausentismo": [
+            445,
+            0
+          ],
+          "vac_cobertura": [
+            221,
+            0
+          ],
+          "cap_horas": [
+            35.19000000000006,
+            1
+          ],
+          "cap_cursos": [
+            94,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0.015625,
+          "sucesion": 0,
+          "dias_vacante": 9.934782608695652,
+          "desercion": 0.2772808586762075,
+          "descarte": 0.14893617021276595,
+          "efectividad": 0.02564102564102564,
+          "rot_total": 0.042818911685994644,
+          "rot_renuncia": 0.005235602094240838,
+          "rot_despido": 0.010471204188481676,
+          "nuevos": 0.04103479036574487,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 207,
+          "record_dias": 205,
+          "mant_plan": 107,
+          "mant": 0.91,
+          "ot_dias": 4,
+          "mant_prev": 0.91,
+          "cap_horas": 4122.960000000003,
+          "cap_hxc": 0.1842408376963354,
+          "cap_cursos": 624,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 0,
+        "prom": 191,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 207
+      },
+      "Venezuela": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 19.2,
+          "desercion": 0.3132530120481928,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0.02617801047120419,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 207,
+          "record_dias": 205,
+          "mant_plan": 107,
+          "mant": 0.91,
+          "ot_dias": 4,
+          "mant_prev": 0.91,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            0,
+            17
+          ],
+          "dias_vacante": [
+            96,
+            5
+          ],
+          "desercion": [
+            26,
+            83
+          ],
+          "descarte": [
+            0,
+            5
+          ],
+          "efectividad": [
+            0,
+            5
+          ],
+          "rot_total": [
+            0,
+            191
+          ],
+          "rot_renuncia": [
+            0,
+            191
+          ],
+          "rot_despido": [
+            0,
+            191
+          ],
+          "nuevos": [
+            5,
+            191
+          ],
+          "ausentismo": [
+            0,
+            0
+          ],
+          "vac_cobertura": [
+            0,
+            0
+          ],
+          "cap_horas": [
+            0,
+            1
+          ],
+          "cap_cursos": [
+            0,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0.015625,
+          "sucesion": 0,
+          "dias_vacante": 9.934782608695652,
+          "desercion": 0.2772808586762075,
+          "descarte": 0.14893617021276595,
+          "efectividad": 0.02564102564102564,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0.04103479036574487,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 207,
+          "record_dias": 205,
+          "mant_plan": 107,
+          "mant": 0.91,
+          "ot_dias": 4,
+          "mant_prev": 0.91,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 0,
+        "prom": 191,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 207
+      }
+    },
+    "2026-07": {
+      "__all__": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0.016483516483516484,
+          "dias_vacante": 17,
+          "desercion": 0.3372093023255814,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0.06951871657754011,
+          "rot_renuncia": 0.026737967914438502,
+          "rot_despido": 0.0427807486631016,
+          "nuevos": 0.016042780748663103,
+          "ausentismo": 0.02150023889154324,
+          "vac_cobertura": 0.10013175230566534,
+          "vacante_activa": 0,
+          "encuesta": 4.2,
+          "merma_hurto": 1,
+          "accidentes": 1,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 8,
+          "record_dias": 231,
+          "mant_plan": 156,
+          "mant": 0.99,
+          "ot_dias": 2,
+          "mant_prev": 0.99,
+          "cap_horas": 55,
+          "cap_hxc": 0.3021978021978022,
+          "cap_cursos": 55,
+          "edad_prom": 31.84342351693481,
+          "antig_prom": 2.7793021489120058,
+          "promo_asc": 0.13736263736263737,
+          "promo": 0.12087912087912088,
+          "ascenso": 0.016483516483516484
+        },
+        "raw": {
+          "rot_indeseada": [
+            0,
+            36
+          ],
+          "dias_vacante": [
+            68,
+            4
+          ],
+          "desercion": [
+            29,
+            86
+          ],
+          "descarte": [
+            0,
+            3
+          ],
+          "efectividad": [
+            0,
+            3
+          ],
+          "rot_total": [
+            13,
+            187
+          ],
+          "rot_renuncia": [
+            5,
+            187
+          ],
+          "rot_despido": [
+            8,
+            187
+          ],
+          "nuevos": [
+            3,
+            187
+          ],
+          "ausentismo": [
+            90,
+            4186
+          ],
+          "vac_cobertura": [
+            228,
+            2277
+          ],
+          "cap_horas": [
+            55,
+            1
+          ],
+          "cap_cursos": [
+            55,
+            1
+          ],
+          "accidentes": [
+            1,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0.010526315789473684,
+          "sucesion": 0.016483516483516484,
+          "dias_vacante": 10.5,
+          "desercion": 0.28527131782945736,
+          "descarte": 0.14,
+          "efectividad": 0.023809523809523808,
+          "rot_total": 0.046636085626911315,
+          "rot_renuncia": 0.026737967914438502,
+          "rot_despido": 0.0427807486631016,
+          "nuevos": 0.03746177370030581,
+          "ausentismo": 0.3184370613008891,
+          "vac_cobertura": 0.5744400527009222,
+          "vacante_activa": 0,
+          "encuesta": 4.2,
+          "merma_hurto": 1,
+          "accidentes": 1,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 8,
+          "record_dias": 231,
+          "mant_plan": 156,
+          "mant": 0.99,
+          "ot_dias": 2,
+          "mant_prev": 0.99,
+          "cap_horas": 4177.960000000003,
+          "cap_hxc": 0.3021978021978022,
+          "cap_cursos": 679,
+          "edad_prom": 31.84342351693481,
+          "antig_prom": 2.7793021489120058,
+          "promo_asc": 0.13736263736263737,
+          "promo": 0.12087912087912088,
+          "ascenso": 0.016483516483516484
+        },
+        "hcTot": 182,
+        "prom": 187,
+        "edadProm": 31.84342351693481,
+        "antigProm": 2.7793021489120058,
+        "diasSinAcc": 8
+      },
+      "Costa Rica": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0.016483516483516484,
+          "dias_vacante": 17,
+          "desercion": 0.3372093023255814,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0.06951871657754011,
+          "rot_renuncia": 0.026737967914438502,
+          "rot_despido": 0.0427807486631016,
+          "nuevos": 0.016042780748663103,
+          "ausentismo": 0.02150023889154324,
+          "vac_cobertura": 0.10013175230566534,
+          "vacante_activa": 0,
+          "encuesta": 4.2,
+          "merma_hurto": 1,
+          "accidentes": 1,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 8,
+          "record_dias": 231,
+          "mant_plan": 156,
+          "mant": 0.99,
+          "ot_dias": 2,
+          "mant_prev": 0.99,
+          "cap_horas": 55,
+          "cap_hxc": 0.3021978021978022,
+          "cap_cursos": 55,
+          "edad_prom": 31.84342351693481,
+          "antig_prom": 2.7793021489120058,
+          "promo_asc": 0.13736263736263737,
+          "promo": 0.12087912087912088,
+          "ascenso": 0.016483516483516484
+        },
+        "raw": {
+          "rot_indeseada": [
+            0,
+            36
+          ],
+          "dias_vacante": [
+            68,
+            4
+          ],
+          "desercion": [
+            29,
+            86
+          ],
+          "descarte": [
+            0,
+            3
+          ],
+          "efectividad": [
+            0,
+            3
+          ],
+          "rot_total": [
+            13,
+            187
+          ],
+          "rot_renuncia": [
+            5,
+            187
+          ],
+          "rot_despido": [
+            8,
+            187
+          ],
+          "nuevos": [
+            3,
+            187
+          ],
+          "ausentismo": [
+            90,
+            4186
+          ],
+          "vac_cobertura": [
+            228,
+            2277
+          ],
+          "cap_horas": [
+            55,
+            1
+          ],
+          "cap_cursos": [
+            55,
+            1
+          ],
+          "accidentes": [
+            1,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0.01,
+          "sucesion": 0.016483516483516484,
+          "dias_vacante": 10.5,
+          "desercion": 0.28527131782945736,
+          "descarte": 0.14,
+          "efectividad": 0.023809523809523808,
+          "rot_total": 0.046636085626911315,
+          "rot_renuncia": 0.026737967914438502,
+          "rot_despido": 0.0427807486631016,
+          "nuevos": 0.03746177370030581,
+          "ausentismo": 0.32513139034878163,
+          "vac_cobertura": 0.5744400527009222,
+          "vacante_activa": 0,
+          "encuesta": 4.2,
+          "merma_hurto": 1,
+          "accidentes": 1,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 8,
+          "record_dias": 231,
+          "mant_plan": 156,
+          "mant": 0.99,
+          "ot_dias": 2,
+          "mant_prev": 0.99,
+          "cap_horas": 4177.960000000003,
+          "cap_hxc": 0.3021978021978022,
+          "cap_cursos": 679,
+          "edad_prom": 31.84342351693481,
+          "antig_prom": 2.7793021489120058,
+          "promo_asc": 0.13736263736263737,
+          "promo": 0.12087912087912088,
+          "ascenso": 0.016483516483516484
+        },
+        "hcTot": 182,
+        "prom": 187,
+        "edadProm": 31.84342351693481,
+        "antigProm": 2.7793021489120058,
+        "diasSinAcc": 8
+      },
+      "Venezuela": {
+        "ind": {
+          "rot_indeseada": 0.11764705882352941,
+          "sucesion": 0,
+          "dias_vacante": 17,
+          "desercion": 0.3372093023255814,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0.016042780748663103,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 4.2,
+          "merma_hurto": 1,
+          "accidentes": 1,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 8,
+          "record_dias": 231,
+          "mant_plan": 156,
+          "mant": 0.99,
+          "ot_dias": 2,
+          "mant_prev": 0.99,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            2,
+            17
+          ],
+          "dias_vacante": [
+            68,
+            4
+          ],
+          "desercion": [
+            29,
+            86
+          ],
+          "descarte": [
+            0,
+            3
+          ],
+          "efectividad": [
+            0,
+            3
+          ],
+          "rot_total": [
+            0,
+            187
+          ],
+          "rot_renuncia": [
+            0,
+            187
+          ],
+          "rot_despido": [
+            0,
+            187
+          ],
+          "nuevos": [
+            3,
+            187
+          ],
+          "ausentismo": [
+            0,
+            0
+          ],
+          "vac_cobertura": [
+            0,
+            0
+          ],
+          "cap_horas": [
+            0,
+            1
+          ],
+          "cap_cursos": [
+            0,
+            1
+          ],
+          "accidentes": [
+            1,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0.037037037037037035,
+          "sucesion": 0,
+          "dias_vacante": 10.5,
+          "desercion": 0.28527131782945736,
+          "descarte": 0.14,
+          "efectividad": 0.023809523809523808,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0.03746177370030581,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 4.2,
+          "merma_hurto": 1,
+          "accidentes": 1,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 8,
+          "record_dias": 231,
+          "mant_plan": 156,
+          "mant": 0.99,
+          "ot_dias": 2,
+          "mant_prev": 0.99,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 0,
+        "prom": 187,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 8
+      }
+    },
+    "2026-08": {
+      "__all__": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 15,
+          "desercion": 0.3055555555555556,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0.03932584269662921,
+          "rot_renuncia": 0.016853932584269662,
+          "rot_despido": 0.011235955056179775,
+          "nuevos": 0.0056179775280898875,
+          "ausentismo": 0.3389355742296919,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 39,
+          "record_dias": 39,
+          "mant_plan": 131,
+          "mant": 0.95,
+          "ot_dias": 1,
+          "mant_prev": 0.95,
+          "cap_horas": 374.25,
+          "cap_hxc": 22.014705882352942,
+          "cap_cursos": 66,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            2,
+            0
+          ],
+          "dias_vacante": [
+            15,
+            1
+          ],
+          "desercion": [
+            22,
+            72
+          ],
+          "descarte": [
+            0,
+            1
+          ],
+          "efectividad": [
+            0,
+            1
+          ],
+          "rot_total": [
+            7,
+            178
+          ],
+          "rot_renuncia": [
+            3,
+            178
+          ],
+          "rot_despido": [
+            2,
+            178
+          ],
+          "nuevos": [
+            1,
+            178
+          ],
+          "ausentismo": [
+            121,
+            357
+          ],
+          "vac_cobertura": [
+            107,
+            0
+          ],
+          "cap_horas": [
+            374.25,
+            1
+          ],
+          "cap_cursos": [
+            66,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0.031578947368421054,
+          "sucesion": 0,
+          "dias_vacante": 10.588235294117647,
+          "desercion": 0.28730822873082285,
+          "descarte": 0.13725490196078433,
+          "efectividad": 0.023255813953488372,
+          "rot_total": 0.04576043068640646,
+          "rot_renuncia": 0.016853932584269662,
+          "rot_despido": 0.011235955056179775,
+          "nuevos": 0.033647375504710635,
+          "ausentismo": 0.32001727488663356,
+          "vac_cobertura": 0.6214317083882301,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 1,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 39,
+          "record_dias": 39,
+          "mant_plan": 131,
+          "mant": 0.95,
+          "ot_dias": 1,
+          "mant_prev": 0.95,
+          "cap_horas": 4552.210000000003,
+          "cap_hxc": 22.014705882352942,
+          "cap_cursos": 745,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 17,
+        "prom": 178,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 39
+      },
+      "Costa Rica": {
+        "ind": {
+          "rot_indeseada": 0.13333333333333333,
+          "sucesion": 0,
+          "dias_vacante": 15,
+          "desercion": 0.3055555555555556,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0.03932584269662921,
+          "rot_renuncia": 0.016853932584269662,
+          "rot_despido": 0.011235955056179775,
+          "nuevos": 0.0056179775280898875,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 39,
+          "record_dias": 39,
+          "mant_plan": 131,
+          "mant": 0.95,
+          "ot_dias": 1,
+          "mant_prev": 0.95,
+          "cap_horas": 374.25,
+          "cap_hxc": 2.1025280898876404,
+          "cap_cursos": 66,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            2,
+            15
+          ],
+          "dias_vacante": [
+            15,
+            1
+          ],
+          "desercion": [
+            22,
+            72
+          ],
+          "descarte": [
+            0,
+            1
+          ],
+          "efectividad": [
+            0,
+            1
+          ],
+          "rot_total": [
+            7,
+            178
+          ],
+          "rot_renuncia": [
+            3,
+            178
+          ],
+          "rot_despido": [
+            2,
+            178
+          ],
+          "nuevos": [
+            1,
+            178
+          ],
+          "ausentismo": [
+            121,
+            0
+          ],
+          "vac_cobertura": [
+            107,
+            0
+          ],
+          "cap_horas": [
+            374.25,
+            1
+          ],
+          "cap_cursos": [
+            66,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0.02608695652173913,
+          "sucesion": 0,
+          "dias_vacante": 10.588235294117647,
+          "desercion": 0.28730822873082285,
+          "descarte": 0.13725490196078433,
+          "efectividad": 0.023255813953488372,
+          "rot_total": 0.04576043068640646,
+          "rot_renuncia": 0.016853932584269662,
+          "rot_despido": 0.011235955056179775,
+          "nuevos": 0.033647375504710635,
+          "ausentismo": 0.35403726708074534,
+          "vac_cobertura": 0.6214317083882301,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 1,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 39,
+          "record_dias": 39,
+          "mant_plan": 131,
+          "mant": 0.95,
+          "ot_dias": 1,
+          "mant_prev": 0.95,
+          "cap_horas": 4552.210000000003,
+          "cap_hxc": 2.1025280898876404,
+          "cap_cursos": 745,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 0,
+        "prom": 178,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 39
+      },
+      "Venezuela": {
+        "ind": {
+          "rot_indeseada": 0.13333333333333333,
+          "sucesion": 0,
+          "dias_vacante": 15,
+          "desercion": 0.3055555555555556,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0.0056179775280898875,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 39,
+          "record_dias": 39,
+          "mant_plan": 131,
+          "mant": 0.95,
+          "ot_dias": 1,
+          "mant_prev": 0.95,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            2,
+            15
+          ],
+          "dias_vacante": [
+            15,
+            1
+          ],
+          "desercion": [
+            22,
+            72
+          ],
+          "descarte": [
+            0,
+            1
+          ],
+          "efectividad": [
+            0,
+            1
+          ],
+          "rot_total": [
+            0,
+            178
+          ],
+          "rot_renuncia": [
+            0,
+            178
+          ],
+          "rot_despido": [
+            0,
+            178
+          ],
+          "nuevos": [
+            1,
+            178
+          ],
+          "ausentismo": [
+            0,
+            0
+          ],
+          "vac_cobertura": [
+            0,
+            0
+          ],
+          "cap_horas": [
+            0,
+            1
+          ],
+          "cap_cursos": [
+            0,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0.052083333333333336,
+          "sucesion": 0,
+          "dias_vacante": 10.588235294117647,
+          "desercion": 0.28730822873082285,
+          "descarte": 0.13725490196078433,
+          "efectividad": 0.023255813953488372,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0.033647375504710635,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 1,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 39,
+          "record_dias": 39,
+          "mant_plan": 131,
+          "mant": 0.95,
+          "ot_dias": 1,
+          "mant_prev": 0.95,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 0,
+        "prom": 178,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 39
+      }
+    },
+    "2026-09": {
+      "__all__": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 12.25,
+          "desercion": 0.4666666666666667,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0.03529411764705882,
+          "rot_renuncia": 0.023529411764705882,
+          "rot_despido": 0.0058823529411764705,
+          "nuevos": 0,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 69,
+          "record_dias": 69,
+          "mant_plan": 135,
+          "mant": 0.89,
+          "ot_dias": 0,
+          "mant_prev": 0.9,
+          "cap_horas": 16,
+          "cap_hxc": 0.09411764705882353,
+          "cap_cursos": 16,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            0,
+            15
+          ],
+          "dias_vacante": [
+            49,
+            4
+          ],
+          "desercion": [
+            21,
+            45
+          ],
+          "descarte": [
+            0,
+            0
+          ],
+          "efectividad": [
+            0,
+            0
+          ],
+          "rot_total": [
+            6,
+            170
+          ],
+          "rot_renuncia": [
+            4,
+            170
+          ],
+          "rot_despido": [
+            1,
+            170
+          ],
+          "nuevos": [
+            0,
+            170
+          ],
+          "ausentismo": [
+            125,
+            0
+          ],
+          "vac_cobertura": [
+            114,
+            0
+          ],
+          "cap_horas": [
+            16,
+            1
+          ],
+          "cap_cursos": [
+            16,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0.02727272727272727,
+          "sucesion": 0,
+          "dias_vacante": 10.709090909090909,
+          "desercion": 0.2979002624671916,
+          "descarte": 0.13725490196078433,
+          "efectividad": 0.023255813953488372,
+          "rot_total": 0.04468599033816425,
+          "rot_renuncia": 0.023529411764705882,
+          "rot_despido": 0.0058823529411764705,
+          "nuevos": 0.030193236714975844,
+          "ausentismo": 0.34700928525156555,
+          "vac_cobertura": 0.6714975845410628,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 1,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 69,
+          "record_dias": 69,
+          "mant_plan": 135,
+          "mant": 0.89,
+          "ot_dias": 0,
+          "mant_prev": 0.9,
+          "cap_horas": 4568.210000000003,
+          "cap_hxc": 0.09411764705882353,
+          "cap_cursos": 761,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 0,
+        "prom": 170,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 69
+      },
+      "Costa Rica": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 12.25,
+          "desercion": 0.4666666666666667,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0.03529411764705882,
+          "rot_renuncia": 0.023529411764705882,
+          "rot_despido": 0.0058823529411764705,
+          "nuevos": 0,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 69,
+          "record_dias": 69,
+          "mant_plan": 135,
+          "mant": 0.89,
+          "ot_dias": 0,
+          "mant_prev": 0.9,
+          "cap_horas": 16,
+          "cap_hxc": 0.09411764705882353,
+          "cap_cursos": 16,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            0,
+            15
+          ],
+          "dias_vacante": [
+            49,
+            4
+          ],
+          "desercion": [
+            21,
+            45
+          ],
+          "descarte": [
+            0,
+            0
+          ],
+          "efectividad": [
+            0,
+            0
+          ],
+          "rot_total": [
+            6,
+            170
+          ],
+          "rot_renuncia": [
+            4,
+            170
+          ],
+          "rot_despido": [
+            1,
+            170
+          ],
+          "nuevos": [
+            0,
+            170
+          ],
+          "ausentismo": [
+            125,
+            0
+          ],
+          "vac_cobertura": [
+            114,
+            0
+          ],
+          "cap_horas": [
+            16,
+            1
+          ],
+          "cap_cursos": [
+            16,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0.023076923076923078,
+          "sucesion": 0,
+          "dias_vacante": 10.709090909090909,
+          "desercion": 0.2979002624671916,
+          "descarte": 0.13725490196078433,
+          "efectividad": 0.023255813953488372,
+          "rot_total": 0.04468599033816425,
+          "rot_renuncia": 0.023529411764705882,
+          "rot_despido": 0.0058823529411764705,
+          "nuevos": 0.030193236714975844,
+          "ausentismo": 0.3838987099856665,
+          "vac_cobertura": 0.6714975845410628,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 1,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 69,
+          "record_dias": 69,
+          "mant_plan": 135,
+          "mant": 0.89,
+          "ot_dias": 0,
+          "mant_prev": 0.9,
+          "cap_horas": 4568.210000000003,
+          "cap_hxc": 0.09411764705882353,
+          "cap_cursos": 761,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 0,
+        "prom": 170,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 69
+      },
+      "Venezuela": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 12.25,
+          "desercion": 0.4666666666666667,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 69,
+          "record_dias": 69,
+          "mant_plan": 135,
+          "mant": 0.89,
+          "ot_dias": 0,
+          "mant_prev": 0.9,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            0,
+            15
+          ],
+          "dias_vacante": [
+            49,
+            4
+          ],
+          "desercion": [
+            21,
+            45
+          ],
+          "descarte": [
+            0,
+            0
+          ],
+          "efectividad": [
+            0,
+            0
+          ],
+          "rot_total": [
+            0,
+            170
+          ],
+          "rot_renuncia": [
+            0,
+            170
+          ],
+          "rot_despido": [
+            0,
+            170
+          ],
+          "nuevos": [
+            0,
+            170
+          ],
+          "ausentismo": [
+            0,
+            0
+          ],
+          "vac_cobertura": [
+            0,
+            0
+          ],
+          "cap_horas": [
+            0,
+            1
+          ],
+          "cap_cursos": [
+            0,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0.04504504504504504,
+          "sucesion": 0,
+          "dias_vacante": 10.709090909090909,
+          "desercion": 0.2979002624671916,
+          "descarte": 0.13725490196078433,
+          "efectividad": 0.023255813953488372,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0.030193236714975844,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 1,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 69,
+          "record_dias": 69,
+          "mant_plan": 135,
+          "mant": 0.89,
+          "ot_dias": 0,
+          "mant_prev": 0.9,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 0,
+        "prom": 170,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 69
+      }
+    },
+    "2027-09": {
+      "__all__": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 0,
+          "desercion": 0,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 75,
+          "record_dias": 0,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 55.32922655715264,
+          "antig_prom": 14.598220396988363,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            0,
+            0
+          ],
+          "dias_vacante": [
+            0,
+            0
+          ],
+          "desercion": [
+            0,
+            1
+          ],
+          "descarte": [
+            0,
+            0
+          ],
+          "efectividad": [
+            0,
+            0
+          ],
+          "rot_total": [
+            0,
+            1
+          ],
+          "rot_renuncia": [
+            0,
+            1
+          ],
+          "rot_despido": [
+            0,
+            1
+          ],
+          "nuevos": [
+            0,
+            1
+          ],
+          "ausentismo": [
+            0,
+            21
+          ],
+          "vac_cobertura": [
+            0,
+            26
+          ],
+          "cap_horas": [
+            0,
+            1
+          ],
+          "cap_cursos": [
+            0,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 0,
+          "desercion": 0,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 75,
+          "record_dias": 0,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 55.32922655715264,
+          "antig_prom": 14.598220396988363,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 1,
+        "prom": 1,
+        "edadProm": 55.32922655715264,
+        "antigProm": 14.598220396988363,
+        "diasSinAcc": 75
+      },
+      "Costa Rica": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 0,
+          "desercion": 0,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 75,
+          "record_dias": 0,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 55.32922655715264,
+          "antig_prom": 14.598220396988363,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            0,
+            0
+          ],
+          "dias_vacante": [
+            0,
+            0
+          ],
+          "desercion": [
+            0,
+            1
+          ],
+          "descarte": [
+            0,
+            0
+          ],
+          "efectividad": [
+            0,
+            0
+          ],
+          "rot_total": [
+            0,
+            1
+          ],
+          "rot_renuncia": [
+            0,
+            1
+          ],
+          "rot_despido": [
+            0,
+            1
+          ],
+          "nuevos": [
+            0,
+            1
+          ],
+          "ausentismo": [
+            0,
+            21
+          ],
+          "vac_cobertura": [
+            0,
+            26
+          ],
+          "cap_horas": [
+            0,
+            1
+          ],
+          "cap_cursos": [
+            0,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 0,
+          "desercion": 0,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 75,
+          "record_dias": 0,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 55.32922655715264,
+          "antig_prom": 14.598220396988363,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 1,
+        "prom": 1,
+        "edadProm": 55.32922655715264,
+        "antigProm": 14.598220396988363,
+        "diasSinAcc": 75
+      },
+      "Venezuela": {
+        "ind": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 0,
+          "desercion": 0,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 75,
+          "record_dias": 0,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "raw": {
+          "rot_indeseada": [
+            0,
+            0
+          ],
+          "dias_vacante": [
+            0,
+            0
+          ],
+          "desercion": [
+            0,
+            0
+          ],
+          "descarte": [
+            0,
+            0
+          ],
+          "efectividad": [
+            0,
+            0
+          ],
+          "rot_total": [
+            0,
+            0
+          ],
+          "rot_renuncia": [
+            0,
+            0
+          ],
+          "rot_despido": [
+            0,
+            0
+          ],
+          "nuevos": [
+            0,
+            0
+          ],
+          "ausentismo": [
+            0,
+            0
+          ],
+          "vac_cobertura": [
+            0,
+            0
+          ],
+          "cap_horas": [
+            0,
+            1
+          ],
+          "cap_cursos": [
+            0,
+            1
+          ],
+          "accidentes": [
+            0,
+            1
+          ],
+          "incidentes": [
+            0,
+            1
+          ]
+        },
+        "acc": {
+          "rot_indeseada": 0,
+          "sucesion": 0,
+          "dias_vacante": 0,
+          "desercion": 0,
+          "descarte": 0,
+          "efectividad": 0,
+          "rot_total": 0,
+          "rot_renuncia": 0,
+          "rot_despido": 0,
+          "nuevos": 0,
+          "ausentismo": 0,
+          "vac_cobertura": 0,
+          "vacante_activa": 0,
+          "encuesta": 0,
+          "merma_hurto": 0,
+          "accidentes": 0,
+          "accid_pct": 0,
+          "colab_accid_n": 0,
+          "incidentes": 0,
+          "dias_sin_acc": 75,
+          "record_dias": 0,
+          "mant_plan": 0,
+          "mant": 0,
+          "ot_dias": 0,
+          "mant_prev": 0,
+          "cap_horas": 0,
+          "cap_hxc": 0,
+          "cap_cursos": 0,
+          "edad_prom": 0,
+          "antig_prom": 0,
+          "promo_asc": 0,
+          "promo": 0,
+          "ascenso": 0
+        },
+        "hcTot": 0,
+        "prom": 0,
+        "edadProm": 0,
+        "antigProm": 0,
+        "diasSinAcc": 75
+      }
+    }
+  }
+}

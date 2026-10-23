@@ -1,0 +1,171 @@
+/* =============================================================================
+   app/(auth)/login/login.module.css
+
+   Estilos SCOPED de la pantalla de login, portados del bloque "Auth · login"
+   de out/index.html (.auth-scrim / .auth-card / .auth-field / .auth-btn /
+   .auth-msg). Se mantienen acá (module) para que el login sea funcional y
+   visualmente coherente SIN depender de app/globals.css, cuya portación 1:1 de
+   variables :root es la tarea 12.1. Los valores de color/tamaño se copian de la
+   fuente de verdad; cuando 12.1 porte las variables, estos estilos pueden
+   migrarse a las clases globales.
+
+   _Requirements: 12.1, 12.3_
+   ============================================================================ */
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: linear-gradient(160deg, #0d3b31, #0a2a23 60%, #08211b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.card {
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  padding: 30px 28px 26px;
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.brandDivider {
+  width: 1px;
+  height: 30px;
+  background: #e2e5e9;
+}
+
+.brand small {
+  display: block;
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: #6b7280;
+  text-transform: uppercase;
+}
+
+.brand b {
+  font-family: "Space Grotesk", "Inter", sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.mark {
+  font-family: "Space Grotesk", "Inter", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #00b497;
+}
+
+.title {
+  font-family: "Space Grotesk", "Inter", sans-serif;
+  font-size: 20px;
+  margin: 18px 0 4px;
+  color: #111827;
+}
+
+.sub {
+  color: #6b7280;
+  font-size: 13px;
+  margin: 0 0 18px;
+}
+
+.field {
+  margin-bottom: 13px;
+}
+
+.field label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+
+.field input {
+  width: 100%;
+  box-sizing: border-box;
+  display: block;
+  border: 1px solid #e2e5e9;
+  border-radius: 10px;
+  padding: 12px 13px;
+  font-family: inherit;
+  font-size: 14.5px;
+  color: #111827;
+  background: #fff;
+  -webkit-appearance: none;
+  appearance: none;
+  transition:
+    border-color 0.14s,
+    box-shadow 0.14s;
+}
+
+.field input::placeholder {
+  color: #9ca3af;
+}
+
+.field input:focus {
+  outline: 0;
+  border-color: #00b497;
+  box-shadow: 0 0 0 3px rgba(0, 180, 151, 0.15);
+}
+
+.btn {
+  width: 100%;
+  background: #00b497;
+  color: #fff;
+  border: 0;
+  border-radius: 10px;
+  padding: 12px;
+  font-weight: 700;
+  font-size: 14.5px;
+  font-family: "Space Grotesk", "Inter", sans-serif;
+  margin-top: 6px;
+  cursor: pointer;
+  transition: 0.14s;
+}
+
+.btn:hover:not(:disabled) {
+  background: #009a81;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.msg {
+  font-size: 12.5px;
+  margin-top: 12px;
+  min-height: 16px;
+}
+
+.msgErr {
+  color: #dc2626;
+}
+
+.msgOk {
+  color: #16a34a;
+}

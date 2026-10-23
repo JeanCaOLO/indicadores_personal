@@ -1,0 +1,1150 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1.1 Crear el proyecto Next.js (App Router + TypeScript) en la carpeta nueva `indicadores-app`": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681052819
+      },
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681066748
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681390250
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681473703
+      }
+    ],
+    "1.2 Crear la estructura de carpetas del diseño y archivos placeholder": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681052997
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681479248
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792682536684
+      }
+    ],
+    "1.3 Configurar el runner de tests (Vitest) y los scripts npm": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681053235
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681480656
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792682537607
+      }
+    ],
+    "2.1 Exportar el snapshot de datos `olo_indicadores_kv`": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681053323
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681481443
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792682538611
+      }
+    ],
+    "2.2 Generar el golden de KPIs calculados por el sistema actual": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681053453
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792682545895
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792682889672
+      }
+    ],
+    "3.1 Implementar `core/types.ts`": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681053563
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792682544815
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792682888603
+      }
+    ],
+    "4.1 Portar `core/kpi-defs.ts` (definiciones de los 29 KPIs y grupos)": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681053667
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792682895280
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683055139
+      }
+    ],
+    "4.3 Portar `core/dates.ts`": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681053739
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792682896304
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683056568
+      }
+    ],
+    "4.5 Portar `core/format.ts`": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681053841
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792682897236
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683057350
+      }
+    ],
+    "4.6 Portar `core/semaphore.ts`": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681053939
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683063953
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683187723
+      }
+    ],
+    "4.9 Portar `core/desercion.ts`": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681054032
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683063196
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683186793
+      }
+    ],
+    "4.12 Portar `core/accumulate.ts`": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681054138
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683204293
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683214797
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683310855
+      }
+    ],
+    "4.16 Portar `core/compute.ts` (núcleo del motor)": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681054255
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683204377
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683314727
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792684269764
+      }
+    ],
+    "5. Checkpoint - Motor portado": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681054339
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683204543
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792684285833
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792684302917
+      }
+    ],
+    "6.1 Implementar el cargador de fixtures y el comparador con tolerancias": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681054439
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683204638
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792684308163
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792684477081
+      }
+    ],
+    "6.2 Implementar el test de paridad numérica model-based (motor vs. golden)": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681054530
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683204756
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792684481070
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792684621236
+      }
+    ],
+    "7.1 Crear la migración de esquema `supabase/migrations/010_schema.sql`": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681054613
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683204861
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792684630621
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792684733218
+      }
+    ],
+    "7.2 Crear la migración de roles/perfiles `supabase/migrations/012_profiles_auth.sql`": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681054692
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683205027
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792684629941
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792684733587
+      }
+    ],
+    "7.3 Crear la migración de RLS `supabase/migrations/011_rls.sql`": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681054794
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683205178
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792684738822
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792684925798
+      }
+    ],
+    "7.4 Generar los tipos de Supabase `supabase/types.ts`": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681054866
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683205291
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792684739587
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792684926107
+      }
+    ],
+    "8.1 Implementar el cliente admin y la limpieza de meses basura": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681055091
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683205378
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792684931799
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792685181543
+      }
+    ],
+    "8.2 Implementar la migración de Config_Global en `supabase/migrate/migrate-data.ts`": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681055173
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683205530
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792685185750
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792685539205
+      }
+    ],
+    "8.3 Implementar la migración de meses, países, entidades y parámetros": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681055241
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683205745
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792685547562
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792686014743
+      }
+    ],
+    "9.1 Implementar los clientes Supabase cliente y servidor": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681055314
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683205860
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792686022667
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792686348408
+      }
+    ],
+    "9.2 Implementar el ensamblaje `lib/data/assemble.ts`": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681055410
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683205985
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792686023799
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792686347633
+      }
+    ],
+    "9.3 Implementar las consultas `lib/data/queries.ts`": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681055515
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683206140
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792686353452
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792686712324
+      }
+    ],
+    "9.4 Implementar las escrituras `lib/data/writes.ts`": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681055601
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683206249
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792686354203
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792686711423
+      }
+    ],
+    "10.1 Implementar sesión y RBAC en `lib/auth/`": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681055699
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683206356
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792686719019
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792687084735
+      }
+    ],
+    "10.2 Implementar el middleware de refresco de sesión y la pantalla de login": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681056037
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683206474
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792687085608
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792687455876
+      }
+    ],
+    "10.3 Implementar el script de migración/creación de usuarios `supabase/migrate/migrate-users.ts`": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681056143
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683206618
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792686720146
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792687456919
+      }
+    ],
+    "11. Checkpoint - Datos, migración y auth": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681056275
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683206719
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792687463536
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792687481579
+      }
+    ],
+    "12.1 Portar `app/globals.css` con las variables `:root` 1:1": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681056363
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683206826
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792687487011
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792687736117
+      }
+    ],
+    "12.2 Configurar las tipografías con `next/font` en `app/layout.tsx`": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681056452
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683206928
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792687485872
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792687493876
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792687740441
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792687893468
+      }
+    ],
+    "12.3 Implementar el layout base del grupo protegido `app/(app)/layout.tsx`": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681056540
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683207028
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792687897398
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792688163315
+      }
+    ],
+    "13.1 Implementar `KpiCard`, `Semaforo`, `Sparkline` y `EslBadge`": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681056663
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683207185
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792688169507
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792688458248
+      }
+    ],
+    "13.2 Implementar `DistTable` y `BarRow`": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681056742
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683207284
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792688168629
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792688459124
+      }
+    ],
+    "14.1 Implementar el Dashboard Operativo (`app/(app)/dashboard/page.tsx` + cliente)": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681056820
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683207370
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792688471086
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792690352167
+      }
+    ],
+    "14.2 Implementar la Vista Corporativa (`app/(app)/corporativa/page.tsx`)": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681056915
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683207478
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792688470594
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792690353526
+      }
+    ],
+    "14.3 Implementar la Vista Comparativa (`app/(app)/comparativa/page.tsx`)": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681057010
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683207589
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792688469217
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792690354974
+      }
+    ],
+    "14.4 Implementar la Pantalla Usuarios (`app/(app)/usuarios/page.tsx`)": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681057103
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683207710
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792688467799
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792690355806
+      }
+    ],
+    "15. Checkpoint - UI principal": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681057196
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683207830
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792690361670
+      }
+    ],
+    "16.1 Portar `field-alias.ts`, `colmap.ts` y `normval.ts`": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681057296
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683207995
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792690367423
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792690591252
+      }
+    ],
+    "16.3 Portar `parse-rows.ts` y la lectura de la Plantilla Maestra": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681057396
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683208145
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792690600359
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792690931194
+      }
+    ],
+    "16.4 Portar `ingest.ts` (reemplazo por país + satisfacción) y conectar con `replaceByPais`": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681057541
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683208249
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792690935195
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792691231012
+      }
+    ],
+    "16.5 Implementar la Pantalla Administrar y el asistente de carga": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681057645
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683208389
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792691238818
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792707181272
+      }
+    ],
+    "17.1 Portar el exportador a Excel (`lib/io/export/xlsx.ts`)": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681057757
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683208496
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792691236573
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792707182643
+      }
+    ],
+    "17.2 Portar el exportador a PDF (`lib/io/export/pdf.ts`)": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681057882
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683208655
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792691237982
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792707183513
+      }
+    ],
+    "18.1 Cablear todas las piezas y verificar el flujo completo": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681057973
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683208816
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792707189925
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792707552161
+      }
+    ],
+    "18.3 _(Opcional)_ Preparar el despliegue": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681058116
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683208959
+      }
+    ],
+    "19. Final checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "1c69f059-3131-4765-beaf-a810d97f81e8",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792681058211
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792683209075
+      },
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792707650343
+      }
+    ],
+    "1. Scaffolding del proyecto Next.js": [
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792682537673
+      }
+    ],
+    "3. Tipos del dominio en TypeScript": [
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792682888754
+      }
+    ],
+    "2. Exportar fixtures golden desde el sistema actual (fuente de verdad)": [
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792682889765
+      }
+    ],
+    "4. Port del motor de indicadores (TypeScript puro, sin DOM)": [
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792684269847
+      }
+    ],
+    "6. Validación de paridad numérica contra el golden": [
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792684621309
+      }
+    ],
+    "7. Esquema de base de datos normalizado (migraciones SQL)": [
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792684926264
+      }
+    ],
+    "8. Script de migración de datos kv → normalizado": [
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792686014977
+      }
+    ],
+    "9. Capa de acceso a datos": [
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792686712502
+      }
+    ],
+    "10. Autenticación con Supabase Auth, guard de sesión y RBAC": [
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792687457061
+      }
+    ],
+    "12. Paridad visual: estilos base, fuentes y layout": [
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792688163500
+      }
+    ],
+    "13. Componentes de KPI compartidos": [
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792688459344
+      }
+    ],
+    "14. Vistas principales": [
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792690355920
+      }
+    ],
+    "16. Importación de archivos (XLSX/CSV) y Plantilla Maestra": [
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792707181390
+      }
+    ],
+    "17. Exportación a Excel y PDF": [
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792707183627
+      }
+    ],
+    "18. Integración, validación end-to-end y despliegue": [
+      {
+        "executionId": "2c5123d3-59cb-47f2-b3d3-cb97f89cdc1a",
+        "chatSessionId": "80b2b1ad-3498-42fc-997d-0e20f8ce4f5c",
+        "timestamp": 1792707649633
+      }
+    ]
+  }
+}
