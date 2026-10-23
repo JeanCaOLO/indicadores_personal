@@ -43,6 +43,15 @@ import Header from "../../components/Header";
 import PillNav, { type PillItem } from "../../components/PillNav";
 import { requireAuth } from "../../lib/auth/session";
 
+// -----------------------------------------------------------------------------
+// Cache Components (Next 16): este grupo es 100% autenticado — el layout lee
+// cookies via requireAuth() en cada request, asi que NO puede prerenderizarse.
+// `instant = false` indica a Next que la navegacion a estas rutas BLOQUEA en el
+// servidor (render dinamico), que es justo lo que necesitamos. Cubre a todas
+// las rutas hijas del grupo (dashboard, corporativa, comparativa, administrar,
+// usuarios). Ver: nextjs.org/docs/app/guides/authentication-with-cache-components
+export const instant = false;
+
 // Pills de las vistas que consumen data (se ocultan para scope admin).
 const DATA_PILLS: PillItem[] = [
   { href: "/dashboard", label: "Dashboard", title: "Dashboard Operativo" },

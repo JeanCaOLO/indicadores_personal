@@ -1,0 +1,25 @@
+# render.yaml - Blueprint de despliegue para Render
+# Web service Next.js (indicadores-app). Las claves secretas NO van aqui:
+# se configuran en el dashboard de Render (sync: false => hay que setearlas).
+services:
+  - type: web
+    name: indicadores-app
+    runtime: node
+    plan: free
+    region: ohio
+    branch: main
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start
+    autoDeploy: true
+    healthCheckPath: /login
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NEXT_TELEMETRY_DISABLED
+        value: "1"
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
